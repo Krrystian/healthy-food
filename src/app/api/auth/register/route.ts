@@ -20,4 +20,5 @@ export async function POST(request: Request) {
             name,
         },
     });
+    return NextResponse.json("User has been created.", { status: 201 });
 }
