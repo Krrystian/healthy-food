@@ -4,8 +4,18 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { registerSchema } from "../lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+import React from "react";
+
+const Background = dynamic(
+  () => import("../components/LoginRegister/Background"),
+  {
+    ssr: false,
+  }
+);
 
 export default function Page() {
+  const [loading, setLoading] = React.useState(true);
   const { register, handleSubmit } = useForm<FieldValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -28,28 +38,51 @@ export default function Page() {
     }
   };
 
+  const handleLoad = () => {
+    setLoading(false);
+  };
+
   return (
-    <form>
-      <label>
-        Name
-        <input type="text" {...register("name", { required: true })} />
-      </label>
-      <label>
-        Email
-        <input type="email" {...register("email", { required: true })} />
-      </label>
-      <label>
-        Password
-        <input type="password" {...register("password", { required: true })} />
-      </label>
-      <label>
-        Confirm password
-        <input
-          type="password"
-          {...register("confirm_password", { required: true })}
-        />
-      </label>
-      <button onClick={handleSubmit(onSubmit)}>Register</button>
-    </form>
+    <div className="relative">
+      {loading && <div>Loading...</div>}
+      <Background loading={handleLoad} />
+      {!loading && (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <label>
+            Name
+            <input
+              type="text"
+              {...register("name", { required: true })}
+              autoComplete="name"
+            />
+          </label>
+          <label>
+            Email
+            <input
+              type="email"
+              {...register("email", { required: true })}
+              autoComplete="email"
+            />
+          </label>
+          <label>
+            Password
+            <input
+              type="password"
+              {...register("password", { required: true })}
+              autoComplete="new-password"
+            />
+          </label>
+          <label>
+            Confirm password
+            <input
+              type="password"
+              {...register("confirm_password", { required: true })}
+              autoComplete="new-password"
+            />
+          </label>
+          <button type="submit">Register</button>
+        </form>
+      )}
+    </div>
   );
 }
