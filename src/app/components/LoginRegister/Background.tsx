@@ -38,6 +38,8 @@ const Mesh = React.memo(
   )
 );
 
+Mesh.displayName = "Mesh";
+
 interface BackgroundProps {
   loading: () => void;
 }
