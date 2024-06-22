@@ -66,8 +66,8 @@ const Background: React.FC<BackgroundProps> = ({ loading }) => {
   }, [handleResize]);
 
   return (
-    <div className={cn("absolute w-screen h-screen -z-10 bg-orange-300")}>
-      <Canvas>
+    <div className={cn("absolute w-screen h-screen")}>
+      <Canvas style={{ backgroundColor: "#FDBA74" }}>
         <PerspectiveCamera makeDefault position={[0, 0, 9]} />
         <Environment preset="sunset" />
         <group>
