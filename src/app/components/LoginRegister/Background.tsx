@@ -72,29 +72,29 @@ const Background: React.FC<BackgroundProps> = ({ loading }) => {
         <Environment preset="sunset" />
         <group>
           <Mesh
-            scale={6}
+            scale={18}
             geometry={(nodes.banana002 as THREE.Mesh).geometry}
             material={(nodes.banana002 as THREE.Mesh).material}
-            rotation={new THREE.Euler(0, 60, 0)}
+            rotation={new THREE.Euler(0, 25, 0)}
             position={new THREE.Vector3(-4, 0, 0)}
             velocity={2}
           />
           <Mesh
-            scale={12}
+            scale={18}
             geometry={(nodes.Strawberry001 as THREE.Mesh).geometry}
             material={(nodes.Strawberry001 as THREE.Mesh).material}
             position={new THREE.Vector3(-4, 2, 0)}
             velocity={2}
           />
           <Mesh
-            scale={6}
+            scale={18}
             geometry={(nodes.yellow002 as THREE.Mesh).geometry}
             material={(nodes.yellow002 as THREE.Mesh).material}
             position={new THREE.Vector3(-7, -0.5, 0)}
             velocity={2}
           />
           <Mesh
-            scale={6}
+            scale={18}
             geometry={(nodes.Mango_01 as THREE.Mesh).geometry}
             material={(nodes.Mango_01 as THREE.Mesh).material}
             position={new THREE.Vector3(0, -2, 0)}
@@ -102,7 +102,7 @@ const Background: React.FC<BackgroundProps> = ({ loading }) => {
             velocity={2}
           />
           <Mesh
-            scale={6}
+            scale={18}
             geometry={(nodes.Kiwi001 as THREE.Mesh).geometry}
             material={(nodes.Kiwi001 as THREE.Mesh).material}
             position={new THREE.Vector3(0, 2, 0)}
