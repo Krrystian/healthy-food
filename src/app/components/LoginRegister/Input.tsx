@@ -3,7 +3,8 @@ import React from "react";
 import { FieldValues, UseFormRegister } from "react-hook-form";
 
 interface InputProps {
-  label: string;
+  label?: string;
+  placeholder?: string;
   type: string;
   register: UseFormRegister<FieldValues>;
   name: string;
@@ -16,6 +17,7 @@ interface InputProps {
 
 const Input: React.FC<InputProps> = ({
   label,
+  placeholder,
   type,
   register,
   name,
@@ -25,25 +27,45 @@ const Input: React.FC<InputProps> = ({
   disabled,
   error,
 }) => {
+  const [onFocus, setOnFocus] = React.useState(false);
+  const [value, setValue] = React.useState("");
   return (
-    <label
-      className={cn(
-        "flex flex-col text-xl font-medium relative",
-        labelClassName
-      )}
-    >
+    <label className={cn("flex flex-col font-medium relative", labelClassName)}>
       {label}
-      <input
-        className={cn(
-          "bg-transparent border-b-4 border-l-4 rounded-bl-xl outline-none focus:border-blue-800 transition-colors duration-300 border-black px-4 py-1",
-          inputClassName
-        )}
-        type={type}
-        disabled={disabled}
-        {...register(name)}
-        autoComplete={autoComplete}
-      />
-      <div className="absolute text-red-700 font-medium bottom-0 translate-y-[100%]">
+      <div className="relative">
+        <input
+          className={cn(
+            "bg-transparent w-full outline-none transition-colors duration-300 border-black py-1 text-xl",
+            inputClassName
+          )}
+          type={type}
+          disabled={disabled}
+          {...register(name)}
+          autoComplete={autoComplete}
+          onFocus={() => setOnFocus(true)}
+          onBlur={() => setOnFocus(false)}
+          onChange={(e) => setValue(e.target.value)}
+        />
+        <div className={cn("absolute w-full h-1 bg-black")} />
+        <div
+          className={cn(
+            "absolute h-1 bg-blue-800 duration-300 transition-all",
+            onFocus ? "w-full" : "w-0"
+          )}
+        />
+        <div
+          className={cn(
+            "absolute top-[15%] text-xl duraiton-300 transition-all cursor-text",
+            onFocus || value.length > 0
+              ? " translate-y-[-100%] text-base"
+              : " translate-y-0"
+          )}
+        >
+          {placeholder}
+        </div>
+      </div>
+
+      <div className="absolute text-red-700 font-medium bottom-0 translate-y-[100%] py-1">
         {error}
       </div>
     </label>

@@ -5,6 +5,8 @@ import React from "react";
 interface ButtonProps {
   label: string;
   labelSecondary?: string;
+  classNameLabel?: string;
+  classNameLabelSecondary?: string;
   type: "submit" | "button" | "reset" | undefined;
   onClick?: () => void;
   className?: string;
@@ -18,6 +20,8 @@ const Button: React.FC<ButtonProps> = ({
   className,
   labelSecondary,
   disabled,
+  classNameLabel,
+  classNameLabelSecondary,
 }) => {
   const handleClick = () => {
     onClick();
@@ -33,13 +37,23 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
     >
       <motion.div
-        className="w-full h-full text-center relative"
+        className="w-full h-full text-center relative tracking-wider"
         whileHover={{ top: "-100%" }}
       >
-        <div className="relative text-center w-full bg-orange-500 p-2">
+        <div
+          className={cn(
+            "relative text-center w-full bg-[#FB8500] p-2",
+            classNameLabel
+          )}
+        >
           {label}
         </div>
-        <div className="w-full h-full absolute bg-black text-white text-center p-2 top-full">
+        <div
+          className={cn(
+            "w-full h-full absolute bg-black text-white text-center p-2 top-full",
+            classNameLabelSecondary
+          )}
+        >
           {labelSecondary ? labelSecondary : label}
         </div>
       </motion.div>

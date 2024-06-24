@@ -10,9 +10,7 @@ import {
   MeshTransmissionMaterial,
   Text,
 } from "@react-three/drei";
-import { useControls } from "leva";
 import * as THREE from "three";
-import { distance } from "framer-motion";
 
 const Mesh = React.memo(
   ({
@@ -72,32 +70,77 @@ const Background: React.FC<BackgroundProps> = ({ loading }) => {
       window.removeEventListener("resize", handleResize);
     };
   }, [handleResize]);
-  const materialProps = useControls({
-    thickness: 0.2,
+  const materialProps = {
+    thickness: 0.7,
     roughness: 0.2,
     transmission: 1,
     ior: 1.2,
     chromaticAberration: 0.8,
-    distortion: 0.3,
-    distortionScale: 0.3,
-    temporalDistortion: 0.3,
-  });
+    distortion: 0.8,
+    distortionScale: 1,
+    temporalDistortion: 0.1,
+  };
   return (
     <div className={cn("absolute w-screen h-screen")}>
-      <Canvas style={{ backgroundColor: "black" }}>
+      <Canvas style={{ backgroundColor: "#023047" }}>
         <PerspectiveCamera makeDefault position={[0, 0, 9]} />
         <Environment preset="sunset" />
         <group scale={scale}>
-          <Text position={[-3.4, 0, 0]} fontSize={1.4}>
+          <Text
+            font="./fonts/Satoshi-Black.otf"
+            color={"#ffb703"}
+            position={[-3.4, -4, -1]}
+            fontSize={1.4}
+          >
             Healthy You
           </Text>
-
+          <Text
+            font="./fonts/Satoshi-Black.otf"
+            color={"#ffb703"}
+            position={[-3.4, 4, -1]}
+            fontSize={1.4}
+          >
+            Healthy You
+          </Text>
+          <Text
+            font="./fonts/Satoshi-Black.otf"
+            color={"#ffb703"}
+            position={[-3.4, 0, -1]}
+            fontSize={1.4}
+          >
+            Healthy You
+          </Text>
+          <Text
+            position={[-3.4, 2, -1]}
+            fontSize={1.4}
+            font="./fonts/Satoshi-Black.otf"
+            color={"#ffb703"}
+          >
+            Healthy You
+          </Text>{" "}
+          <Text
+            position={[-3.4, -2, -1]}
+            fontSize={1.4}
+            font="./fonts/Satoshi-Black.otf"
+            color={"#ffb703"}
+          >
+            Healthy You
+          </Text>
           <Mesh
             scale={0.3}
             geometry={(nodes.banana002 as THREE.Mesh).geometry}
             material={(nodes.banana002 as THREE.Mesh).material}
-            rotation={new THREE.Euler(0, 0, 0)}
+            rotation={new THREE.Euler(0, 0.6, 0)}
             position={new THREE.Vector3(0.5, -0.5, 1)}
+            velocity={2}
+            materialSettings={materialProps}
+          />
+          <Mesh
+            scale={0.1}
+            geometry={(nodes.banana002 as THREE.Mesh).geometry}
+            material={(nodes.banana002 as THREE.Mesh).material}
+            rotation={new THREE.Euler(0.9, 0, 0)}
+            position={new THREE.Vector3(-7, 2, 1)}
             velocity={2}
             materialSettings={materialProps}
           />
@@ -109,31 +152,52 @@ const Background: React.FC<BackgroundProps> = ({ loading }) => {
             velocity={2}
             materialSettings={materialProps}
           />
-
           <Mesh
-            scale={0.2}
+            scale={0.1}
+            geometry={(nodes.Strawberry001 as THREE.Mesh).geometry}
+            material={(nodes.Strawberry001 as THREE.Mesh).material}
+            position={new THREE.Vector3(-2, 2, 0)}
+            velocity={2}
+            materialSettings={materialProps}
+          />
+          <Mesh
+            scale={0.15}
+            geometry={(nodes.yellow002 as THREE.Mesh).geometry}
+            material={(nodes.yellow002 as THREE.Mesh).material}
+            position={new THREE.Vector3(-7, -4, 1)}
+            velocity={2}
+            materialSettings={materialProps}
+          />
+          <Mesh
+            scale={0.15}
             geometry={(nodes.yellow002 as THREE.Mesh).geometry}
             material={(nodes.yellow002 as THREE.Mesh).material}
             position={new THREE.Vector3(-4, 0, 1)}
             velocity={2}
             materialSettings={materialProps}
           />
-
           <Mesh
-            scale={15}
-            geometry={(nodes.Mango_01 as THREE.Mesh).geometry}
-            material={(nodes.Mango_01 as THREE.Mesh).material}
-            position={new THREE.Vector3(-3, -3, 0)}
-            rotation={new THREE.Euler(0, 90, 0)}
+            scale={1}
+            geometry={(nodes.Kiwi001 as THREE.Mesh).geometry}
+            material={(nodes.Kiwi001 as THREE.Mesh).material}
+            position={new THREE.Vector3(0, -1, 4)}
+            rotation={new THREE.Euler(12, 50, 0)}
+            velocity={0.1}
+            materialSettings={materialProps}
+          />
+          <Mesh
+            scale={0.1}
+            geometry={(nodes.Strawberry001 as THREE.Mesh).geometry}
+            material={(nodes.Strawberry001 as THREE.Mesh).material}
+            position={new THREE.Vector3(-1, -3, 0)}
             velocity={2}
             materialSettings={materialProps}
           />
-
           <Mesh
-            scale={2}
-            geometry={(nodes.Kiwi001 as THREE.Mesh).geometry}
-            material={(nodes.Kiwi001 as THREE.Mesh).material}
-            position={new THREE.Vector3(-7, -2, 0)}
+            scale={0.2}
+            geometry={(nodes.Strawberry001 as THREE.Mesh).geometry}
+            material={(nodes.Strawberry001 as THREE.Mesh).material}
+            position={new THREE.Vector3(4, 3, 0)}
             velocity={2}
             materialSettings={materialProps}
           />

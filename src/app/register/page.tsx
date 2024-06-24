@@ -8,6 +8,7 @@ import dynamic from "next/dynamic";
 import React from "react";
 import Input from "../components/LoginRegister/Input";
 import Button from "../components/LoginRegister/Button";
+import GoogleButton from "../components/LoginRegister/GoogleButton";
 
 const Background = dynamic(
   () => import("../components/LoginRegister/Background"),
@@ -17,7 +18,7 @@ const Background = dynamic(
 );
 
 export default function Page() {
-  const [loading, setLoading] = React.useState<boolean>(true);
+  const [loading, setLoading] = React.useState<boolean>(false);
   const [processing, setProcessing] = React.useState<boolean>(false);
   const [match, setMatch] = React.useState<string>("");
   const {
@@ -61,22 +62,23 @@ export default function Page() {
     setLoading(false);
   };
   return (
-    <div className="relative h-screen bg-orange-300">
-      {loading && <div className="bg-orange-300">Loading...</div>}
+    <div className="relative h-screen bg-[#023047]">
+      {loading && <div className="bg-[#023047]">Loading...</div>}
       <Background loading={handleLoad} />
       {!loading && (
         <div className="absolute top-0 h-screen right-0 flex items-center z-20 w-[40vw]">
-          <div className="px-16 w-full bg-yellow-300 rounded-l-3xl h-[80vh] flex flex-col items-center justify-center shadow-xl">
-            <div className="w-full flex gap-4 items-center pb-6">
-              <h1 className="text-7xl font-black">WELCOME</h1>
-              <div className="h-2 rounded-xl w-full bg-black" />
+          <div className="px-16 w-full bg-[#FFB703] rounded-l-3xl h-[80vh] flex flex-col items-center justify-center shadow-xl">
+            <div className="w-full flex gap-4 items-center py-8">
+              <div className="h-1 rounded-xl w-full bg-black" />
+              <h1 className="text-5xl font-black">WELCOME</h1>
+              <div className="h-1 rounded-xl w-full bg-black" />
             </div>
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="flex flex-col w-full gap-10"
+              className="flex flex-col w-[60%] gap-8"
             >
               <Input
-                label="Name"
+                placeholder="Name"
                 type="text"
                 register={register}
                 name="name"
@@ -85,7 +87,7 @@ export default function Page() {
                 error={errors.name?.message as string}
               />
               <Input
-                label="Email"
+                placeholder="Email"
                 type="email"
                 register={register}
                 name="email"
@@ -94,7 +96,7 @@ export default function Page() {
                 error={errors.email?.message as string}
               />
               <Input
-                label="Password"
+                placeholder="Password"
                 type="password"
                 register={register}
                 name="password"
@@ -103,7 +105,7 @@ export default function Page() {
                 error={errors.password?.message as string}
               />
               <Input
-                label="Confirm password"
+                placeholder="Confirm password"
                 type="password"
                 register={register}
                 name="confirm_password"
@@ -114,12 +116,19 @@ export default function Page() {
               <div className="flex w-full justify-center">
                 <Button
                   label="Register"
-                  labelSecondary="Happy to see you!"
+                  labelSecondary="And change your life!"
                   type="submit"
+                  className="w-full"
                   disabled={processing}
                 />
               </div>
             </form>
+            <div className="w-full flex gap-4 items-center py-6">
+              <div className="h-1 rounded-xl w-full bg-black" />
+              <h1 className="text-2xl font-black">OR</h1>
+              <div className="h-1 rounded-xl w-full bg-black" />
+            </div>
+            <GoogleButton />
           </div>
         </div>
       )}
