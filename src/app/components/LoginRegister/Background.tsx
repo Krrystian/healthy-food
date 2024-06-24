@@ -11,8 +11,8 @@ import {
   Text,
 } from "@react-three/drei";
 import * as THREE from "three";
+import { useMotionValue, useSpring } from "framer-motion";
 
-useGLTF.preload("/food3.glb");
 const Mesh = React.memo(
   ({
     geometry,
@@ -23,11 +23,12 @@ const Mesh = React.memo(
     materialSettings,
   }: {
     geometry: THREE.Mesh["geometry"];
-    material: THREE.Mesh["material"];
+    material?: THREE.Mesh["material"];
     scale?: number;
     rotation?: THREE.Euler;
     position?: THREE.Vector3;
     materialSettings?: any;
+    smoothScroll?: any;
   }) => (
     <mesh
       geometry={geometry}
@@ -42,6 +43,7 @@ const Mesh = React.memo(
 );
 
 Mesh.displayName = "Mesh";
+useGLTF.preload("/food3.glb");
 
 interface BackgroundProps {
   loading: () => void;
@@ -67,6 +69,7 @@ const Background: React.FC<BackgroundProps> = ({ loading }) => {
       window.removeEventListener("resize", handleResize);
     };
   }, [handleResize]);
+
   const materialProps = {
     thickness: 0.7,
     roughness: 0.35,
@@ -128,7 +131,6 @@ const Background: React.FC<BackgroundProps> = ({ loading }) => {
             <Mesh
               scale={0.3}
               geometry={(nodes.banana002 as THREE.Mesh).geometry}
-              material={(nodes.banana002 as THREE.Mesh).material}
               rotation={new THREE.Euler(0, 0.6, 0)}
               position={new THREE.Vector3(0.5, 1, 1)}
               materialSettings={materialProps}
@@ -137,14 +139,12 @@ const Background: React.FC<BackgroundProps> = ({ loading }) => {
             <Mesh
               scale={0.1}
               geometry={(nodes.Strawberry001 as THREE.Mesh).geometry}
-              material={(nodes.Strawberry001 as THREE.Mesh).material}
               position={new THREE.Vector3(-2, -2, 0)}
               materialSettings={materialProps}
             />
             <Mesh
               scale={0.1}
               geometry={(nodes.yellow002 as THREE.Mesh).geometry}
-              material={(nodes.yellow002 as THREE.Mesh).material}
               position={new THREE.Vector3(-6, -3, 1)}
               rotation={new THREE.Euler(7, 0, 0)}
               materialSettings={materialProps}
@@ -152,7 +152,7 @@ const Background: React.FC<BackgroundProps> = ({ loading }) => {
             <Mesh
               scale={0.2}
               geometry={(nodes.yellow002 as THREE.Mesh).geometry}
-              material={(nodes.yellow002 as THREE.Mesh).material}
+              // material={(nodes.yellow002 as THREE.Mesh).material}
               position={new THREE.Vector3(-3, 1, 1)}
               materialSettings={materialProps}
             />
