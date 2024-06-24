@@ -129,59 +129,30 @@ const Background: React.FC<BackgroundProps> = ({ loading }) => {
               geometry={(nodes.banana002 as THREE.Mesh).geometry}
               material={(nodes.banana002 as THREE.Mesh).material}
               rotation={new THREE.Euler(0, 0.6, 0)}
-              position={new THREE.Vector3(0.5, -0.5, 1)}
+              position={new THREE.Vector3(0.5, 1, 1)}
               materialSettings={materialProps}
             />
-            <Mesh
-              scale={0.1}
-              geometry={(nodes.banana002 as THREE.Mesh).geometry}
-              material={(nodes.banana002 as THREE.Mesh).material}
-              rotation={new THREE.Euler(0.9, 0, 0)}
-              position={new THREE.Vector3(-7, 2, 1)}
-              materialSettings={materialProps}
-            />
+
             <Mesh
               scale={0.1}
               geometry={(nodes.Strawberry001 as THREE.Mesh).geometry}
               material={(nodes.Strawberry001 as THREE.Mesh).material}
-              position={new THREE.Vector3(-6, 2, 0)}
+              position={new THREE.Vector3(-2, -2, 0)}
               materialSettings={materialProps}
             />
             <Mesh
               scale={0.1}
-              geometry={(nodes.Strawberry001 as THREE.Mesh).geometry}
-              material={(nodes.Strawberry001 as THREE.Mesh).material}
-              position={new THREE.Vector3(-2, 2, 0)}
-              materialSettings={materialProps}
-            />
-            <Mesh
-              scale={0.15}
               geometry={(nodes.yellow002 as THREE.Mesh).geometry}
               material={(nodes.yellow002 as THREE.Mesh).material}
-              position={new THREE.Vector3(-7, -4, 1)}
+              position={new THREE.Vector3(-6, -3, 1)}
               rotation={new THREE.Euler(7, 0, 0)}
               materialSettings={materialProps}
             />
             <Mesh
-              scale={0.15}
+              scale={0.2}
               geometry={(nodes.yellow002 as THREE.Mesh).geometry}
               material={(nodes.yellow002 as THREE.Mesh).material}
-              position={new THREE.Vector3(-4, 0, 1)}
-              materialSettings={materialProps}
-            />
-            <Mesh
-              scale={1}
-              geometry={(nodes.Kiwi001 as THREE.Mesh).geometry}
-              material={(nodes.Kiwi001 as THREE.Mesh).material}
-              position={new THREE.Vector3(0, -1, 4)}
-              rotation={new THREE.Euler(12, 50, 0)}
-              materialSettings={materialProps}
-            />
-            <Mesh
-              scale={0.2}
-              geometry={(nodes.Strawberry001 as THREE.Mesh).geometry}
-              material={(nodes.Strawberry001 as THREE.Mesh).material}
-              position={new THREE.Vector3(4, 3, 0)}
+              position={new THREE.Vector3(-3, 1, 1)}
               materialSettings={materialProps}
             />
           </Float>
