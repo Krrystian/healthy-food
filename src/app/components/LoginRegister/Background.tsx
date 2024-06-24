@@ -7,8 +7,12 @@ import {
   Float,
   PerspectiveCamera,
   useGLTF,
+  MeshTransmissionMaterial,
+  Text,
 } from "@react-three/drei";
+import { useControls } from "leva";
 import * as THREE from "three";
+import { distance } from "framer-motion";
 
 const Mesh = React.memo(
   ({
@@ -18,6 +22,7 @@ const Mesh = React.memo(
     rotation,
     velocity,
     position,
+    materialSettings,
   }: {
     geometry: THREE.Mesh["geometry"];
     material: THREE.Mesh["material"];
@@ -25,6 +30,7 @@ const Mesh = React.memo(
     rotation?: THREE.Euler;
     velocity?: number;
     position?: THREE.Vector3;
+    materialSettings?: any;
   }) => (
     <Float speed={velocity}>
       <mesh
@@ -33,7 +39,9 @@ const Mesh = React.memo(
         scale={scale}
         rotation={rotation}
         position={position}
-      />
+      >
+        <MeshTransmissionMaterial {...materialSettings} />
+      </mesh>
     </Float>
   )
 );
@@ -45,7 +53,7 @@ interface BackgroundProps {
 }
 
 const Background: React.FC<BackgroundProps> = ({ loading }) => {
-  const { nodes } = useGLTF("/food2.glb");
+  const { nodes } = useGLTF("/food3.glb");
 
   React.useEffect(() => {
     loading();
@@ -64,49 +72,70 @@ const Background: React.FC<BackgroundProps> = ({ loading }) => {
       window.removeEventListener("resize", handleResize);
     };
   }, [handleResize]);
-
+  const materialProps = useControls({
+    thickness: 0.2,
+    roughness: 0.2,
+    transmission: 1,
+    ior: 1.2,
+    chromaticAberration: 0.8,
+    distortion: 0.3,
+    distortionScale: 0.3,
+    temporalDistortion: 0.3,
+  });
   return (
     <div className={cn("absolute w-screen h-screen")}>
-      <Canvas style={{ backgroundColor: "#FDBA74" }}>
+      <Canvas style={{ backgroundColor: "black" }}>
         <PerspectiveCamera makeDefault position={[0, 0, 9]} />
         <Environment preset="sunset" />
-        <group>
+        <group scale={scale}>
+          <Text position={[-3.4, 0, 0]} fontSize={1.4}>
+            Healthy You
+          </Text>
+
           <Mesh
-            scale={18}
+            scale={0.3}
             geometry={(nodes.banana002 as THREE.Mesh).geometry}
             material={(nodes.banana002 as THREE.Mesh).material}
-            rotation={new THREE.Euler(0, 25, 0)}
-            position={new THREE.Vector3(-4, 0, 0)}
+            rotation={new THREE.Euler(0, 0, 0)}
+            position={new THREE.Vector3(0.5, -0.5, 1)}
             velocity={2}
+            materialSettings={materialProps}
           />
           <Mesh
-            scale={18}
+            scale={0.1}
             geometry={(nodes.Strawberry001 as THREE.Mesh).geometry}
             material={(nodes.Strawberry001 as THREE.Mesh).material}
-            position={new THREE.Vector3(-4, 2, 0)}
+            position={new THREE.Vector3(-6, 2, 0)}
             velocity={2}
+            materialSettings={materialProps}
           />
+
           <Mesh
-            scale={18}
+            scale={0.2}
             geometry={(nodes.yellow002 as THREE.Mesh).geometry}
             material={(nodes.yellow002 as THREE.Mesh).material}
-            position={new THREE.Vector3(-7, -0.5, 0)}
+            position={new THREE.Vector3(-4, 0, 1)}
             velocity={2}
+            materialSettings={materialProps}
           />
+
           <Mesh
-            scale={18}
+            scale={15}
             geometry={(nodes.Mango_01 as THREE.Mesh).geometry}
             material={(nodes.Mango_01 as THREE.Mesh).material}
-            position={new THREE.Vector3(0, -2, 0)}
+            position={new THREE.Vector3(-3, -3, 0)}
             rotation={new THREE.Euler(0, 90, 0)}
             velocity={2}
+            materialSettings={materialProps}
           />
+
           <Mesh
-            scale={18}
+            scale={2}
             geometry={(nodes.Kiwi001 as THREE.Mesh).geometry}
             material={(nodes.Kiwi001 as THREE.Mesh).material}
-            position={new THREE.Vector3(0, 2, 0)}
+            position={new THREE.Vector3(-7, -2, 0)}
             velocity={2}
+            materialSettings={materialProps}
           />
         </group>
       </Canvas>
