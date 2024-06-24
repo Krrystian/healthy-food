@@ -165,6 +165,7 @@ const Background: React.FC<BackgroundProps> = ({ loading }) => {
             geometry={(nodes.yellow002 as THREE.Mesh).geometry}
             material={(nodes.yellow002 as THREE.Mesh).material}
             position={new THREE.Vector3(-7, -4, 1)}
+            rotation={new THREE.Euler(7, 0, 0)}
             velocity={2}
             materialSettings={materialProps}
           />
@@ -183,14 +184,6 @@ const Background: React.FC<BackgroundProps> = ({ loading }) => {
             position={new THREE.Vector3(0, -1, 4)}
             rotation={new THREE.Euler(12, 50, 0)}
             velocity={0.1}
-            materialSettings={materialProps}
-          />
-          <Mesh
-            scale={0.1}
-            geometry={(nodes.Strawberry001 as THREE.Mesh).geometry}
-            material={(nodes.Strawberry001 as THREE.Mesh).material}
-            position={new THREE.Vector3(-1, -3, 0)}
-            velocity={2}
             materialSettings={materialProps}
           />
           <Mesh

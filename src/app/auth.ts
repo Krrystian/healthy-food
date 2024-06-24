@@ -3,11 +3,21 @@ import Credentials from "next-auth/providers/credentials"
 import { signInSchema } from "./lib/zod"
 import bcrypt from "bcryptjs"
 import prisma from "./lib/prisma"
-import Google from "next-auth/providers/google"
- 
+import GoogleProvider from "next-auth/providers/google"
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
-    Google,
+    GoogleProvider({
+      clientId: process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET,
+      authorization: {
+        params: {
+          access_type: "offline",
+          prompt: "consent",
+          response_type: "code",
+        },
+      },
+    }),
     Credentials({
       credentials: {
         email: {},
