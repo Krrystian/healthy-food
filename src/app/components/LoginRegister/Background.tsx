@@ -69,13 +69,14 @@ const Background: React.FC<BackgroundProps> = ({ loading }) => {
   }, [handleResize]);
   const materialProps = {
     thickness: 0.7,
-    roughness: 0.2,
+    roughness: 0.35,
     transmission: 1,
     ior: 1.2,
     chromaticAberration: 0.8,
     distortion: 0.8,
     distortionScale: 1,
-    temporalDistortion: 0.1,
+    temporalDistortion: 0.3,
+    color: "#FE03A7",
   };
   return (
     <div className={cn("absolute w-screen h-screen")}>
@@ -86,44 +87,44 @@ const Background: React.FC<BackgroundProps> = ({ loading }) => {
           <Text
             font="./fonts/Satoshi-Black.otf"
             color={"#ffb703"}
-            position={[-3.4, -4, -1]}
+            position={[-3.8, 4, -1]}
             fontSize={1.4}
           >
             Healthy You
           </Text>
           <Text
-            font="./fonts/Satoshi-Black.otf"
-            color={"#ffb703"}
-            position={[-3.4, 4, -1]}
-            fontSize={1.4}
-          >
-            Healthy You
-          </Text>
-          <Text
-            font="./fonts/Satoshi-Black.otf"
-            color={"#ffb703"}
-            position={[-3.4, 0, -1]}
-            fontSize={1.4}
-          >
-            Healthy You
-          </Text>
-          <Text
-            position={[-3.4, 2, -1]}
-            fontSize={1.4}
-            font="./fonts/Satoshi-Black.otf"
-            color={"#ffb703"}
-          >
-            Healthy You
-          </Text>{" "}
-          <Text
-            position={[-3.4, -2, -1]}
+            position={[-3.8, 2, -1]}
             fontSize={1.4}
             font="./fonts/Satoshi-Black.otf"
             color={"#ffb703"}
           >
             Healthy You
           </Text>
-          <Float speed={1}>
+          <Text
+            font="./fonts/Satoshi-Black.otf"
+            color={"#ffb703"}
+            position={[-3.8, 0, -1]}
+            fontSize={1.4}
+          >
+            Healthy You
+          </Text>
+          <Text
+            position={[-3.8, -2, -1]}
+            fontSize={1.4}
+            font="./fonts/Satoshi-Black.otf"
+            color={"#ffb703"}
+          >
+            Healthy You
+          </Text>
+          <Text
+            font="./fonts/Satoshi-Black.otf"
+            color={"#ffb703"}
+            position={[-3.8, -4, -1]}
+            fontSize={1.4}
+          >
+            Healthy You
+          </Text>
+          <Float speed={1} floatingRange={[-0.25, 0.25]} rotationIntensity={4}>
             <Mesh
               scale={0.3}
               geometry={(nodes.banana002 as THREE.Mesh).geometry}

@@ -2,6 +2,7 @@ import React from "react";
 import { auth } from "./auth";
 import { SignInButton } from "./components/SignInOut/SignInButton";
 import { SignOutButton } from "./components/SignInOut/SignOutButton";
+import Link from "next/link";
 
 export default async function Home() {
   let session = await auth();
@@ -10,6 +11,9 @@ export default async function Home() {
       Hello {session ? session.user?.name : "Guest"}
       <SignInButton />
       <SignOutButton />
+      <Link href="/register" prefetch={true}>
+        Register
+      </Link>
     </main>
   );
 }
