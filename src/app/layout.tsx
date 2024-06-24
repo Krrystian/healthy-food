@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import localFont from "next/font/local";
+import { injectSpeedInsights } from "@vercel/speed-insights";
 import "./globals.css";
 
 const font = localFont({
@@ -38,6 +39,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  injectSpeedInsights();
   return (
     <html lang="en">
       <body className={font.className}>{children}</body>
