@@ -1,67 +1,63 @@
 import React from "react";
 import Link from "next/link";
 import { cn } from "@/app/lib/cn";
+import { AnimatePresence, motion } from "framer-motion";
 interface NavLinkProps {
   className?: string;
-  classNameBorder?: string;
-  classNameBorderLeft?: string;
-  classNameBorderRight?: string;
-  classNameBorderTop?: string;
-  classNameBorderBottom?: string;
   label: string;
   href: string;
   prefetch?: boolean;
+  Content?: React.ElementType;
 }
 const NavLink: React.FC<NavLinkProps> = ({
   className,
-  classNameBorder,
-  classNameBorderBottom,
-  classNameBorderLeft,
-  classNameBorderRight,
-  classNameBorderTop,
   label,
   href,
   prefetch = true,
+  Content,
 }) => {
+  const [open, setOpen] = React.useState(false);
+  const show = Content && open;
+
   return (
-    <Link
-      href={href}
-      prefetch={prefetch}
-      className={cn(
-        "relative p-4 duration-300 w-full h-full transition-all text-xl group",
-        className
-      )}
+    <div
+      className="relative h-fit w-fit"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
     >
-      <div
+      <Link
+        href={href}
+        prefetch={prefetch}
         className={cn(
-          "absolute w-full h-0 border-l-2 rounded-md border-[#023047] top-0 left-0 group-hover:h-full duration-300",
-          classNameBorder,
-          classNameBorderLeft
+          "px-4 py-2 duration-300 w-full h-full transition-all text-xl relative flex group",
+          className
         )}
-      ></div>
-      <div
-        className={cn(
-          "absolute w-full h-0 border-r-2 rounded-md border-[#023047] top-0 left-0 group-hover:h-full duration-300",
-          classNameBorder,
-          classNameBorderRight
+      >
+        {label}
+        <div
+          className={cn(
+            "absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC]",
+            open && "w-full"
+          )}
+        />
+      </Link>
+      <AnimatePresence>
+        {show && (
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 15 }}
+            style={{ translateX: "-50%" }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="absolute left-1/2 top-16 bg-white text-black"
+          >
+            <div className="absolute -top-6 left-0 right-0 h-6 bg-transparent" />
+            <div className="absolute left-1/2 top-0 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-white" />
+            <Content />
+          </motion.div>
         )}
-      ></div>
-      <div
-        className={cn(
-          "absolute w-0 h-full border-b-2 rounded-md border-[#023047] top-0 left-0 group-hover:w-full duration-300",
-          classNameBorder,
-          classNameBorderBottom
-        )}
-      ></div>
-      <div
-        className={cn(
-          "absolute w-0 h-full border-t-2 rounded-md border-[#023047] top-0 left-0 group-hover:w-full duration-300",
-          classNameBorder,
-          classNameBorderTop
-        )}
-      ></div>
-      {label}
-    </Link>
+      </AnimatePresence>
+    </div>
   );
 };
 
