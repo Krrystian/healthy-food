@@ -18,7 +18,7 @@ const Background = dynamic(
 );
 
 export default function Page() {
-  const [loading, setLoading] = React.useState<boolean>(true);
+  const [loading, setLoading] = React.useState<boolean>(false);
   const [processing, setProcessing] = React.useState<boolean>(false);
   const [match, setMatch] = React.useState<string>("");
   const {
@@ -57,7 +57,6 @@ export default function Page() {
       setProcessing(false);
     }
   };
-
   const handleLoad = () => {
     setLoading(false);
   };
@@ -116,10 +115,12 @@ export default function Page() {
               <div className="flex w-full justify-center">
                 <Button
                   label="Register"
-                  labelSecondary="And change your life!"
+                  labelSecondary="Change your life!"
                   type="submit"
-                  className="w-full"
+                  className="w-full border-2 border-black"
                   disabled={processing}
+                  classNameLabel="bg-[#FFB703]/90"
+                  classNameLabelSecondary=""
                 />
               </div>
             </form>
