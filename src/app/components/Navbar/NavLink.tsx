@@ -29,7 +29,7 @@ const NavLink: React.FC<NavLinkProps> = ({
         href={href}
         prefetch={prefetch}
         className={cn(
-          "px-4 py-2 duration-300 w-full h-full transition-all text-xl relative flex group",
+          "px-4 py-2 duration-300 w-full h-full transition-all text-xl relative flex group font-medium",
           className
         )}
       >
