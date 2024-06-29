@@ -1,23 +1,39 @@
+"use client";
 import React from "react";
 import Link from "next/link";
 import { cn } from "@/app/lib/cn";
 import { AnimatePresence, motion } from "framer-motion";
+import { usePathname, useRouter } from "next/navigation";
+import { animatePageOut } from "@/app/lib/pageTransition";
+
 interface NavLinkProps {
   className?: string;
   label: string;
   href: string;
   prefetch?: boolean;
   Content?: React.ElementType;
+  underline?: boolean;
 }
+
 const NavLink: React.FC<NavLinkProps> = ({
   className,
   label,
   href,
   prefetch = true,
   Content,
+  underline = true,
 }) => {
   const [open, setOpen] = React.useState(false);
   const show = Content && open;
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (pathname !== href) {
+      animatePageOut(href, router);
+    }
+  };
 
   return (
     <div
@@ -28,18 +44,21 @@ const NavLink: React.FC<NavLinkProps> = ({
       <Link
         href={href}
         prefetch={prefetch}
+        onClick={handleClick}
         className={cn(
           "px-4 py-2 duration-300 w-full h-full transition-all text-xl relative flex group font-medium",
           className
         )}
       >
         {label}
-        <div
-          className={cn(
-            "absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC]",
-            open && "w-full"
-          )}
-        />
+        {underline && (
+          <div
+            className={cn(
+              "absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC]",
+              open && "w-full"
+            )}
+          />
+        )}
       </Link>
       <AnimatePresence>
         {show && (
