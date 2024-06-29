@@ -11,6 +11,7 @@ import {
   KalkulatoryContent,
   PrzepisyContent,
 } from "./NavLinkBody";
+import { SignInButton } from "../SignInOut/SignInButton";
 
 const Navbar = () => {
   const [scrollProgress, setScrollProgress] = React.useState(0);
@@ -78,13 +79,16 @@ const Navbar = () => {
             <NavLink label="Produkty" href="/" prefetch={true} />
           </div>
           <div className="flex flex-row gap-8">
-            <NavLink
+            {/* <NavLink
               href="/login"
               label="Login"
               prefetch={true}
               underline={false}
               className="p-3 border-2 border-[#023047] rounded-md hover:bg-[#FB8500]/90 duration-300 transition-all text-xl font-medium"
-            />
+            /> */}
+            <SignInButton className="p-3 border-2 border-[#023047] rounded-md hover:bg-[#FB8500]/90 duration-300 transition-all text-xl font-medium">
+              Login
+            </SignInButton>
           </div>
         </div>
       </motion.div>
