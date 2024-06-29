@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useForm, SubmitHandler, FieldValues, Field } from "react-hook-form";
+import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import dynamic from "next/dynamic";
 import Input from "../components/LoginRegister/Input";
@@ -9,6 +9,8 @@ import Button from "../components/LoginRegister/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../lib/zod";
 import GoogleButton from "../components/LoginRegister/GoogleButton";
+import { redirect } from "next/dist/server/api-utils";
+import { useRouter } from "next/navigation";
 
 const Background = dynamic(
   () => import("../components/LoginRegister/Background"),
@@ -31,10 +33,11 @@ export default function Page() {
       password: "",
     },
   });
+
   const handleLoad = () => {
     setLoading(false);
   };
-
+  const router = useRouter();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setDisabled(true);
     const result = await signIn("credentials", {
@@ -42,12 +45,13 @@ export default function Page() {
       email: data.email,
       password: data.password,
     });
-
+    setDisabled(false);
     setLoading(false);
-
     if (result?.error) {
-      setDisabled(false);
-      console.error(result.error);
+      console.log(result.error);
+    } else {
+      console.log("Sign in successful:", result);
+      router.push("/");
     }
   };
 
@@ -82,7 +86,7 @@ export default function Page() {
                 register={register}
                 name="password"
                 disabled={disabled}
-                autoComplete="current-password"
+                autoComplete="password"
                 error={errors.password?.message as string}
               />
               <div className="flex w-full justify-center">

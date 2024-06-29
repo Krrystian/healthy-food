@@ -28,10 +28,10 @@ export default function Page() {
   } = useForm<FieldValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirm_password: "",
+      nameReg: "",
+      emailReg: "",
+      passwordReg: "",
+      confirm_passwordReg: "",
     },
   });
   const router = useRouter();
@@ -39,12 +39,16 @@ export default function Page() {
     try {
       if (processing) return;
       setProcessing(true);
-      if (data.password !== data.confirm_password) {
+      if (data.passwordReg !== data.confirm_passwordReg) {
         setMatch("Passwords do not match.");
         setProcessing(false);
         return null;
       }
-      const response = await axios.post("/api/auth/register", data);
+      const response = await axios.post("/api/auth/register", {
+        name: data.nameReg,
+        email: data.emailReg,
+        password: data.passwordReg,
+      });
       if (response.status === 201) {
         router.push("/login");
       }
@@ -74,13 +78,13 @@ export default function Page() {
             </div>
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="flex flex-col w-[60%] gap-8"
+              className="flex flex-col w-[60%] gap-10"
             >
               <Input
                 placeholder="Name"
                 type="text"
                 register={register}
-                name="name"
+                name="nameReg"
                 autoComplete="name"
                 disabled={processing}
                 error={errors.name?.message as string}
@@ -89,7 +93,7 @@ export default function Page() {
                 placeholder="Email"
                 type="email"
                 register={register}
-                name="email"
+                name="emailReg"
                 autoComplete="email"
                 disabled={processing}
                 error={errors.email?.message as string}
@@ -98,7 +102,7 @@ export default function Page() {
                 placeholder="Password"
                 type="password"
                 register={register}
-                name="password"
+                name="passwordReg"
                 autoComplete="new-password"
                 disabled={processing}
                 error={errors.password?.message as string}
@@ -107,7 +111,7 @@ export default function Page() {
                 placeholder="Confirm password"
                 type="password"
                 register={register}
-                name="confirm_password"
+                name="confirm_passwordReg"
                 autoComplete="new-password"
                 disabled={processing}
                 error={match}

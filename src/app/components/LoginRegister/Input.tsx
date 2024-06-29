@@ -29,6 +29,7 @@ const Input: React.FC<InputProps> = ({
 }) => {
   const [onFocus, setOnFocus] = React.useState(false);
   const [value, setValue] = React.useState("");
+
   return (
     <label className={cn("flex flex-col font-medium relative", labelClassName)}>
       {label}
@@ -38,13 +39,16 @@ const Input: React.FC<InputProps> = ({
             "bg-transparent w-full outline-none transition-colors duration-300 border-black py-1 text-xl",
             inputClassName
           )}
+          id={name}
           type={type}
           disabled={disabled}
-          {...register(name)}
+          {...register(name, {
+            required: true,
+            onChange: (e) => setValue(e.target.value),
+          })}
           autoComplete={autoComplete}
           onFocus={() => setOnFocus(true)}
           onBlur={() => setOnFocus(false)}
-          onChange={(e) => setValue(e.target.value)}
         />
         <div className={cn("absolute w-full h-1 bg-black")} />
         <div
@@ -55,16 +59,13 @@ const Input: React.FC<InputProps> = ({
         />
         <div
           className={cn(
-            "absolute top-[15%] text-xl duraiton-300 transition-all cursor-text",
-            onFocus || value.length > 0
-              ? " translate-y-[-100%] text-base"
-              : " translate-y-0"
+            "absolute top-[15%] text-xl duration-300 transition-all cursor-text",
+            onFocus || value ? "translate-y-[-100%] text-base" : "translate-y-0"
           )}
         >
           {placeholder}
         </div>
       </div>
-
       <div className="absolute text-red-700 font-medium bottom-0 translate-y-[100%] py-1">
         {error}
       </div>
