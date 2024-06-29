@@ -3,6 +3,7 @@
 import { cn } from "@/app/lib/cn";
 import { animatePageOut } from "@/app/lib/pageTransition";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
@@ -13,19 +14,23 @@ export function SignInButton({
   children: React.ReactNode;
   className?: string;
 }) {
-  const router = useRouter();
   const pathname = usePathname();
   return (
-    <button
-      onClick={() => {
+    <Link
+      href="#"
+      prefetch={true}
+      onClick={(e: any) => {
+        e.preventDefault();
         if (pathname !== "/login*") {
           animatePageOut();
-          signIn();
+          setTimeout(() => {
+            signIn();
+          }, 1000);
         }
       }}
       className={cn(className)}
     >
       {children}
-    </button>
+    </Link>
   );
 }

@@ -65,7 +65,7 @@ export default function Page() {
             </div>
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="flex flex-col w-[60%] gap-8"
+              className="flex flex-col w-[60%] gap-10"
             >
               <Input
                 placeholder="Email"
