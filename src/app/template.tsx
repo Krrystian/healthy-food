@@ -2,15 +2,25 @@
 import React from "react";
 import { animatePageIn, animatePageInForce } from "./lib/pageTransition";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function Template({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isRootPage = pathname === "/";
 
   React.useEffect(() => {
-    if (isRootPage) animatePageInForce();
-    else animatePageIn();
-  }, []);
+    if (isRootPage) {
+      animatePageInForce();
+    } else {
+      animatePageIn();
+    }
+    if (isRootPage) {
+      animatePageInForce();
+    } else {
+      animatePageIn();
+    }
+  }, [pathname, isRootPage]);
+
   return (
     <div>
       <div

@@ -5,7 +5,6 @@ import { Canvas } from "@react-three/fiber";
 import {
   Environment,
   Float,
-  PerspectiveCamera,
   useGLTF,
   MeshTransmissionMaterial,
   Text,

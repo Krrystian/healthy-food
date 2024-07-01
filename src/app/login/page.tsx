@@ -20,7 +20,7 @@ const Background = dynamic(
 );
 
 export default function Page() {
-  const [loading, setLoading] = React.useState<boolean>(false);
+  const [loading, setLoading] = React.useState<boolean>(true);
   const [disabled, setDisabled] = React.useState<boolean>(false);
   const {
     register,

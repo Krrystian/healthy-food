@@ -28,7 +28,7 @@ export const animatePageInForce = () => {
 
   if (bannerOne && bannerTwo && bannerThree && bannerFour) {
     gsap.set([bannerFour, bannerThree, bannerTwo, bannerOne], {
-      yPercent: 0,
+      yPercent: 100,
     })
     gsap.to([bannerFour, bannerThree, bannerTwo, bannerOne], {
       yPercent: 100,
