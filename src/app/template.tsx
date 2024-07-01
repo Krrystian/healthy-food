@@ -1,10 +1,15 @@
 "use client";
 import React from "react";
-import { animatePageIn } from "./lib/pageTransition";
+import { animatePageIn, animatePageInForce } from "./lib/pageTransition";
+import { usePathname } from "next/navigation";
 
 export default function Template({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const isRootPage = pathname === "/";
+
   React.useEffect(() => {
-    animatePageIn();
+    if (isRootPage) animatePageInForce();
+    else animatePageIn();
   }, []);
   return (
     <div>

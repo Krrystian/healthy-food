@@ -15,7 +15,24 @@ export const animatePageIn = () => {
     }).to([bannerFour, bannerThree, bannerTwo, bannerOne], {
       yPercent: 100,
       stagger: 0.5,
-      duration:1.5
+      duration:1.5,
+
+    })
+  }
+}
+export const animatePageInForce = () => {
+  const bannerOne = document.getElementById("banner-1")
+  const bannerTwo = document.getElementById("banner-2")
+  const bannerThree = document.getElementById("banner-3")
+  const bannerFour = document.getElementById("banner-4")
+
+  if (bannerOne && bannerTwo && bannerThree && bannerFour) {
+    gsap.set([bannerFour, bannerThree, bannerTwo, bannerOne], {
+      yPercent: 0,
+    })
+    gsap.to([bannerFour, bannerThree, bannerTwo, bannerOne], {
+      yPercent: 100,
+      duration: 0,
     })
   }
 }

@@ -1,10 +1,8 @@
 "use client";
-import Link from "next/link";
 import React from "react";
 import { motion } from "framer-motion";
 import { cn } from "../../lib/cn";
 import NavLink from "./NavLink";
-import Image from "next/image";
 import {
   BlogContent,
   DietaContent,
@@ -79,13 +77,6 @@ const Navbar = () => {
             <NavLink label="Produkty" href="/" prefetch={true} />
           </div>
           <div className="flex flex-row gap-8">
-            {/* <NavLink
-              href="/login"
-              label="Login"
-              prefetch={true}
-              underline={false}
-              className="p-3 border-2 border-[#023047] rounded-md hover:bg-[#FB8500]/90 duration-300 transition-all text-xl font-medium"
-            /> */}
             <SignInButton className="p-3 border-2 border-[#023047] rounded-md hover:bg-[#FB8500]/90 duration-300 transition-all text-xl font-medium">
               Login
             </SignInButton>
