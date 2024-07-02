@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 export default function Template({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const previousPathname = useRef<string | null>(null);
-
   useEffect(() => {
     if (
       previousPathname.current !== null &&
