@@ -11,6 +11,8 @@ import { loginSchema } from "../lib/zod";
 import GoogleButton from "../components/LoginRegister/GoogleButton";
 import { redirect } from "next/dist/server/api-utils";
 import { useRouter } from "next/navigation";
+import LoadingScreen from "../components/Test/LoadingScreen";
+import { animatePageOut } from "../lib/pageTransition";
 
 const Background = dynamic(
   () => import("../components/LoginRegister/Background"),
@@ -57,7 +59,7 @@ export default function Page() {
 
   return (
     <div className="relative h-screen bg-[#023047]">
-      {loading && <div className="bg-[#023047]">Loading...</div>}
+      {/* <LoadingScreen loading={loading} /> */}
       <Background loading={handleLoad} />
       {!loading && (
         <div className="absolute top-0 h-screen right-0 flex items-center z-20 w-[40vw]">
@@ -105,7 +107,19 @@ export default function Page() {
               <h1 className="text-2xl font-black">OR</h1>
               <div className="h-1 rounded-xl w-full bg-black" />
             </div>
-            <GoogleButton />
+            <div className="flex flex-col w-full  items-center gap-4">
+              <GoogleButton />
+              <Button
+                label="Don't have an account?"
+                type="button"
+                onClick={() => {
+                  animatePageOut("/register", router);
+                }}
+                className="w-[60%] border-2 border-black"
+                classNameLabel="bg-red-600"
+                labelSecondary="Register now!"
+              />
+            </div>
           </div>
         </div>
       )}

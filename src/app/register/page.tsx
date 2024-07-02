@@ -9,6 +9,7 @@ import React from "react";
 import Input from "../components/LoginRegister/Input";
 import Button from "../components/LoginRegister/Button";
 import GoogleButton from "../components/LoginRegister/GoogleButton";
+import { animatePageOut } from "../lib/pageTransition";
 
 const Background = dynamic(
   () => import("../components/LoginRegister/Background"),
@@ -18,7 +19,7 @@ const Background = dynamic(
 );
 
 export default function Page() {
-  const [loading, setLoading] = React.useState<boolean>(false);
+  const [loading, setLoading] = React.useState<boolean>(true);
   const [processing, setProcessing] = React.useState<boolean>(false);
   const [match, setMatch] = React.useState<string>("");
   const {
@@ -66,12 +67,11 @@ export default function Page() {
   };
   return (
     <div className="relative h-screen bg-[#023047]">
-      {loading && <div className="bg-[#023047]">Loading...</div>}
       <Background loading={handleLoad} />
       {!loading && (
         <div className="absolute top-0 h-screen right-0 flex items-center z-20 w-[40vw]">
-          <div className="px-16 w-full bg-[#FFB703]/90 rounded-l-3xl h-[80vh] flex flex-col items-center justify-center shadow-xl">
-            <div className="w-full flex gap-4 items-center py-8">
+          <div className="px-16 w-full bg-[#FFB703]/90 rounded-l-3xl h-[90vh] flex flex-col items-center justify-center shadow-xl">
+            <div className="w-full flex gap-4 items-center pb-8">
               <div className="h-1 rounded-xl w-full bg-black" />
               <h1 className="text-5xl font-black">WELCOME</h1>
               <div className="h-1 rounded-xl w-full bg-black" />
@@ -133,7 +133,19 @@ export default function Page() {
               <h1 className="text-2xl font-black">OR</h1>
               <div className="h-1 rounded-xl w-full bg-black" />
             </div>
-            <GoogleButton />
+            <div className="flex flex-col items-center gap-4 w-full">
+              <GoogleButton />
+              <Button
+                label="Have an account?"
+                type="button"
+                onClick={() => {
+                  animatePageOut("/login", router);
+                }}
+                className="w-[60%] border-2 border-black"
+                classNameLabel="bg-red-600"
+                labelSecondary="Login now!"
+              />
+            </div>
           </div>
         </div>
       )}
