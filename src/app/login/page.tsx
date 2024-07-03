@@ -9,9 +9,7 @@ import Button from "../components/LoginRegister/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../lib/zod";
 import GoogleButton from "../components/LoginRegister/GoogleButton";
-import { redirect } from "next/dist/server/api-utils";
 import { useRouter } from "next/navigation";
-import LoadingScreen from "../components/Test/LoadingScreen";
 import { animatePageOut } from "../lib/pageTransition";
 
 const Background = dynamic(
@@ -52,7 +50,6 @@ export default function Page() {
     if (result?.error) {
       console.log(result.error);
     } else {
-      console.log("Sign in successful:", result);
       router.push("/");
     }
   };

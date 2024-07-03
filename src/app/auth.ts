@@ -33,10 +33,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           if (!user) {
             throw new Error("User not found.");
           }
-          const isValid = await bcrypt.compare(password, user.password || "")
+          const isValid = await bcrypt.compare(password, user.password!)
           if (!isValid) {
             throw new Error("Invalid password.");
           }
+          console.log("User found and password is valid.", user)
           return user
         }
         catch (error) {
@@ -48,5 +49,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   pages: {
     signIn: "/login",
+  },
+  callbacks: {
+    async session({ session, token, user }) {
+      session.user = user || token?.user || session?.user;
+      return session;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.user = user;
+      }
+      return token;
+    },
+  },
+  session: {
+    strategy: "jwt",
   },
 })
