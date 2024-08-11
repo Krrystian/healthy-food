@@ -56,7 +56,6 @@ export default function Page() {
 
   return (
     <div className="relative h-screen bg-[#023047]">
-      {/* <LoadingScreen loading={loading} /> */}
       <Background loading={handleLoad} />
       {!loading && (
         <div className="absolute top-0 h-screen right-0 flex items-center z-20 w-[40vw]">
