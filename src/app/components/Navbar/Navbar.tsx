@@ -44,7 +44,7 @@ const Navbar = () => {
       <motion.div
         className={cn(
           "h-full duration-300 transition-all px-2 bg-[#FFB703] relative",
-          scrollProgress > 30 ? "w-[40vw] rounded-b-xl" : "w-[100vw] px-4"
+          scrollProgress > 30 ? "w-[50vw] rounded-b-xl" : "w-[100vw] px-4"
         )}
       >
         <div className="flex flex-row justify-between items-center h-full">
