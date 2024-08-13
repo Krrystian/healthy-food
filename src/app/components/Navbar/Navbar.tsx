@@ -10,6 +10,7 @@ import {
   PrzepisyContent,
 } from "./NavLinkBody";
 import { SignInButton } from "../SignInOut/SignInButton";
+import Image from "next/image";
 
 const Navbar = () => {
   const [scrollProgress, setScrollProgress] = React.useState(0);
@@ -48,7 +49,7 @@ const Navbar = () => {
         )}
       >
         <div className="flex flex-row justify-between items-center h-full">
-          <p>Logo</p>
+          <Image src="/logo.png" width={70} height={50} alt="logo" />
           <div className="flex flex-row items-center justify-center gap-1">
             <NavLink
               label="Kalkulatory"
