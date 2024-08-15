@@ -36,7 +36,7 @@ const Navbar = () => {
   return (
     <nav
       className={cn(
-        "fixed w-full h-20 flex justify-center duration-300 transition-all text-[#023047] bg-transparent",
+        "fixed w-full z-50 h-20 flex justify-center duration-300 transition-all text-[#023047] bg-transparent",
         scrollProgress > 100 && scrollDirection === "down"
           ? "translate-y-[-100%]"
           : "translate-y-0"
@@ -49,7 +49,7 @@ const Navbar = () => {
         )}
       >
         <div className="flex flex-row justify-between items-center h-full">
-          <Image src="/logo.png" width={70} height={50} alt="logo" />
+          <Image src="/logo.png" width={60} height={50} alt="logo" />
           <div className="flex flex-row items-center justify-center gap-1">
             <NavLink
               label="Kalkulatory"

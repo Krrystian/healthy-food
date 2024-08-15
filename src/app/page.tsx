@@ -9,10 +9,15 @@ export default function Home() {
   useSmoothScroll();
 
   return (
-    <main className="flex flex-col gap-4 min-h-[200vh] justify-center items-center">
+    <main className="flex flex-col gap-4 min-h-[100vh] justify-center items-center">
       <BackgroundPattern />
-      <p className="text-7xl text-white">TEST TEST TEST TEST</p>
-      <p className="text-7xl text-white">{session.data?.user?.id}</p>
+      <div className="w-screen h-[200vh] flex justify-center items-center relative">
+        <div className="sticky border-black border">
+          <video autoPlay muted loop>
+            <source src="/background-video.webm" type="video/webm" />
+          </video>
+        </div>
+      </div>
     </main>
   );
 }
