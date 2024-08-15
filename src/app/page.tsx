@@ -14,9 +14,8 @@ export default function Home() {
 
   const container = useRef<ScrollableElement>(null);
   const stickyMask = useRef<HTMLDivElement>(null);
-  const firstLine = useRef<HTMLDivElement>(null);
-  const secondLine = useRef<HTMLDivElement>(null);
   const clipContainer = useRef<HTMLDivElement>(null);
+  const alertContainer = useRef<HTMLDivElement>(null);
 
   const [mobile, setMobile] = React.useState(false);
   const initialMaskSize = mobile ? 1 : 0.5;
@@ -55,7 +54,7 @@ export default function Home() {
     }
   };
   const isInView = useInView(clipContainer, { once: false });
-
+  const alertInView = useInView(alertContainer, { once: false });
   const getScrollProgress = () => {
     if (container.current) {
       const scrollProgress =
@@ -79,10 +78,9 @@ export default function Home() {
           ref={stickyMask}
           className="sticky top-0 h-screen flex items-center justify-center overflow-hidden mask-video w-full"
         >
-          <div className="absolute z-10 flex flex-col justify-center items-center">
+          <div className="z-10 flex flex-col justify-center items-center fixed">
             <div className="overflow-hidden absolute translate-x-[100%]">
               <motion.p
-                ref={firstLine}
                 className="text-7xl font-bold py-2 flex gap-8 items-end text-green-800"
                 initial={{ translateY: "100%" }}
                 animate={{ translateY: isInView ? "0%" : "100%" }}
@@ -93,7 +91,6 @@ export default function Home() {
             </div>
             <div className="overflow-hidden w-full">
               <motion.p
-                ref={firstLine}
                 className="text-7xl font-bold py-2 flex gap-8 items-end"
                 initial={{ translateY: "100%" }}
                 animate={{ translateY: isInView ? "0%" : "100%" }}
@@ -101,7 +98,7 @@ export default function Home() {
               >
                 Ponad
                 <span className="text-[164px] font-black text-[#BF3619] w-[350px]">
-                  <Counter value={55} />%
+                  {isInView ? <Counter value={55} /> : 55}%
                 </span>
                 <span className="self-start">ma nadwagę</span>
               </motion.p>
@@ -109,7 +106,6 @@ export default function Home() {
 
             <div className="overflow-hidden">
               <motion.p
-                ref={firstLine}
                 className="text-7xl font-bold py-2 flex gap-8"
                 initial={{ translateY: "100%" }}
                 animate={{ translateY: isInView ? "0%" : "100%" }}
@@ -117,10 +113,19 @@ export default function Home() {
               >
                 Około
                 <span className="text-[164px] font-black text-[#BF3619] w-[370px]">
-                  0
-                  <Counter value={9} />%
+                  0{isInView ? <Counter value={9} /> : 9}%
                 </span>
                 <span className="self-end">ma cukrzycę</span>
+              </motion.p>
+            </div>
+            <div className="overflow-hidden absolute w-[80vw] -rotate-12 text-center py-12 text-white rounded-xl">
+              <motion.p
+                className="text-7xl font-bold  bg-[#02A051] overflow-hidden py-12 rounded-xl"
+                initial={{ translateY: "200%" }}
+                animate={{ translateY: alertInView ? "0%" : "200%" }}
+                transition={{ duration: 0.5 }}
+              >
+                Nie zwiększaj statystyk.
               </motion.p>
             </div>
           </div>
@@ -136,10 +141,17 @@ export default function Home() {
         </div>
         <div
           ref={clipContainer}
-          className="h-screen w-full absolute bottom-0 -z-10"
-        ></div>
+          className="h-[100vh] w-full absolute bottom-0 -z-10"
+        >
+          <div
+            ref={alertContainer}
+            className="absolute bottom-0 w-full h-[30vh]"
+          />
+        </div>
       </div>
-      <div className="h-screen"></div>
+      <div className="h-screen">
+        <h2 className="text-[#FFB701] text-7xl font-bold">Oferujemy</h2>
+      </div>
     </main>
   );
 }
