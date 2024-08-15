@@ -10,3 +10,18 @@ input:-webkit-autofill:focus {
 html {
   background-color:#023047;
 }
+
+.mask-video {
+  -webkit-mask-image: url('/zdrowie-mask.svg');
+  mask-image: url('/zdrowie-mask.svg');
+  -webkit-mask-position: 49.75% 47.185%;
+  mask-position: 49.75% 47.185%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
