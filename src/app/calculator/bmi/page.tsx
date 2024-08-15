@@ -43,7 +43,7 @@ export default function Page() {
           <div className='flex flex-row justify-between'>
             <div className='w-1/2 pr-4'>
               <h3 className='text-4xl text-[#009E52] mb-4'>Czym jest BMI?</h3>
-              <p>Wskaźnik BMI to skrót od angielskiego "Body Mass Index". Informuje nas o stosunku naszej masy ciała (wagi) do wzrostu.
+              <p>Wskaźnik BMI to skrót od angielskiego &quot;Body Mass Index&quot;. Informuje nas o stosunku naszej masy ciała (wagi) do wzrostu.
                 Kalkulator BMI to zatem przydatne narzędzie, dzięki któremu możemy dowiedzieć się czy nasza waga jest odpowiednia względem naszego wzrostu.
                 Wzór na wyznaczenie BMI stworzył Adolphe Quetelet już w 1832 roku i wygląda następująco:<span className="block text-center font-bold my-2">BMI = waga / (wzrost_w_metrach &sup2;)</span>
                 Normy BMI:<br/>
