@@ -3,19 +3,22 @@ import React, { useEffect, useRef } from "react";
 import useSmoothScroll from "./hooks/useSmoothScroll";
 import { useSession } from "next-auth/react";
 import BackgroundPattern from "./components/BackgroundPattern";
-import { useInView, motion, useScroll, useTransform } from "framer-motion";
+import { useInView, motion } from "framer-motion";
 import Counter from "./components/MainPage/Counter";
-
-type ScrollableElement = HTMLDivElement | null;
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SplitType from "split-type";
 
 export default function Home() {
   const session = useSession();
   useSmoothScroll();
 
-  const container = useRef<ScrollableElement>(null);
+  // First and second section
+  const container = useRef<HTMLDivElement>(null);
   const stickyMask = useRef<HTMLDivElement>(null);
   const clipContainer = useRef<HTMLDivElement>(null);
   const alertContainer = useRef<HTMLDivElement>(null);
+  const aboutUsRef = useRef<HTMLDivElement>(null);
 
   const [mobile, setMobile] = React.useState(false);
   const initialMaskSize = mobile ? 1 : 0.5;
@@ -25,7 +28,7 @@ export default function Home() {
 
   const updateMaskSize = () => {
     const isMobile = window.innerWidth <= 768;
-    setMobile(isMobile ? true : false);
+    setMobile(isMobile);
   };
 
   useEffect(() => {
@@ -53,8 +56,10 @@ export default function Home() {
       requestAnimationFrame(animate);
     }
   };
+
   const isInView = useInView(clipContainer, { once: false });
   const alertInView = useInView(alertContainer, { once: false });
+
   const getScrollProgress = () => {
     if (container.current) {
       const scrollProgress =
@@ -67,10 +72,38 @@ export default function Home() {
     return 0;
   };
 
+  // About us section
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    if (aboutUsRef.current) {
+      const splitText = new SplitType(aboutUsRef.current, {
+        types: "chars,words",
+      });
+
+      gsap.from(splitText.chars, {
+        opacity: 0,
+        y: 50,
+        duration: 1,
+        stagger: 0.05,
+        scrollTrigger: {
+          trigger: aboutUsRef.current,
+          start: "top 75%",
+          end: "bottom 25%",
+          scrub: true,
+        },
+      });
+    }
+
+    return () => {
+      // Clean up GSAP animations or ScrollTriggers if necessary
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []);
+
   return (
     <main className="min-h-screen w-screen">
       <BackgroundPattern />
-      <div
+      <section
         ref={container}
         className="w-screen h-[300vh] flex justify-center relative"
       >
@@ -148,10 +181,18 @@ export default function Home() {
             className="absolute bottom-0 w-full h-[30vh]"
           />
         </div>
-      </div>
-      <div className="h-screen">
-        <h2 className="text-[#FFB701] text-7xl font-bold">Oferujemy</h2>
-      </div>
+      </section>
+      <section className="h-screen flex items-center justify-center">
+        <p
+          className="text-[#FFB701] text-7xl font-bold text-justify w-[90%] about-us"
+          ref={aboutUsRef}
+        >
+          Jesteśmy zespołem pasjonatów zdrowego stylu życia, który stawia sobie
+          za cel dostarczanie kompleksowych usług wspierających Twoje zdrowie i
+          dobre samopoczucie. Nasza misja to inspirowanie i edukowanie, aby
+          każdy mógł cieszyć się pełnią życia w zdrowiu.
+        </p>
+      </section>
     </main>
   );
 }
