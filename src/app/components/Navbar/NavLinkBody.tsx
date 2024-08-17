@@ -50,24 +50,26 @@ export const BlogContent = () => {
 export const KalkulatoryContent = () => {
   return (
     <div className="w-52 bg-white flex flex-col p-6">
-      <div className="text-center">
+      {/* <div className="text-center">
         <Link href="#" className="relative group font-semibold py-1">
           Czym są kalkulatory?
           <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
         </Link>
-      </div>
+      </div> */}
       <div className="text-center">
-        <h4 className="font-semibold py-2 cursor-default">Oblicz wskaźniki</h4>
+        <h3 className="font-semibold py-1 cursor-default">
+          Dostępne wskaźniki
+        </h3>
         <div className="flex flex-col text-sm">
-          <Link href="#" className="relative group py-1">
+          <Link href="/calculator/bmi" className="relative group py-1">
             BMI
             <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
           </Link>
-          <Link href="#" className="relative group py-1">
+          <Link href="/calculator/bmr" className="relative group py-1">
             BMR
             <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
           </Link>
-          <Link href="#" className="relative group py-1">
+          <Link href="/calculator/tdee" className="relative group py-1">
             TDEE
             <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
           </Link>
