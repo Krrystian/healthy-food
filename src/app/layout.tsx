@@ -44,7 +44,7 @@ export default async function RootLayout({
   const session = await auth();
   return (
     <html lang="en">
-      <body className={font.className}>
+      <body className={font.className + " "+"overflow-x-hidden"}>
         <AuthProvider session={session}>
           <Navbar />
           {children}

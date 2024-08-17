@@ -66,7 +66,7 @@ export default function Page() {
     setLoading(false);
   };
   return (
-    <div className="relative h-screen bg-[#023047]">
+    <div className="relative z-[60] h-screen bg-[#023047]">
       <Background loading={handleLoad} />
       {!loading && (
         <div className="absolute top-0 h-screen right-0 flex items-center z-20 w-[40vw]">
