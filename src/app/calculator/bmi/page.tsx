@@ -37,7 +37,7 @@ export default function Page() {
     <div className='flex w-screen h-screen justify-center items-center pt-[80px] px-10'>
       <div>
         <div className='text-center'>
-          <h2 className='text-7xl text-[#26BDDC] mb-3'>BMI CALCULATOR</h2>
+          <h2 className='text-7xl text-[#26BDDC] mb-3'>KALKULATOR BMI</h2>
         </div>
         <div className='bg-gray-100 p-5 rounded-lg shadow-lg'>
           <div className='flex flex-row justify-between'>

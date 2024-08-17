@@ -24,15 +24,21 @@ export default function Page() {
 
   
   return (
-    <div className='flex w-screen h-screen justify-center items-center pt-[80px] px-10'>
+    <div className='flex w-screen h-screen justify-center items-center px-10'>
       <div>
         <div className='text-center'>
-          <h2 className='text-7xl text-[#26BDDC] mb-3'>BMR CALCULATOR</h2>
+          <h2 className='text-7xl text-[#26BDDC] mb-3'>KALKULATOR BMR</h2>
         </div>
         <div className='bg-gray-100 p-5 rounded-lg shadow-lg'>
           <div className='flex flex-row justify-between'>
             <div className='w-1/2 pr-4'>
-            <h3 className='text-4xl text-[#009E52] mb-4'>Czym jest BMR?</h3>
+              <h3 className='text-4xl text-[#009E52] mb-4'>Czym jest BMR?</h3>
+              <p>BMR to skrót od angielskiego &quot;Basal Metabolic Rate&quot;. Korzystając z kalkulatora BMR możemy dowiedzieć się jakie jest nasze dzienne zapotrzebowanie kaloryczne. 
+                Wiedza ta jest niezwykle przydatna, jeśli chcemy odżywiać się zdrowo względem naszego wzrostu, wagi, wieku oraz płci. 
+                Wzorów do wyznaczenia BMR jest kilka, jednakże w naszych obliczeniach korzystamy z równań Harrisa-Benedicta, opracowanych w 1984 roku, które wyglądają następująco:
+                <br/>Dla mężczyzn:<span className="block text-center font-bold my-2">BMR = 88.362 + (13.397 * waga) + (4.799 * wzrost_w_cm) - (5.677 * wiek)</span>
+                Dla kobiet:<span className="block text-center font-bold my-2">BMR = 447.593 + (9.247 * waga) + (3.098 * wzrost_w_cm) - (4.330 * wiek)</span>
+              </p>
             </div>
 
             <div className='w-1/2 pl-4'>
