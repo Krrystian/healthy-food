@@ -1,9 +1,23 @@
 import Image from "next/legacy/image";
 import React from "react";
+import { cn } from "../lib/cn";
 
-const BackgroundPattern = () => {
+interface BackgroundPatternProps {
+  color?: string;
+  className?: string;
+}
+const BackgroundPattern: React.FC<BackgroundPatternProps> = ({
+  color = "#023047",
+  className,
+}) => {
   return (
-    <div className="bg-[#023047] -z-10 h-screen w-screen top-0 fixed">
+    <div
+      className={cn(
+        `-z-10 h-screen w-screen top-0 fixed`,
+        `bg-[${color}]`,
+        className
+      )}
+    >
       <div className="relative bg-pattern w-full h-full mix-blend-color-burn opacity-10">
         <Image
           src="/pattern.svg"

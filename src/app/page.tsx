@@ -81,21 +81,19 @@ export default function Home() {
       });
 
       gsap.from(splitText.chars, {
-        opacity: 0,
-        y: 50,
-        duration: 1,
-        stagger: 0.05,
+        opacity: 0.2,
+        stagger: 0.1,
         scrollTrigger: {
           trigger: aboutUsRef.current,
-          start: "top 75%",
-          end: "bottom 25%",
+          start: "top 90%",
+          end: "bottom 60%",
           scrub: true,
+          markers: false,
         },
       });
     }
 
     return () => {
-      // Clean up GSAP animations or ScrollTriggers if necessary
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
@@ -182,16 +180,35 @@ export default function Home() {
           />
         </div>
       </section>
-      <section className="h-screen flex items-center justify-center">
-        <p
-          className="text-[#FFB701] text-7xl font-bold text-justify w-[90%] about-us"
-          ref={aboutUsRef}
-        >
-          Jesteśmy zespołem pasjonatów zdrowego stylu życia, który stawia sobie
-          za cel dostarczanie kompleksowych usług wspierających Twoje zdrowie i
-          dobre samopoczucie. Nasza misja to inspirowanie i edukowanie, aby
-          każdy mógł cieszyć się pełnią życia w zdrowiu.
-        </p>
+      <section className="min-h-screen flex flex-col items-center">
+        <div className="h-screen flex items-center justify-center">
+          <p
+            className="text-[#FFB701] text-7xl font-bold text-justify w-[90%] about-us leading-tight"
+            ref={aboutUsRef}
+          >
+            Jesteśmy zespołem pasjonatów zdrowego stylu życia, który stawia
+            sobie za cel dostarczanie kompleksowych usług wspierających Twoje
+            zdrowie i dobre samopoczucie. Nasza misja to inspirowanie i
+            edukowanie, aby każdy mógł cieszyć się pełnią życia w zdrowiu.
+          </p>
+        </div>
+        <div className="min-h-screen flex justify-center relative">
+          <div className="flex flex-col w-screen items-center *:w-[90%]">
+            {/* Dwa obok siebie przewijane w prawo potem zejscie na 3 w dol i w lewo na 4 taka mozaika */}
+            <div className="h-screen text-7xl text-center bg-[#28B9DA]/30 rounded-t-xl">
+              Blog
+            </div>
+            <div className="h-screen text-7xl text-center bg-[#DD242C]/30">
+              Dieta
+            </div>
+            <div className="h-screen text-7xl text-center bg-[#28B9DA]/30">
+              Przepisy
+            </div>
+            <div className="h-screen text-7xl text-center bg-[#02A051]/30 rounded-b-xl">
+              Produkty
+            </div>
+          </div>
+        </div>
       </section>
     </main>
   );
