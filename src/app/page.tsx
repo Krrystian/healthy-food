@@ -193,7 +193,7 @@ export default function Home() {
           </p>
         </div>
         <div className="min-h-screen flex justify-center relative">
-          <div className="flex flex-col w-screen items-center *:w-[90%]">
+          <div className="flex flex-col items-center *:w-[90%]">
             {/* Dwa obok siebie przewijane w prawo potem zejscie na 3 w dol i w lewo na 4 taka mozaika */}
             <div className="h-screen text-7xl text-center bg-[#28B9DA]/30 rounded-t-xl">
               Blog

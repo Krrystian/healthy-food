@@ -24,7 +24,7 @@ export default function Page() {
 
   
   return (
-    <div className='flex w-screen h-screen justify-center items-center px-10'>
+    <div className='flex w-screen justify-center px-10 mt-24'>
       <div>
         <div className='text-center'>
           <h2 className='text-7xl text-[#26BDDC] mb-3'>KALKULATOR BMR</h2>
