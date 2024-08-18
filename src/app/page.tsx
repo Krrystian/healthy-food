@@ -49,7 +49,7 @@ export default function Home() {
     handleAnimationFrame();
   }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const tl = gsap
       .timeline({
         scrollTrigger: {
