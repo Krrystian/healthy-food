@@ -24,7 +24,7 @@ const TextAppear: React.FC<TextAppearProps> = ({
   React.useEffect(() => {
     if (ref.current) {
       const splitText = new SplitType(ref.current, { types: "chars,words" });
-      const context = gsap.from(splitText.chars, {
+      gsap.from(splitText.chars, {
         y: 50,
         opacity: 0,
         stagger: options.stagger,
@@ -36,9 +36,6 @@ const TextAppear: React.FC<TextAppearProps> = ({
           markers: false,
         },
       });
-      return () => {
-        context.revert();
-      };
     }
   }, []);
   return (
