@@ -49,24 +49,24 @@ export default function Home() {
     handleAnimationFrame();
   }, []);
 
-  useEffect(() => {
-    const tl = gsap
-      .timeline({
-        scrollTrigger: {
-          trigger: parallaxFirstLine.current,
-          start: "top 70%",
-          end: "bottom 20%",
-          scrub: true,
-          markers: false,
-        },
-      })
-      .to(parallaxFirstLine.current, { y: -200 }, 0)
-      .to(parallaxSecondLine.current, { y: 150 }, 0);
+  // useEffect(() => {
+  //   const tl = gsap
+  //     .timeline({
+  //       scrollTrigger: {
+  //         trigger: parallaxFirstLine.current,
+  //         start: "top 70%",
+  //         end: "bottom 20%",
+  //         scrub: true,
+  //         markers: false,
+  //       },
+  //     })
+  //     .to(parallaxFirstLine.current, { y: -200 }, 0)
+  //     .to(parallaxSecondLine.current, { y: 150 }, 0);
 
-    return () => {
-      tl.reverse();
-    };
-  }, []);
+  //   return () => {
+  //     tl.reverse();
+  //   };
+  // }, []);
 
   const animate = () => {
     if (stickyMask.current && container.current) {
