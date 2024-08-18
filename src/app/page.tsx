@@ -1,13 +1,13 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useRef } from "react";
 import useSmoothScroll from "./hooks/useSmoothScroll";
 import { useSession } from "next-auth/react";
 import BackgroundPattern from "./components/BackgroundPattern";
-import { useInView, motion } from "framer-motion";
 import Counter from "./components/MainPage/Counter";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
+import TextAppear from "./components/MainPage/TextAppear";
 
 export default function Home() {
   const session = useSession();
@@ -16,8 +16,9 @@ export default function Home() {
   // First and second section
   const container = useRef<HTMLDivElement>(null);
   const stickyMask = useRef<HTMLDivElement>(null);
-  const clipContainer = useRef<HTMLDivElement>(null);
-  const alertContainer = useRef<HTMLDivElement>(null);
+  const parallaxContainer = useRef<HTMLDivElement>(null);
+  const parallaxFirstLine = useRef<HTMLDivElement>(null);
+  const parallaxSecondLine = useRef<HTMLDivElement>(null);
   const aboutUsRef = useRef<HTMLDivElement>(null);
 
   const [mobile, setMobile] = React.useState(false);
@@ -48,6 +49,25 @@ export default function Home() {
     handleAnimationFrame();
   }, []);
 
+  useLayoutEffect(() => {
+    const tl = gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: parallaxFirstLine.current,
+          start: "top 70%",
+          end: "bottom 20%",
+          scrub: true,
+          markers: false,
+        },
+      })
+      .to(parallaxFirstLine.current, { y: -200 }, 0)
+      .to(parallaxSecondLine.current, { y: 150 }, 0);
+
+    return () => {
+      tl.reverse();
+    };
+  }, []);
+
   const animate = () => {
     if (stickyMask.current && container.current) {
       const maskSizeProgress = targetMaskSize * getScrollProgress();
@@ -56,9 +76,6 @@ export default function Home() {
       requestAnimationFrame(animate);
     }
   };
-
-  const isInView = useInView(clipContainer, { once: false });
-  const alertInView = useInView(alertContainer, { once: false });
 
   const getScrollProgress = () => {
     if (container.current) {
@@ -109,58 +126,6 @@ export default function Home() {
           ref={stickyMask}
           className="sticky top-0 h-screen flex items-center justify-center overflow-hidden mask-video w-full"
         >
-          <div className="z-10 flex flex-col justify-center items-center fixed">
-            <div className="overflow-hidden absolute translate-x-[100%]">
-              <motion.p
-                className="text-7xl font-bold py-2 flex gap-8 items-end text-green-800"
-                initial={{ translateY: "100%" }}
-                animate={{ translateY: isInView ? "0%" : "100%" }}
-                transition={{ duration: 0.5 }}
-              >
-                w Polsce
-              </motion.p>
-            </div>
-            <div className="overflow-hidden w-full">
-              <motion.p
-                className="text-7xl font-bold py-2 flex gap-8 items-end"
-                initial={{ translateY: "100%" }}
-                animate={{ translateY: isInView ? "0%" : "100%" }}
-                transition={{ duration: 0.5 }}
-              >
-                Ponad
-                <span className="text-[164px] font-black text-[#BF3619] w-[350px]">
-                  {isInView ? <Counter value={55} /> : 55}%
-                </span>
-                <span className="self-start">ma nadwagę</span>
-              </motion.p>
-            </div>
-
-            <div className="overflow-hidden">
-              <motion.p
-                className="text-7xl font-bold py-2 flex gap-8"
-                initial={{ translateY: "100%" }}
-                animate={{ translateY: isInView ? "0%" : "100%" }}
-                transition={{ duration: 0.5 }}
-              >
-                Około
-                <span className="text-[164px] font-black text-[#BF3619] w-[370px]">
-                  0{isInView ? <Counter value={9} /> : 9}%
-                </span>
-                <span className="self-end">ma cukrzycę</span>
-              </motion.p>
-            </div>
-            <div className="overflow-hidden absolute w-[80vw] -rotate-12 text-center py-12 text-white rounded-xl">
-              <motion.p
-                className="text-7xl font-bold  bg-[#02A051] overflow-hidden py-12 rounded-xl"
-                initial={{ translateY: "200%" }}
-                animate={{ translateY: alertInView ? "0%" : "200%" }}
-                transition={{ duration: 0.5 }}
-              >
-                Nie zwiększaj statystyk.
-              </motion.p>
-            </div>
-          </div>
-
           <video
             className="h-full w-full object-cover absolute"
             autoPlay
@@ -170,14 +135,21 @@ export default function Home() {
             <source src="/background-video.webm" type="video/webm" />
           </video>
         </div>
-        <div
-          ref={clipContainer}
-          className="h-[100vh] w-full absolute bottom-0 -z-10"
-        >
-          <div
-            ref={alertContainer}
-            className="absolute bottom-0 w-full h-[30vh]"
-          />
+        <div className="h-[300vh] w-full absolute bottom-0 flex justify-center items-end">
+          <div ref={parallaxContainer} className="h-[125vh] top-1/2">
+            <div ref={parallaxFirstLine}>
+              <TextAppear className="text-7xl text-center font-semibold">
+                Ponad <span className="text-[#DC2528] text-9xl">55%</span>{" "}
+                cierpi na <span className="text-[#DC2528] ">nadwagę</span>
+              </TextAppear>
+            </div>
+            <div ref={parallaxSecondLine}>
+              <TextAppear className="text-7xl text-center font-semibold">
+                Natomiast <span className="text-[#DC2528] text-9xl">09%</span>{" "}
+                choruje na <span className="text-[#DC2528] ">cukrzycę</span>
+              </TextAppear>
+            </div>
+          </div>
         </div>
       </section>
       <section className="min-h-screen flex flex-col items-center">
