@@ -49,24 +49,24 @@ export default function Home() {
     handleAnimationFrame();
   }, []);
 
-  // useEffect(() => {
-  //   const tl = gsap
-  //     .timeline({
-  //       scrollTrigger: {
-  //         trigger: parallaxFirstLine.current,
-  //         start: "top 70%",
-  //         end: "bottom 20%",
-  //         scrub: true,
-  //         markers: false,
-  //       },
-  //     })
-  //     .to(parallaxFirstLine.current, { y: -200 }, 0)
-  //     .to(parallaxSecondLine.current, { y: 150 }, 0);
+  useEffect(() => {
+    const tl = gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: parallaxFirstLine.current,
+          start: "top 70%",
+          end: "bottom 20%",
+          scrub: true,
+          markers: false,
+        },
+      })
+      .to(parallaxFirstLine.current, { y: -200 }, 0)
+      .to(parallaxSecondLine.current, { y: 150 }, 0);
 
-  //   return () => {
-  //     tl.reverse();
-  //   };
-  // }, []);
+    return () => {
+      tl.reverse();
+    };
+  }, []);
 
   const animate = () => {
     if (stickyMask.current && container.current) {
@@ -96,7 +96,6 @@ export default function Home() {
       const splitText = new SplitType(aboutUsRef.current, {
         types: "chars,words",
       });
-
       gsap.from(splitText.chars, {
         opacity: 0.2,
         stagger: 0.1,
@@ -137,19 +136,18 @@ export default function Home() {
         </div>
         <div className="h-[300vh] w-full absolute bottom-0 flex justify-center items-end">
           <div ref={parallaxContainer} className="h-[125vh] top-1/2">
-            {/* <div ref={parallaxFirstLine}> */}
-            <TextAppear className="text-7xl text-center font-semibold">
-              {/* Ponad <span className="text-[#DC2528] text-9xl">55%</span> cierpi
-              na <span className="text-[#DC2528] ">nadwagę</span> */}
-              TEST TETS TEST TEST
-            </TextAppear>
-            {/* </div> */}
-            {/* <div ref={parallaxSecondLine}>
+            <div ref={parallaxFirstLine}>
+              <TextAppear className="text-7xl text-center font-semibold">
+                Ponad <span className="text-[#DC2528] text-9xl">55%</span>{" "}
+                cierpi na <span className="text-[#DC2528] ">nadwagę</span>
+              </TextAppear>
+            </div>
+            <div ref={parallaxSecondLine}>
               <TextAppear className="text-7xl text-center font-semibold">
                 Natomiast <span className="text-[#DC2528] text-9xl">09%</span>{" "}
                 choruje na <span className="text-[#DC2528] ">cukrzycę</span>
               </TextAppear>
-            </div> */}
+            </div>
           </div>
         </div>
       </section>
