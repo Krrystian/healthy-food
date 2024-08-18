@@ -137,12 +137,13 @@ export default function Home() {
         </div>
         <div className="h-[300vh] w-full absolute bottom-0 flex justify-center items-end">
           <div ref={parallaxContainer} className="h-[125vh] top-1/2">
-            <div ref={parallaxFirstLine}>
-              <TextAppear className="text-7xl text-center font-semibold">
-                Ponad <span className="text-[#DC2528] text-9xl">55%</span>{" "}
-                cierpi na <span className="text-[#DC2528] ">nadwagę</span>
-              </TextAppear>
-            </div>
+            {/* <div ref={parallaxFirstLine}> */}
+            <TextAppear className="text-7xl text-center font-semibold">
+              {/* Ponad <span className="text-[#DC2528] text-9xl">55%</span> cierpi
+              na <span className="text-[#DC2528] ">nadwagę</span> */}
+              TEST TETS TEST TEST
+            </TextAppear>
+            {/* </div> */}
             {/* <div ref={parallaxSecondLine}>
               <TextAppear className="text-7xl text-center font-semibold">
                 Natomiast <span className="text-[#DC2528] text-9xl">09%</span>{" "}
