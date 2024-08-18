@@ -143,12 +143,12 @@ export default function Home() {
                 cierpi na <span className="text-[#DC2528] ">nadwagę</span>
               </TextAppear>
             </div>
-            <div ref={parallaxSecondLine}>
+            {/* <div ref={parallaxSecondLine}>
               <TextAppear className="text-7xl text-center font-semibold">
                 Natomiast <span className="text-[#DC2528] text-9xl">09%</span>{" "}
                 choruje na <span className="text-[#DC2528] ">cukrzycę</span>
               </TextAppear>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
