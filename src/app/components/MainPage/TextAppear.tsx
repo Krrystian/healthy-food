@@ -35,7 +35,7 @@ const TextAppear: React.FC<TextAppearProps> = ({
           start: options.start,
           end: options.end,
           scrub: true,
-          markers: true,
+          markers: false,
         },
       });
     }

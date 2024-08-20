@@ -3,11 +3,11 @@ import React, { useEffect, useLayoutEffect, useRef } from "react";
 import useSmoothScroll from "./hooks/useSmoothScroll";
 import { useSession } from "next-auth/react";
 import BackgroundPattern from "./components/BackgroundPattern";
-import Counter from "./components/MainPage/Counter";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
 import TextAppear from "./components/MainPage/TextAppear";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 
 export default function Home() {
   const session = useSession();
@@ -101,8 +101,8 @@ export default function Home() {
         stagger: 0.1,
         scrollTrigger: {
           trigger: aboutUsRef.current,
-          start: "top 90%",
-          end: "bottom 60%",
+          start: "top 80%",
+          end: "bottom 30%",
           scrub: true,
           markers: false,
         },
@@ -114,6 +114,22 @@ export default function Home() {
     };
   }, []);
 
+  // Horizontal sections
+  const horizontalSections = useRef<HTMLDivElement>(null);
+  const imagesRef = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = React.useState(0);
+  const { scrollYProgress } = useScroll({
+    target: horizontalSections,
+    offset: ["start start", "end end"],
+  });
+  const xV = useTransform(scrollYProgress, [0, 1], [0, width * -0.8]);
+  const x = useSpring(xV, { stiffness: 400, damping: 90 });
+  console.log(width);
+  useLayoutEffect(() => {
+    if (imagesRef.current) {
+      setWidth(imagesRef.current.offsetWidth);
+    }
+  }, []);
   return (
     <main className="min-h-screen w-screen">
       <BackgroundPattern />
@@ -151,10 +167,10 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="min-h-screen flex flex-col items-center">
-        <div className="h-screen flex items-center justify-center">
+      <section className="min-h-screen flex flex-col ">
+        <div className="h-screen w-screen flex items-center justify-center">
           <p
-            className="text-[#FFB701] text-7xl font-bold text-justify w-[90%] about-us leading-tight"
+            className="text-[#FFB701] w-[80%] text-5xl font-bold text-justify about-us leading-tight"
             ref={aboutUsRef}
           >
             Jesteśmy zespołem pasjonatów zdrowego stylu życia, który stawia
@@ -163,21 +179,28 @@ export default function Home() {
             edukowanie, aby każdy mógł cieszyć się pełnią życia w zdrowiu.
           </p>
         </div>
-        <div className="min-h-screen flex justify-center relative">
-          <div className="flex flex-col items-center *:w-[90%]">
-            <div className="h-screen text-7xl text-center bg-[#28B9DA]/30 rounded-t-xl">
+        <div
+          className="min-h-[300vh] relative overflow-x-clip flex"
+          ref={horizontalSections}
+        >
+          <motion.div
+            className="sticky h-screen items-center top-0 flex"
+            ref={imagesRef}
+            style={{ x }}
+          >
+            <div className="w-screen h-screen flex-shrink-0 bg-green-500">
               Blog
             </div>
-            <div className="h-screen text-7xl text-center bg-[#DD242C]/30">
+            <div className="w-screen h-screen flex-shrink-0 bg-green-600">
               Dieta
             </div>
-            <div className="h-screen text-7xl text-center bg-[#28B9DA]/30">
+            <div className="w-screen h-screen flex-shrink-0 bg-green-700">
               Przepisy
             </div>
-            <div className="h-screen text-7xl text-center bg-[#02A051]/30 rounded-b-xl">
+            <div className="w-screen h-screen flex-shrink-0 bg-green-800">
               Produkty
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
     </main>
