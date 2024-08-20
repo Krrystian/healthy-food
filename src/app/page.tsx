@@ -8,6 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
 import TextAppear from "./components/MainPage/TextAppear";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import Image from "next/legacy/image";
 
 export default function Home() {
   const session = useSession();
@@ -124,12 +125,14 @@ export default function Home() {
   });
   const xV = useTransform(scrollYProgress, [0, 1], [0, width * -0.8]);
   const x = useSpring(xV, { stiffness: 400, damping: 90 });
-  console.log(width);
   useLayoutEffect(() => {
     if (imagesRef.current) {
       setWidth(imagesRef.current.offsetWidth);
     }
   }, []);
+
+  //image
+
   return (
     <main className="min-h-screen w-screen">
       <BackgroundPattern />
@@ -170,7 +173,7 @@ export default function Home() {
       <section className="min-h-screen flex flex-col ">
         <div className="h-screen w-screen flex items-center justify-center">
           <p
-            className="text-[#FFB701] w-[80%] text-5xl font-bold text-justify about-us leading-tight"
+            className="text-[#FFB701] w-[80%] text-6xl font-bold text-justify about-us leading-tight"
             ref={aboutUsRef}
           >
             Jesteśmy zespołem pasjonatów zdrowego stylu życia, który stawia
@@ -188,18 +191,30 @@ export default function Home() {
             ref={imagesRef}
             style={{ x }}
           >
-            <div className="w-screen h-screen flex-shrink-0 bg-green-500">
-              Blog
+            <div className="w-screen h-screen flex flex-shrink-0 p-20 gap-12">
+              <div className="w-1/3 h-full relative flex-shrink-0">
+                <Image
+                  src="/sections/forum.jpg"
+                  alt="orange-item"
+                  layout="fill"
+                  className="object-cover"
+                />
+              </div>
+              <div className="h-full flex flex-col gap-12 flex-grow">
+                <h2 className="text-8xl font-black text-[#FFB706]">
+                  Kalkulatory
+                </h2>
+                <p className="text-white text-2xl border flex-grow">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi
+                  voluptate suscipit alias ratione quas atque illum quo porro.
+                  Quaerat architecto obcaecati harum vel repudiandae natus animi
+                  deleniti maiores sint voluptate!
+                </p>
+              </div>
             </div>
-            <div className="w-screen h-screen flex-shrink-0 bg-green-600">
-              Dieta
-            </div>
-            <div className="w-screen h-screen flex-shrink-0 bg-green-700">
-              Przepisy
-            </div>
-            <div className="w-screen h-screen flex-shrink-0 bg-green-800">
-              Produkty
-            </div>
+            <div className="w-screen h-screen flex-shrink-0 ">Dieta</div>
+            <div className="w-screen h-screen flex-shrink-0 ">Przepisy</div>
+            <div className="w-screen h-screen flex-shrink-0 ">Produkty</div>
           </motion.div>
         </div>
       </section>
