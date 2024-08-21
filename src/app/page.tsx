@@ -109,7 +109,6 @@ export default function Home() {
         },
       });
     }
-
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
@@ -123,7 +122,7 @@ export default function Home() {
     target: horizontalSections,
     offset: ["start start", "end end"],
   });
-  const xV = useTransform(scrollYProgress, [0, 1], [0, width * -0.8]);
+  const xV = useTransform(scrollYProgress, [0, 1], [0, width * -0.75]);
   const x = useSpring(xV, { stiffness: 400, damping: 90 });
   useLayoutEffect(() => {
     if (imagesRef.current) {
@@ -131,8 +130,52 @@ export default function Home() {
     }
   }, []);
 
-  //image
+  const blogContainerRef = useRef<HTMLDivElement>(null);
+  const dietaContainerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: blogContainerRef.current,
+        start: "top 60%",
+        end: "bottom 20%",
+        scrub: false,
+        markers: false,
+      },
+    });
+    const tlDieta = gsap.timeline({
+      scrollTrigger: {
+        trigger: dietaContainerRef.current,
+        start: "top 60%",
+        end: "bottom 20%",
+        scrub: false,
+        markers: false,
+      },
+    });
+    tl.to(".blogBg", { width: "100%", duration: 0.7 }, 0)
+      .to(".blogTitleBg", { width: "100%", duration: 0.7 }, 0.3)
+      .to(".blogDescBg", { width: "100%", duration: 0.7 }, 0.6)
+      .set(".blogImage", { opacity: 1 })
+      .set(".blogTitle", { opacity: 1 })
+      .set(".blogDesc", { opacity: 1 })
+      .to(".blogBg", { width: "0%", duration: 0.7 }, 1)
+      .to(".blogTitleBg", { width: "0%", duration: 0.7 }, 1.2)
+      .to(".blogDescBg", { width: "0%", duration: 0.7 }, 1.4);
 
+    tlDieta
+      .to(".dietaBg", { width: "100%", duration: 0.7 }, 0)
+      .to(".dietaTitleBg", { width: "100%", duration: 0.7 }, 0.3)
+      .to(".dietaDescBg", { width: "100%", duration: 0.7 }, 0.6)
+      .set(".dietaImage", { opacity: 1 })
+      .set(".dietaTitle", { opacity: 1 })
+      .set(".dietaDesc", { opacity: 1 })
+      .to(".dietaBg", { width: "0%", duration: 0.7 }, 1)
+      .to(".dietaTitleBg", { width: "0%", duration: 0.7 }, 1.2)
+      .to(".dietaDescBg", { width: "0%", duration: 0.7 }, 1.4);
+    return () => {
+      tl.reverse();
+      tlDieta.reverse();
+    };
+  }, []);
   return (
     <main className="min-h-screen w-screen">
       <BackgroundPattern />
@@ -170,7 +213,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="min-h-screen flex flex-col ">
+      <section className="min-h-screen min-w-screen flex flex-col">
         <div className="h-screen w-screen flex items-center justify-center">
           <p
             className="text-[#FFB701] w-[80%] text-6xl font-bold text-justify about-us leading-tight"
@@ -182,39 +225,79 @@ export default function Home() {
             edukowanie, aby każdy mógł cieszyć się pełnią życia w zdrowiu.
           </p>
         </div>
-        <div
-          className="min-h-[300vh] relative overflow-x-clip flex"
-          ref={horizontalSections}
-        >
+        <div className="h-[400vh] relative flex" ref={horizontalSections}>
           <motion.div
             className="sticky h-screen items-center top-0 flex"
             ref={imagesRef}
             style={{ x }}
           >
-            <div className="w-screen h-screen flex flex-shrink-0 p-20 gap-12">
-              <div className="w-1/3 h-full relative flex-shrink-0">
-                <Image
-                  src="/sections/forum.jpg"
-                  alt="orange-item"
-                  layout="fill"
-                  className="object-cover"
-                />
+            <div
+              className="w-screen h-screen flex flex-shrink-0 p-20 gap-12"
+              ref={blogContainerRef}
+            >
+              <div className="w-2/4 h-full relative flex-shrink-0 overflow-hidden">
+                <div className="relative w-full opacity-0 h-full blogImage">
+                  <Image
+                    src="/sections/forum.jpg"
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                </div>
+                <div className="absolute top-0 h-full bg-[#019E52] blogBg z-10" />
               </div>
-              <div className="h-full flex flex-col gap-12 flex-grow">
-                <h2 className="text-8xl font-black text-[#FFB706]">
-                  Kalkulatory
-                </h2>
-                <p className="text-white text-2xl border flex-grow">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi
-                  voluptate suscipit alias ratione quas atque illum quo porro.
-                  Quaerat architecto obcaecati harum vel repudiandae natus animi
-                  deleniti maiores sint voluptate!
-                </p>
+
+              <div className="h-full flex flex-col gap-12">
+                <div className="relative">
+                  <h2 className="text-8xl font-black text-[#FFB706] blogTitle opacity-0">
+                    Blog
+                  </h2>
+                  <div className="bg-[#DC2528] absolute top-0 left-0 h-[115%] z-10 blogTitleBg" />
+                </div>
+                <div className="relative">
+                  <p className="text-white text-2xl flex-grow opacity-0 blogDesc">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Animi voluptate suscipit alias ratione quas atque illum quo
+                    porro. Quaerat architecto obcaecati harum vel repudiandae
+                    natus animi deleniti maiores sint voluptate!
+                  </p>
+                  <div className="bg-[#27BDDA] absolute top-0 left-0 h-full z-10 blogDescBg" />
+                </div>
+              </div>
+            </div>
+            <div
+              className="w-screen h-screen flex flex-shrink-0 p-20 gap-12"
+              ref={dietaContainerRef}
+            >
+              <div className="w-2/4 h-full relative flex-shrink-0 overflow-hidden">
+                <div className="relative w-full opacity-0 h-full dietaImage">
+                  <Image
+                    src="/sections/forum.jpg"
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                </div>
+                <div className="absolute top-0 h-full bg-[#019E52] dietaBg z-10" />
+              </div>
+              <div className="h-full flex flex-col gap-12">
+                <div className="relative">
+                  <h2 className="text-8xl font-black text-[#FFB706] dietaTitle opacity-0">
+                    Dieta
+                  </h2>
+                  <div className="bg-[#DC2528] absolute top-0 left-0 h-[115%] z-10 dietaTitleBg" />
+                </div>
+                <div className="relative">
+                  <p className="text-white text-2xl flex-grow opacity-0 dietaDesc">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Animi voluptate suscipit alias ratione quas atque illum quo
+                    porro. Quaerat architecto obcaecati harum vel repudiandae
+                    natus animi deleniti maiores sint voluptate!
+                  </p>
+                  <div className="bg-[#27BDDA] absolute top-0 left-0 h-full z-10 dietaDescBg" />
+                </div>
               </div>
             </div>
             <div className="w-screen h-screen flex-shrink-0 ">Dieta</div>
-            <div className="w-screen h-screen flex-shrink-0 ">Przepisy</div>
-            <div className="w-screen h-screen flex-shrink-0 ">Produkty</div>
+            <div className="w-screen h-screen flex-shrink-0 ">Kalkulatory</div>
           </motion.div>
         </div>
       </section>
