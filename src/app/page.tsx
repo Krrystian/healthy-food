@@ -133,6 +133,7 @@ export default function Home() {
   const blogContainerRef = useRef<HTMLDivElement>(null);
   const dietaContainerRef = useRef<HTMLDivElement>(null);
   const przepisyContainerRef = useRef<HTMLDivElement>(null);
+  const kalkulatoryContainerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -161,14 +162,23 @@ export default function Home() {
         markers: false,
       },
     });
+    const tlKalkulatory = gsap.timeline({
+      scrollTrigger: {
+        trigger: kalkulatoryContainerRef.current,
+        start: "top 60%",
+        end: "bottom 20%",
+        scrub: false,
+        markers: false,
+      },
+    });
     tl.to(".blogBg", { width: "100%", duration: 0.7 }, 0)
       .to(".blogTitleBg", { width: "100%", duration: 0.7 }, 0.3)
       .to(".blogDescBg", { width: "100%", duration: 0.7 }, 0.6)
       .set(".blogImage", { opacity: 1 }, 0.8)
       .set(".blogTitle", { opacity: 1 })
       .set(".blogDesc", { opacity: 1 })
-      .to(".blogBg", { width: "0%", duration: 0.7 }, 1.2)
-      .to(".blogTitleBg", { width: "0%", duration: 0.7 }, 1.4)
+      .to(".blogBg", { width: "0%", duration: 0.7 }, 1)
+      .to(".blogTitleBg", { width: "0%", duration: 0.6 }, 1.4)
       .to(".blogDescBg", { width: "0%", duration: 0.7 }, 1.2);
 
     tlDieta
@@ -180,7 +190,7 @@ export default function Home() {
       .set(".dietaDesc", { opacity: 1 })
       .to(".dietaBg", { width: "0%", duration: 0.7 }, 1)
       .to(".dietaTitleBg", { width: "0%", duration: 0.7 }, 1.2)
-      .to(".dietaDescBg", { width: "0%", duration: 0.7 }, 1.4);
+      .to(".dietaDescBg", { width: "0%", duration: 0.6 }, 1.4);
 
     tlPrzepisy
       .to(".przepisyBg", { width: "100%", duration: 0.7 }, 0)
@@ -191,10 +201,22 @@ export default function Home() {
       .set(".przepisyDesc", { opacity: 1 })
       .to(".przepisyBg", { width: "0%", duration: 0.7 }, 1)
       .to(".przepisyTitleBg", { width: "0%", duration: 0.7 }, 1.2)
-      .to(".przepisyDescBg", { width: "0%", duration: 0.7 }, 1.4);
+      .to(".przepisyDescBg", { width: "0%", duration: 0.6 }, 1.4);
+    tlKalkulatory
+      .to(".kalkulatoryBg", { width: "100%", duration: 0.7 }, 0)
+      .to(".kalkulatoryTitleBg", { width: "100%", duration: 0.7 }, 0.3)
+      .to(".kalkulatoryDescBg", { width: "100%", duration: 0.7 }, 0.6)
+      .set(".kalkulatoryImage", { opacity: 1 }, 0.8)
+      .set(".kalkulatoryTitle", { opacity: 1 })
+      .set(".kalkulatoryDesc", { opacity: 1 })
+      .to(".kalkulatoryBg", { width: "0%", duration: 0.7 }, 1)
+      .to(".kalkulatoryTitleBg", { width: "0%", duration: 0.7 }, 1.2)
+      .to(".kalkulatoryDescBg", { width: "0%", duration: 0.6 }, 1.4);
     return () => {
       tl.reverse();
       tlDieta.reverse();
+      tlPrzepisy.reverse();
+      tlKalkulatory.reverse();
     };
   }, []);
   return (
@@ -346,14 +368,45 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="w-screen h-screen flex-shrink-0">Kalkulatory</div>
+            <div>
+              <div className="w-screen h-screen flex flex-shrink-0 p-20 gap-12">
+                <div className="w-2/4 h-full relative flex-shrink-0 overflow-hidden">
+                  <div className="relative w-full opacity-0 h-full kalkulatoryImage">
+                    <Image
+                      src="/sections/forum.webp"
+                      layout="fill"
+                      objectFit="cover"
+                      priority
+                    />
+                  </div>
+                  <div className="absolute top-0 h-full bg-[#019E52] kalkulatoryBg z-10" />
+                </div>
+                <div className="h-full flex flex-col gap-12">
+                  <div className="relative">
+                    <h2 className="text-8xl font-black text-[#FFB706] kalkulatoryTitle opacity-0">
+                      Kalkulatory
+                    </h2>
+                    <div className="bg-[#DC2528] absolute top-0 left-0 h-[115%] z-10 kalkulatoryTitleBg" />
+                  </div>
+                  <div className="relative">
+                    <p className="text-white text-2xl flex-grow opacity-0 kalkulatoryDesc">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Animi voluptate suscipit alias ratione quas atque illum
+                      quo porro. Quaerat architecto obcaecati harum vel
+                      repudiandae natus animi deleniti maiores sint voluptate!
+                    </p>
+                    <div className="bg-[#27BDDA] absolute top-0 left-0 h-full z-10 kalkulatoryDescBg" />
+                  </div>
+                </div>
+              </div>
+            </div>
           </motion.div>
           {/* widmo do animacji */}
           <div className="absolute">
             <div className="w-screen h-screen" />
             <div ref={dietaContainerRef} className="w-screen h-screen" />
             <div ref={przepisyContainerRef} className="w-screen h-screen" />
-            <div />
+            <div ref={kalkulatoryContainerRef} className="w-screen h-screen" />
           </div>
         </div>
       </section>
