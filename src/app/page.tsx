@@ -268,7 +268,10 @@ export default function Home() {
             edukowanie, aby każdy mógł cieszyć się pełnią życia w zdrowiu.
           </p>
         </div>
-        <div className="h-[400vh] relative flex" ref={horizontalSections}>
+        <div
+          className="h-[400vh] relative overflow-x-clip flex"
+          ref={horizontalSections}
+        >
           <motion.div
             className="sticky h-screen items-center top-0 flex"
             ref={imagesRef}
