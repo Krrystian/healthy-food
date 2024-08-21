@@ -164,7 +164,7 @@ export default function Home() {
     tl.to(".blogBg", { width: "100%", duration: 0.7 }, 0)
       .to(".blogTitleBg", { width: "100%", duration: 0.7 }, 0.3)
       .to(".blogDescBg", { width: "100%", duration: 0.7 }, 0.6)
-      .set(".blogImage", { opacity: 1 })
+      .set(".blogImage", { opacity: 1 }, 0.8)
       .set(".blogTitle", { opacity: 1 })
       .set(".blogDesc", { opacity: 1 })
       .to(".blogBg", { width: "0%", duration: 0.7 }, 1.2)
@@ -172,14 +172,11 @@ export default function Home() {
       .to(".blogDescBg", { width: "0%", duration: 0.7 }, 1.2);
 
     tlDieta
-      .set(".dietaBg, .dietaTitleBg, .dietaDescBg", {
-        transformOrigin: "right",
-      })
       .to(".dietaBg", { width: "100%", duration: 0.7 }, 0)
       .to(".dietaTitleBg", { width: "100%", duration: 0.7 }, 0.3)
       .to(".dietaDescBg", { width: "100%", duration: 0.7 }, 0.6)
-      .set(".dietaImage", { opacity: 1 })
-      .set(".dietaTitle", { opacity: 1 })
+      .set(".dietaImage", { opacity: 1 }, 0.8)
+      .set(".dietaTitle", { opacity: 1 }, 0)
       .set(".dietaDesc", { opacity: 1 })
       .to(".dietaBg", { width: "0%", duration: 0.7 }, 1)
       .to(".dietaTitleBg", { width: "0%", duration: 0.7 }, 1.2)
@@ -189,7 +186,7 @@ export default function Home() {
       .to(".przepisyBg", { width: "100%", duration: 0.7 }, 0)
       .to(".przepisyTitleBg", { width: "100%", duration: 0.7 }, 0.3)
       .to(".przepisyDescBg", { width: "100%", duration: 0.7 }, 0.6)
-      .set(".przepisyImage", { opacity: 1 })
+      .set(".przepisyImage", { opacity: 1 }, 0.8)
       .set(".przepisyTitle", { opacity: 1 })
       .set(".przepisyDesc", { opacity: 1 })
       .to(".przepisyBg", { width: "0%", duration: 0.7 }, 1)
