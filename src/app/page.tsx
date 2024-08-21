@@ -132,6 +132,7 @@ export default function Home() {
 
   const blogContainerRef = useRef<HTMLDivElement>(null);
   const dietaContainerRef = useRef<HTMLDivElement>(null);
+  const przepisyContainerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -151,17 +152,29 @@ export default function Home() {
         markers: false,
       },
     });
+    const tlPrzepisy = gsap.timeline({
+      scrollTrigger: {
+        trigger: przepisyContainerRef.current,
+        start: "top 60%",
+        end: "bottom 20%",
+        scrub: false,
+        markers: false,
+      },
+    });
     tl.to(".blogBg", { width: "100%", duration: 0.7 }, 0)
       .to(".blogTitleBg", { width: "100%", duration: 0.7 }, 0.3)
       .to(".blogDescBg", { width: "100%", duration: 0.7 }, 0.6)
       .set(".blogImage", { opacity: 1 })
       .set(".blogTitle", { opacity: 1 })
       .set(".blogDesc", { opacity: 1 })
-      .to(".blogBg", { width: "0%", duration: 0.7 }, 1)
-      .to(".blogTitleBg", { width: "0%", duration: 0.7 }, 1.2)
-      .to(".blogDescBg", { width: "0%", duration: 0.7 }, 1.4);
+      .to(".blogBg", { width: "0%", duration: 0.7 }, 1.2)
+      .to(".blogTitleBg", { width: "0%", duration: 0.7 }, 1.4)
+      .to(".blogDescBg", { width: "0%", duration: 0.7 }, 1.2);
 
     tlDieta
+      .set(".dietaBg, .dietaTitleBg, .dietaDescBg", {
+        transformOrigin: "right",
+      })
       .to(".dietaBg", { width: "100%", duration: 0.7 }, 0)
       .to(".dietaTitleBg", { width: "100%", duration: 0.7 }, 0.3)
       .to(".dietaDescBg", { width: "100%", duration: 0.7 }, 0.6)
@@ -171,6 +184,17 @@ export default function Home() {
       .to(".dietaBg", { width: "0%", duration: 0.7 }, 1)
       .to(".dietaTitleBg", { width: "0%", duration: 0.7 }, 1.2)
       .to(".dietaDescBg", { width: "0%", duration: 0.7 }, 1.4);
+
+    tlPrzepisy
+      .to(".przepisyBg", { width: "100%", duration: 0.7 }, 0)
+      .to(".przepisyTitleBg", { width: "100%", duration: 0.7 }, 0.3)
+      .to(".przepisyDescBg", { width: "100%", duration: 0.7 }, 0.6)
+      .set(".przepisyImage", { opacity: 1 })
+      .set(".przepisyTitle", { opacity: 1 })
+      .set(".przepisyDesc", { opacity: 1 })
+      .to(".przepisyBg", { width: "0%", duration: 0.7 }, 1)
+      .to(".przepisyTitleBg", { width: "0%", duration: 0.7 }, 1.2)
+      .to(".przepisyDescBg", { width: "0%", duration: 0.7 }, 1.4);
     return () => {
       tl.reverse();
       tlDieta.reverse();
@@ -238,9 +262,10 @@ export default function Home() {
               <div className="w-2/4 h-full relative flex-shrink-0 overflow-hidden">
                 <div className="relative w-full opacity-0 h-full blogImage">
                   <Image
-                    src="/sections/forum.jpg"
+                    src="/sections/forum.webp"
                     layout="fill"
                     objectFit="cover"
+                    priority
                   />
                 </div>
                 <div className="absolute top-0 h-full bg-[#019E52] blogBg z-10" />
@@ -264,16 +289,14 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div
-              className="w-screen h-screen flex flex-shrink-0 p-20 gap-12"
-              ref={dietaContainerRef}
-            >
+            <div className="w-screen h-screen flex flex-shrink-0 p-20 gap-12">
               <div className="w-2/4 h-full relative flex-shrink-0 overflow-hidden">
                 <div className="relative w-full opacity-0 h-full dietaImage">
                   <Image
-                    src="/sections/forum.jpg"
+                    src="/sections/forum.webp"
                     layout="fill"
                     objectFit="cover"
+                    priority
                   />
                 </div>
                 <div className="absolute top-0 h-full bg-[#019E52] dietaBg z-10" />
@@ -296,9 +319,45 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="w-screen h-screen flex-shrink-0 ">Dieta</div>
-            <div className="w-screen h-screen flex-shrink-0 ">Kalkulatory</div>
+            <div className="w-screen h-screen flex flex-shrink-0 p-20 gap-12">
+              <div className="w-2/4 h-full relative flex-shrink-0 overflow-hidden">
+                <div className="relative w-full opacity-0 h-full przepisyImage">
+                  <Image
+                    src="/sections/forum.webp"
+                    layout="fill"
+                    objectFit="cover"
+                    priority
+                  />
+                </div>
+                <div className="absolute top-0 h-full bg-[#019E52] przepisyBg z-10" />
+              </div>
+              <div className="h-full flex flex-col gap-12">
+                <div className="relative">
+                  <h2 className="text-8xl font-black text-[#FFB706] przepisyTitle opacity-0">
+                    Przepisy
+                  </h2>
+                  <div className="bg-[#DC2528] absolute top-0 left-0 h-[115%] z-10 przepisyTitleBg" />
+                </div>
+                <div className="relative">
+                  <p className="text-white text-2xl flex-grow opacity-0 przepisyDesc">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Animi voluptate suscipit alias ratione quas atque illum quo
+                    porro. Quaerat architecto obcaecati harum vel repudiandae
+                    natus animi deleniti maiores sint voluptate!
+                  </p>
+                  <div className="bg-[#27BDDA] absolute top-0 left-0 h-full z-10 przepisyDescBg" />
+                </div>
+              </div>
+            </div>
+            <div className="w-screen h-screen flex-shrink-0">Kalkulatory</div>
           </motion.div>
+          {/* widmo do animacji */}
+          <div className="absolute">
+            <div className="w-screen h-screen" />
+            <div ref={dietaContainerRef} className="w-screen h-screen" />
+            <div ref={przepisyContainerRef} className="w-screen h-screen" />
+            <div />
+          </div>
         </div>
       </section>
     </main>
