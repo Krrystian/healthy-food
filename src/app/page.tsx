@@ -9,6 +9,7 @@ import SplitType from "split-type";
 import TextAppear from "./components/MainPage/TextAppear";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import Image from "next/legacy/image";
+import Footer from "./components/Footer";
 
 export default function Home() {
   const session = useSession();
@@ -220,7 +221,7 @@ export default function Home() {
     };
   }, []);
   return (
-    <main className="min-h-screen w-screen">
+    <main className="min-h-screen w-screen relative">
       <BackgroundPattern />
       <section
         ref={container}
@@ -256,7 +257,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="min-h-screen min-w-screen flex flex-col">
+      <section className="top-0 min-h-screen min-w-screen flex flex-col">
         <div className="h-screen w-screen flex items-center justify-center">
           <p
             className="text-[#FFB701] w-[80%] text-6xl font-bold text-justify about-us leading-tight"
@@ -269,7 +270,7 @@ export default function Home() {
           </p>
         </div>
         <div
-          className="h-[400vh] relative overflow-x-clip flex"
+          className="min-h-[400vh] relative overflow-x-clip flex"
           ref={horizontalSections}
         >
           <motion.div
@@ -372,7 +373,7 @@ export default function Home() {
               </div>
             </div>
             <div>
-              <div className="w-screen h-screen flex flex-shrink-0 p-20 gap-12">
+              <div className="w-screen h-screen flex flex-shrink-0 p-20 gap-12 sticky top-0">
                 <div className="w-2/4 h-full relative flex-shrink-0 overflow-hidden">
                   <div className="relative w-full opacity-0 h-full kalkulatoryImage">
                     <Image
@@ -384,7 +385,7 @@ export default function Home() {
                   </div>
                   <div className="absolute top-0 h-full bg-[#019E52] kalkulatoryBg z-10" />
                 </div>
-                <div className="h-full flex flex-col gap-12">
+                <div className="h-full flex flex-col gap-12 ">
                   <div className="relative">
                     <h2 className="text-8xl font-black text-[#FFB706] kalkulatoryTitle opacity-0">
                       Kalkulatory
@@ -405,7 +406,7 @@ export default function Home() {
             </div>
           </motion.div>
           {/* widmo do animacji */}
-          <div className="absolute">
+          <div className="absolute -z-10">
             <div className="w-screen h-screen" />
             <div ref={dietaContainerRef} className="w-screen h-screen" />
             <div ref={przepisyContainerRef} className="w-screen h-screen" />
@@ -413,6 +414,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <Footer />
     </main>
   );
 }
