@@ -19,8 +19,6 @@ export default function Home() {
   const container = useRef<HTMLDivElement>(null);
   const stickyMask = useRef<HTMLDivElement>(null);
   const parallaxContainer = useRef<HTMLDivElement>(null);
-  const parallaxFirstLine = useRef<HTMLDivElement>(null);
-  const parallaxSecondLine = useRef<HTMLDivElement>(null);
   const aboutUsRef = useRef<HTMLDivElement>(null);
 
   const [mobile, setMobile] = React.useState(false);
@@ -55,15 +53,14 @@ export default function Home() {
     const tl = gsap
       .timeline({
         scrollTrigger: {
-          trigger: parallaxFirstLine.current,
-          start: "top 70%",
-          end: "bottom 20%",
+          trigger: parallaxContainer.current,
+          start: "top 80%",
+          end: "bottom 30%",
           scrub: true,
           markers: false,
         },
       })
-      .to(parallaxFirstLine.current, { y: -200 }, 0)
-      .to(parallaxSecondLine.current, { y: 150 }, 0);
+      .to(".leftLine", { y: "30%", opacity: 1 }, 0);
 
     return () => {
       tl.reverse();
@@ -241,19 +238,48 @@ export default function Home() {
           </video>
         </div>
         <div className="h-[300vh] w-full absolute bottom-0 flex justify-center items-end">
-          <div ref={parallaxContainer} className="h-[125vh] top-1/2">
-            <div ref={parallaxFirstLine}>
-              <TextAppear className="text-7xl text-center font-semibold">
-                Ponad <span className="text-[#DC2528] text-9xl">55%</span>{" "}
-                cierpi na <span className="text-[#DC2528] ">nadwagę</span>
+          {/* <div
+            ref={parallaxContainer}
+            className="h-[100vh] top-1/2 flex w-[60%] justify-between"
+          > */}
+          <div
+            ref={parallaxContainer}
+            className="h-[125vh] w-[70%] top-1/2 flex justify-between"
+          >
+            <div>
+              <TextAppear className="leftLine text-6xl text-center font-semibold flex flex-col">
+                <span className="text-[#DC2528] text-[192px] leading-[1]">
+                  55%
+                </span>{" "}
+                <span>cierpi na</span>{" "}
+                <span className="text-[#DC2528] ">nadwagę</span>
               </TextAppear>
             </div>
-            <div ref={parallaxSecondLine}>
-              <TextAppear className="text-7xl text-center font-semibold">
-                Natomiast <span className="text-[#DC2528] text-9xl">09%</span>{" "}
-                choruje na <span className="text-[#DC2528] ">cukrzycę</span>
+            <div>
+              <TextAppear className="rightLine text-6xl text-center font-semibold flex flex-col">
+                <span className="text-[#DC2528] text-[192px] leading-[1]">
+                  09%
+                </span>{" "}
+                <span>choruje na</span>{" "}
+                <span className="text-[#DC2528] ">cukrzycę</span>
               </TextAppear>
             </div>
+            {/* <div className="flex flex-col items-center w-[35%] opacity-0 videoLeft">
+              <p className="text-[164px] leading-[1] text-[#DC2528] font-black videoLeftNum">
+                55%
+              </p>
+              <p className="text-6xl font-bold text-center videoLeftText">
+                Cierpi na nadwagę
+              </p>
+            </div>
+            <div className="flex flex-col items-center w-[35%] videoRight">
+              <p className="text-[164px] leading-[1] text-[#DC2528] font-black videoRightNum">
+                09%
+              </p>
+              <p className="text-6xl font-bold text-center videoRightText">
+                Choruje na cukrzycę
+              </p>
+            </div> */}
           </div>
         </div>
       </section>
