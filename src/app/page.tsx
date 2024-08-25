@@ -10,6 +10,8 @@ import TextAppear from "./components/MainPage/TextAppear";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import Image from "next/legacy/image";
 import Footer from "./components/Footer";
+import Button from "./components/MainPage/Button";
+import ImageHorizontal from "./components/MainPage/ImageHorizontal";
 
 export default function Home() {
   const session = useSession();
@@ -177,7 +179,8 @@ export default function Home() {
       .set(".blogDesc", { opacity: 1 })
       .to(".blogBg", { width: "0%", duration: 0.7 }, 1)
       .to(".blogTitleBg", { width: "0%", duration: 0.6 }, 1.4)
-      .to(".blogDescBg", { width: "0%", duration: 0.7 }, 1.2);
+      .to(".blogDescBg", { width: "0%", duration: 0.7 }, 1.2)
+      .to(".blogButton", { translateY: "0", duration: 0.7 }, 1.6);
 
     tlDieta
       .to(".dietaBg", { width: "100%", duration: 0.7 }, 0)
@@ -238,10 +241,6 @@ export default function Home() {
           </video>
         </div>
         <div className="h-[300vh] w-full absolute bottom-0 flex justify-center items-end">
-          {/* <div
-            ref={parallaxContainer}
-            className="h-[100vh] top-1/2 flex w-[60%] justify-between"
-          > */}
           <div
             ref={parallaxContainer}
             className="h-[125vh] w-[70%] top-1/2 flex justify-between"
@@ -259,27 +258,11 @@ export default function Home() {
               <TextAppear className="rightLine text-6xl text-center font-semibold flex flex-col">
                 <span className="text-[#DC2528] text-[192px] leading-[1]">
                   09%
-                </span>{" "}
-                <span>choruje na</span>{" "}
-                <span className="text-[#DC2528] ">cukrzycę</span>
+                </span>
+                <span>choruje na</span>
+                <span className="text-[#DC2528]">cukrzycę</span>
               </TextAppear>
             </div>
-            {/* <div className="flex flex-col items-center w-[35%] opacity-0 videoLeft">
-              <p className="text-[164px] leading-[1] text-[#DC2528] font-black videoLeftNum">
-                55%
-              </p>
-              <p className="text-6xl font-bold text-center videoLeftText">
-                Cierpi na nadwagę
-              </p>
-            </div>
-            <div className="flex flex-col items-center w-[35%] videoRight">
-              <p className="text-[164px] leading-[1] text-[#DC2528] font-black videoRightNum">
-                09%
-              </p>
-              <p className="text-6xl font-bold text-center videoRightText">
-                Choruje na cukrzycę
-              </p>
-            </div> */}
           </div>
         </div>
       </section>
@@ -309,13 +292,8 @@ export default function Home() {
               ref={blogContainerRef}
             >
               <div className="w-2/4 h-full relative flex-shrink-0 overflow-hidden">
-                <div className="relative w-full opacity-0 h-full blogImage">
-                  <Image
-                    src="/sections/forum.webp"
-                    layout="fill"
-                    objectFit="cover"
-                    priority
-                  />
+                <div className="relative w-full opacity-0 h-full blogImage select-none">
+                  <ImageHorizontal src="/sections/blog.webp" alt="blog" />
                 </div>
                 <div className="absolute top-0 h-full bg-[#019E52] blogBg z-10" />
               </div>
@@ -328,13 +306,21 @@ export default function Home() {
                   <div className="bg-[#DC2528] absolute top-0 left-0 h-[115%] z-10 blogTitleBg" />
                 </div>
                 <div className="relative">
-                  <p className="text-white text-2xl flex-grow opacity-0 blogDesc">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Animi voluptate suscipit alias ratione quas atque illum quo
-                    porro. Quaerat architecto obcaecati harum vel repudiandae
-                    natus animi deleniti maiores sint voluptate!
+                  <p className="text-white text-3xl flex-grow opacity-0 blogDesc">
+                    Miejsce w którym pasja do zdrowego stylu życia łączy się z
+                    miłością do jedzenia. Jesteś ekspertem lub dopiero stawiasz
+                    swoje pierwsze kroki w poprawie swojego zdrowia? Tutaj
+                    znajdziesz coś dla siebie! Dołącz do naszej społeczności i
+                    dziel się swoimi doświadczeniami.
                   </p>
                   <div className="bg-[#27BDDA] absolute top-0 left-0 h-full z-10 blogDescBg" />
+                </div>
+                <div className="items-end justify-end flex h-full p-4 translate-y-[100%] blogButton">
+                  <Button
+                    text="Przejdź do bloga"
+                    className="bg-[#DC2528] text-white"
+                    href="/calculator/bmi"
+                  />
                 </div>
               </div>
             </div>
@@ -342,7 +328,7 @@ export default function Home() {
               <div className="w-2/4 h-full relative flex-shrink-0 overflow-hidden">
                 <div className="relative w-full opacity-0 h-full dietaImage">
                   <Image
-                    src="/sections/forum.webp"
+                    src="/sections/blog.webp"
                     layout="fill"
                     objectFit="cover"
                     priority
