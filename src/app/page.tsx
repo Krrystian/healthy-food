@@ -191,7 +191,8 @@ export default function Home() {
       .set(".dietaDesc", { opacity: 1 })
       .to(".dietaBg", { width: "0%", duration: 0.7 }, 1)
       .to(".dietaTitleBg", { width: "0%", duration: 0.7 }, 1.2)
-      .to(".dietaDescBg", { width: "0%", duration: 0.6 }, 1.4);
+      .to(".dietaDescBg", { width: "0%", duration: 0.6 }, 1.4)
+      .to(".dietaButton", { translateY: "0", duration: 0.7 }, 1.6);
 
     tlPrzepisy
       .to(".przepisyBg", { width: "100%", duration: 0.7 }, 0)
@@ -202,7 +203,8 @@ export default function Home() {
       .set(".przepisyDesc", { opacity: 1 })
       .to(".przepisyBg", { width: "0%", duration: 0.7 }, 1)
       .to(".przepisyTitleBg", { width: "0%", duration: 0.7 }, 1.2)
-      .to(".przepisyDescBg", { width: "0%", duration: 0.6 }, 1.4);
+      .to(".przepisyDescBg", { width: "0%", duration: 0.6 }, 1.4)
+      .to(".przepisyButton", { translateY: "0", duration: 0.7 }, 1.6);
     tlKalkulatory
       .to(".kalkulatoryBg", { width: "100%", duration: 0.7 }, 0)
       .to(".kalkulatoryTitleBg", { width: "100%", duration: 0.7 }, 0.3)
@@ -212,7 +214,9 @@ export default function Home() {
       .set(".kalkulatoryDesc", { opacity: 1 })
       .to(".kalkulatoryBg", { width: "0%", duration: 0.7 }, 1)
       .to(".kalkulatoryTitleBg", { width: "0%", duration: 0.7 }, 1.2)
-      .to(".kalkulatoryDescBg", { width: "0%", duration: 0.6 }, 1.4);
+      .to(".kalkulatoryDescBg", { width: "0%", duration: 0.6 }, 1.4)
+      .to(".kalkulatoryButton", { translateY: "0", duration: 0.7 }, 1.6);
+
     return () => {
       tl.reverse();
       tlDieta.reverse();
@@ -327,12 +331,7 @@ export default function Home() {
             <div className="w-screen h-screen flex flex-shrink-0 p-20 gap-12">
               <div className="w-2/4 h-full relative flex-shrink-0 overflow-hidden">
                 <div className="relative w-full opacity-0 h-full dietaImage">
-                  <Image
-                    src="/sections/blog.webp"
-                    layout="fill"
-                    objectFit="cover"
-                    priority
-                  />
+                  <ImageHorizontal src="/sections/blog.webp" alt="dieta" />
                 </div>
                 <div className="absolute top-0 h-full bg-[#019E52] dietaBg z-10" />
               </div>
@@ -352,17 +351,19 @@ export default function Home() {
                   </p>
                   <div className="bg-[#27BDDA] absolute top-0 left-0 h-full z-10 dietaDescBg" />
                 </div>
+                <div className="items-end justify-end flex h-full p-4 translate-y-[100%] dietaButton">
+                  <Button
+                    text="Zacznij dietę"
+                    className="bg-[#DC2528] text-white"
+                    href="/calculator/bmi"
+                  />
+                </div>
               </div>
             </div>
             <div className="w-screen h-screen flex flex-shrink-0 p-20 gap-12">
               <div className="w-2/4 h-full relative flex-shrink-0 overflow-hidden">
                 <div className="relative w-full opacity-0 h-full przepisyImage">
-                  <Image
-                    src="/sections/forum.webp"
-                    layout="fill"
-                    objectFit="cover"
-                    priority
-                  />
+                  <ImageHorizontal src="/sections/blog.webp" alt="blog" />
                 </div>
                 <div className="absolute top-0 h-full bg-[#019E52] przepisyBg z-10" />
               </div>
@@ -382,18 +383,20 @@ export default function Home() {
                   </p>
                   <div className="bg-[#27BDDA] absolute top-0 left-0 h-full z-10 przepisyDescBg" />
                 </div>
+                <div className="items-end justify-end flex h-full p-4 translate-y-[100%] przepisyButton">
+                  <Button
+                    text="Sprawdź przepisy"
+                    className="bg-[#DC2528] text-white"
+                    href="/calculator/bmi"
+                  />
+                </div>
               </div>
             </div>
             <div>
               <div className="w-screen h-screen flex flex-shrink-0 p-20 gap-12 sticky top-0">
                 <div className="w-2/4 h-full relative flex-shrink-0 overflow-hidden">
                   <div className="relative w-full opacity-0 h-full kalkulatoryImage">
-                    <Image
-                      src="/sections/forum.webp"
-                      layout="fill"
-                      objectFit="cover"
-                      priority
-                    />
+                    <ImageHorizontal src="/sections/blog.webp" alt="blog" />
                   </div>
                   <div className="absolute top-0 h-full bg-[#019E52] kalkulatoryBg z-10" />
                 </div>
@@ -412,6 +415,13 @@ export default function Home() {
                       repudiandae natus animi deleniti maiores sint voluptate!
                     </p>
                     <div className="bg-[#27BDDA] absolute top-0 left-0 h-full z-10 kalkulatoryDescBg" />
+                  </div>
+                  <div className="items-end justify-end flex h-full p-4 translate-y-[100%] kalkulatoryButton">
+                    <Button
+                      text="Oblicz swoje BMI"
+                      className="bg-[#DC2528] text-white"
+                      href="/calculator/bmi"
+                    />
                   </div>
                 </div>
               </div>
