@@ -1,5 +1,6 @@
 import { cn } from "@/app/lib/cn";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import React from "react";
 import SplitType from "split-type";
 interface TextAppearProps {
@@ -22,9 +23,10 @@ const TextAppear: React.FC<TextAppearProps> = ({
 }) => {
   const ref = React.useRef<HTMLParagraphElement>(null);
   React.useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
     if (ref.current) {
       const splitText = new SplitType(ref.current, { types: "chars,words" });
-      const context = gsap.from(splitText.chars, {
+      gsap.from(splitText.chars, {
         y: 50,
         opacity: 0,
         stagger: options.stagger,
@@ -36,9 +38,6 @@ const TextAppear: React.FC<TextAppearProps> = ({
           markers: false,
         },
       });
-      return () => {
-        context.revert();
-      };
     }
   }, []);
   return (

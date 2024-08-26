@@ -32,8 +32,29 @@ const font = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Healthy Food",
-  description: "Healthy food, blog, recipes, products, and more.",
+  // metadataBase: new URL("https://5uxonw73zpjz7342oh3txyw5li.srv.us/"),
+  title: {
+    default: "Healthy You",
+    template: "%s | Healthy You",
+  },
+  description:
+    "Kompleksowe podejście do zdrowego odżywiania. Zdrowy ty, szczęśliwy ty.",
+  openGraph: {
+    images: [
+      {
+        url: "/opengraph-image.png",
+        // url: new URL(
+        //   "https://5uxonw73zpjz7342oh3txyw5li.srv.us/opengraph-image.png"
+        // ),
+        width: 1200,
+        height: 630,
+        alt: "Healthy You",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default async function RootLayout({

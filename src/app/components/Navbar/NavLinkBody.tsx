@@ -1,5 +1,7 @@
+import { animatePageOut } from "@/app/lib/pageTransition";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 export const BlogContent = () => {
   return (
@@ -48,6 +50,12 @@ export const BlogContent = () => {
 };
 
 export const KalkulatoryContent = () => {
+  const router = useRouter();
+  const path = usePathname();
+  const onClick = (href: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    if (href !== path) animatePageOut(href, router);
+  };
   return (
     <div className="w-52 bg-white flex flex-col p-6">
       <div className="text-center">
@@ -55,15 +63,27 @@ export const KalkulatoryContent = () => {
           Dostępne wskaźniki
         </h3>
         <div className="flex flex-col text-sm">
-          <Link href="/calculator/bmi" className="relative group py-1">
+          <Link
+            href="/calculator/bmi"
+            className="relative group py-1"
+            onClick={(e: React.MouseEvent) => onClick("/calculator/bmi", e)}
+          >
             BMI
             <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
           </Link>
-          <Link href="/calculator/bmr" className="relative group py-1">
+          <Link
+            href="/calculator/bmr"
+            className="relative group py-1"
+            onClick={(e: React.MouseEvent) => onClick("/calculator/bmr", e)}
+          >
             BMR
             <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
           </Link>
-          <Link href="/calculator/tdee" className="relative group py-1">
+          <Link
+            href="/calculator/tdee"
+            className="relative group py-1"
+            onClick={(e: React.MouseEvent) => onClick("/calculator/tdee", e)}
+          >
             TDEE
             <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
           </Link>

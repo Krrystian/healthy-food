@@ -50,7 +50,7 @@ const Navbar = () => {
           )}
         >
           <div className="flex flex-row justify-between items-center h-full">
-            <Image src="/logo.png" width={60} height={60} alt="logo" />
+            <Image src="/logo.png" width={60} height={60} alt="logo" priority />
             <div className="flex flex-row items-center justify-center gap-1">
               <NavLink
                 label="Kalkulatory"
