@@ -8,7 +8,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
 import TextAppear from "./components/MainPage/TextAppear";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
-import Image from "next/legacy/image";
 import Footer from "./components/Footer";
 import Button from "./components/MainPage/Button";
 import ImageHorizontal from "./components/MainPage/ImageHorizontal";

@@ -32,8 +32,15 @@ const font = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Healthy Food",
-  description: "Healthy food, blog, recipes, products, and more.",
+  title: {
+    default: "Healthy You",
+    template: "%s | Healthy You",
+  },
+  description:
+    "Kompleksowe podejście do zdrowego odżywiania. Zdrowy ty, szczęśliwy ty.",
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default async function RootLayout({

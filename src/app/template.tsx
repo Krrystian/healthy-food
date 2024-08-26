@@ -21,9 +21,6 @@ export default function Template({ children }: { children: React.ReactNode }) {
     }
   }, [pathname]);
 
-  if (pathname === "/") {
-    return <div>{children}</div>;
-  }
   return (
     <div>
       <div
