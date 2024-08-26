@@ -42,10 +42,10 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        // url: "/opengraph-image.png",
-        url: new URL(
-          "https://5uxonw73zpjz7342oh3txyw5li.srv.us/opengraph-image.png"
-        ),
+        url: "/opengraph-image.png",
+        // url: new URL(
+        //   "https://5uxonw73zpjz7342oh3txyw5li.srv.us/opengraph-image.png"
+        // ),
         width: 1200,
         height: 630,
         alt: "Healthy You",
