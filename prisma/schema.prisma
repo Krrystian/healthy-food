@@ -16,6 +16,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  calculators   Calculator[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -58,4 +59,20 @@ model VerificationToken {
   expires    DateTime
 
   @@id([identifier, token])
+}
+
+model Calculator {
+  id              String  @id @default(cuid())
+  userId          String  
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type            String
+  result          Float
+  weight          Float
+  height          Float
+  gender          String?  
+  age             Int?     
+  activityLevel   Float?   
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
