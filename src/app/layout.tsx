@@ -32,12 +32,18 @@ const font = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("localhost:3000"), // Change this to your domain
   title: {
     default: "Healthy You",
     template: "%s | Healthy You",
   },
   description:
     "Kompleksowe podejście do zdrowego odżywiania. Zdrowy ty, szczęśliwy ty.",
+  openGraph: {
+    title: "Healthy You",
+    description:
+      "Kompleksowe podejście do zdrowego odżywiania. Zdrowy ty, szczęśliwy ty.",
+  },
   twitter: {
     card: "summary_large_image",
   },

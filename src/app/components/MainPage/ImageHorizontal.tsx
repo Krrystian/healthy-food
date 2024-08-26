@@ -20,6 +20,7 @@ const ImageHorizontal: React.FC<ImageHorizontalProps> = ({ src, alt }) => {
         <Image
           src={src}
           alt={alt}
+          priority
           layout="fill"
           className={cn(
             "object-cover  duration-[1.6s]",
@@ -33,6 +34,7 @@ const ImageHorizontal: React.FC<ImageHorizontalProps> = ({ src, alt }) => {
         <Image
           src={src}
           alt={alt}
+          priority
           layout="fill"
           className={cn(
             "object-cover  duration-[1.6s]",
@@ -46,6 +48,7 @@ const ImageHorizontal: React.FC<ImageHorizontalProps> = ({ src, alt }) => {
           src={src}
           alt={alt}
           layout="fill"
+          priority
           className="object-cover invert"
         />
       </div>
