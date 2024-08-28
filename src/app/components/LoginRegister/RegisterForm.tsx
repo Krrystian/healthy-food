@@ -10,6 +10,7 @@ import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 import Button from "./Button";
 import GoogleButton from "./GoogleButton";
 import Input from "./Input";
+import { useSession } from "next-auth/react";
 
 const Background = dynamic(() => import("./Background"), {
   ssr: false,
@@ -33,6 +34,12 @@ const RegisterForm = () => {
     },
   });
   const router = useRouter();
+  const session = useSession();
+  React.useEffect(() => {
+    if (session.status === "authenticated") {
+      router.push("/");
+    }
+  }, []);
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       if (processing) return;

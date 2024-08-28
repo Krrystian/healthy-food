@@ -2,6 +2,7 @@ import { animatePageOut } from "@/app/lib/pageTransition";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { SignOutButton } from "../SignInOut/SignOutButton";
 
 export const BlogContent = () => {
   return (
@@ -151,6 +152,34 @@ export const PrzepisyContent = () => {
           Utwórz przepis
           <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
         </Link>
+      </div>
+    </div>
+  );
+};
+
+export const KontoContent = () => {
+  const router = useRouter();
+  const path = usePathname();
+  const onClick = (href: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    if (href !== path) animatePageOut(href, router);
+  };
+  return (
+    <div className="w-36 bg-white flex flex-col p-6">
+      <div className="text-center gap-2 flex flex-col">
+        <Link
+          href="/account"
+          onClick={(e: React.MouseEvent) => onClick("/account/settings", e)}
+          className="relative group font-semibold py-1"
+        >
+          Ustawienia
+          <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
+        </Link>
+        <Link href="#" className="relative group font-semibold py-1">
+          Statystyki
+          <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
+        </Link>
+        <SignOutButton />
       </div>
     </div>
   );

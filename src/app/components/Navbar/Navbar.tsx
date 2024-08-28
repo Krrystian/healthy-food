@@ -7,14 +7,21 @@ import {
   BlogContent,
   DietaContent,
   KalkulatoryContent,
+  KontoContent,
   PrzepisyContent,
 } from "./NavLinkBody";
 import { SignInButton } from "../SignInOut/SignInButton";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
+import { animatePageOut } from "@/app/lib/pageTransition";
+import { useSession } from "next-auth/react";
 
 const Navbar = () => {
   const [scrollProgress, setScrollProgress] = React.useState(0);
   const [scrollDirection, setScrollDirection] = React.useState("up");
+  const pathname = usePathname();
+  const router = useRouter();
+  const session = useSession();
 
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
@@ -30,8 +37,16 @@ const Navbar = () => {
 
   React.useEffect(() => {
     window.addEventListener("scroll", handleScroll);
+    router.prefetch("/login");
+    router.prefetch("/register");
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, [scrollProgress]);
+
+  const loggedIn = session.status === "authenticated";
+  if (pathname.startsWith("/login") || pathname.startsWith("/register")) {
+    return null;
+  }
 
   return (
     <div className="w-full flex justify-center">
@@ -50,11 +65,19 @@ const Navbar = () => {
           )}
         >
           <div className="flex flex-row justify-between items-center h-full">
-            <Image src="/logo.png" width={60} height={60} alt="logo" priority />
+            <Image
+              src="/logo.png"
+              width={60}
+              height={60}
+              alt="logo"
+              priority
+              className="cursor-pointer"
+              onClick={() => animatePageOut("/", router)}
+            />
             <div className="flex flex-row items-center justify-center gap-1">
               <NavLink
                 label="Kalkulatory"
-                href="/"
+                href="/calculator/bmi"
                 prefetch={true}
                 Content={KalkulatoryContent}
               />
@@ -79,9 +102,21 @@ const Navbar = () => {
               <NavLink label="Produkty" href="/" prefetch={true} />
             </div>
             <div className="flex flex-row gap-8">
-              <SignInButton className="p-3 border-2 border-[#023047] rounded-md hover:bg-[#FB8500]/90 duration-300 transition-all text-xl font-medium">
-                Login
-              </SignInButton>
+              {loggedIn ? (
+                <NavLink
+                  label="Konto"
+                  href="/"
+                  prefetch={true}
+                  Content={KontoContent}
+                  account
+                  underline={false}
+                  className="px-8 border-2 rounded-xl border-black"
+                />
+              ) : (
+                <SignInButton className="p-3 border-2 border-[#023047] rounded-md hover:bg-[#FB8500]/90 duration-300 transition-all text-xl font-medium">
+                  Login
+                </SignInButton>
+              )}
             </div>
           </div>
         </motion.div>

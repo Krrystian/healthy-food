@@ -5,6 +5,7 @@ import { cn } from "@/app/lib/cn";
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
 import { animatePageOut } from "@/app/lib/pageTransition";
+import Image from "next/legacy/image";
 
 interface NavLinkProps {
   className?: string;
@@ -14,6 +15,7 @@ interface NavLinkProps {
   Content?: React.ElementType;
   underline?: boolean;
   animate?: boolean;
+  account?: boolean;
 }
 
 const NavLink: React.FC<NavLinkProps> = ({
@@ -24,6 +26,7 @@ const NavLink: React.FC<NavLinkProps> = ({
   Content,
   underline = true,
   animate = true,
+  account = false,
 }) => {
   const [open, setOpen] = React.useState(false);
   const show = Content && open;
@@ -48,10 +51,11 @@ const NavLink: React.FC<NavLinkProps> = ({
         prefetch={prefetch}
         onClick={handleClick}
         className={cn(
-          "px-4 py-2 duration-300 w-full h-full transition-all text-xl relative flex group font-medium",
+          "px-4 py-2 duration-300 w-full h-full transition-all text-xl relative flex group font-medium gap-2",
           className
         )}
       >
+        {account && <Image src="/account.svg" width={24} height={24} />}
         {label}
         {underline && (
           <div

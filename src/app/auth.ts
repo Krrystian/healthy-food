@@ -61,7 +61,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return token;
     },
+    async redirect({ url, baseUrl }) {
+      return baseUrl;
+    },
   },
+  
   session: {
     strategy: "jwt",
   },
