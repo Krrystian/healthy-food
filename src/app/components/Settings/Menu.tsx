@@ -8,8 +8,12 @@ import React from "react";
 const Profie: React.FC = () => {
   const session = useSession();
   const [selected, setSelected] = React.useState<string>("Public");
-  const color =
-    !session.data?.user?.image && useNameToRGB(session.data?.user?.email || "");
+  const color = React.useMemo(() => {
+    if (!session.data?.user?.image) {
+      return useNameToRGB(session.data?.user?.email || "");
+    }
+    return "";
+  }, [session.data?.user?.image, session.data?.user?.email]);
   const changeSelection = React.useCallback((val: string) => {
     localStorage.setItem("menuItemValue", val);
     setSelected(val);
