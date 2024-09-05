@@ -8,12 +8,11 @@ import React from "react";
 const Profie: React.FC = () => {
   const session = useSession();
   const [selected, setSelected] = React.useState<string>("Public");
-  const color = React.useMemo(() => {
-    if (!session.data?.user?.image) {
-      return useNameToRGB(session.data?.user?.email || "");
-    }
-    return "";
-  }, [session.data?.user?.image, session.data?.user?.email]);
+
+  // Always call the hook, but handle the logic in the component render
+  const fallbackColor = useNameToRGB(session.data?.user?.email || "");
+  const color = session.data?.user?.image ? "" : fallbackColor;
+
   const changeSelection = React.useCallback((val: string) => {
     localStorage.setItem("menuItemValue", val);
     setSelected(val);
@@ -25,15 +24,16 @@ const Profie: React.FC = () => {
       setSelected(item);
     }
   }, [selected]);
+
   return (
-    <div className="w-full h-full bg-black/60  flex items-center p-8 flex-col gap-8 col-span-3">
+    <div className="w-full h-full bg-black/60 flex items-center p-8 flex-col gap-8 col-span-3">
       <div className="flex-col flex items-center gap-2">
         <div className="relative w-16 h-16 rounded-full overflow-hidden">
           {session.data?.user?.image ? (
             <Image
               src={session.data?.user?.image}
               layout="fill"
-              className=" object-cover"
+              className="object-cover"
             />
           ) : (
             <div
