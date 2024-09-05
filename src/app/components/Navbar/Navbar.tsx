@@ -163,17 +163,17 @@ const Navbar = () => {
                 Welcome
               </p>
               <div className="flex flex-col text-5xl gap-6">
-                <div
-                  className="flex flex-col w-full items-center"
-                  onClick={() =>
-                    setActiveMenu((prev: any) => {
-                      return prev === "Calculator" ? "" : "Calculator";
-                    })
-                  }
-                >
-                  <div className="flex justify-between w-full items-center">
+                <div className="flex flex-col w-full items-center">
+                  <div
+                    className="flex justify-between w-full items-center"
+                    onClick={() =>
+                      setActiveMenu((prev: any) => {
+                        return prev === "Calculator" ? "" : "Calculator";
+                      })
+                    }
+                  >
                     <p className="">Kalkulatory</p>
-                    <div className="relative h-10 w-10">
+                    <div className="relative h-10 w-10 self-end">
                       <Image
                         src={"/arrowMenu.svg"}
                         alt="arrow"

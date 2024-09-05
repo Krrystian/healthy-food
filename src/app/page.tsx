@@ -118,7 +118,6 @@ export default function Home() {
   const dietaContainerRef = useRef<HTMLDivElement>(null);
   const przepisyContainerRef = useRef<HTMLDivElement>(null);
   const kalkulatoryContainerRef = useRef<HTMLDivElement>(null);
-
   const horizontalSections = useRef<HTMLDivElement>(null);
   const imagesRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = React.useState(0);
