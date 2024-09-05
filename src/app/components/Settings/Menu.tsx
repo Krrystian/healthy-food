@@ -9,10 +9,9 @@ const Profie: React.FC = () => {
   const session = useSession();
   const [selected, setSelected] = React.useState<string>("Public");
 
-  // Move the useNameToRGB hook outside of useMemo
-  const color = session.data?.user?.image
-    ? ""
-    : useNameToRGB(session.data?.user?.email || "");
+  // Always call the hook, but handle the logic in the component render
+  const fallbackColor = useNameToRGB(session.data?.user?.email || "");
+  const color = session.data?.user?.image ? "" : fallbackColor;
 
   const changeSelection = React.useCallback((val: string) => {
     localStorage.setItem("menuItemValue", val);
