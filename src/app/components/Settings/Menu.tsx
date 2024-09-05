@@ -22,7 +22,7 @@ const Profie: React.FC = () => {
     }
   }, [selected]);
   return (
-    <div className="w-full h-full bg-[#26BCDB]/40 flex items-center p-8 flex-col gap-8 col-span-3">
+    <div className="w-full h-full bg-black/60  flex items-center p-8 flex-col gap-8 col-span-3">
       <div className="flex-col flex items-center gap-2">
         <div className="relative w-16 h-16 rounded-full overflow-hidden">
           {session.data?.user?.image ? (

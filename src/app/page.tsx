@@ -114,6 +114,11 @@ export default function Home() {
   }, []);
 
   // Horizontal sections
+  const blogContainerRef = useRef<HTMLDivElement>(null);
+  const dietaContainerRef = useRef<HTMLDivElement>(null);
+  const przepisyContainerRef = useRef<HTMLDivElement>(null);
+  const kalkulatoryContainerRef = useRef<HTMLDivElement>(null);
+
   const horizontalSections = useRef<HTMLDivElement>(null);
   const imagesRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = React.useState(0);
@@ -124,15 +129,18 @@ export default function Home() {
   const xV = useTransform(scrollYProgress, [0, 1], [0, width * -0.75]);
   const x = useSpring(xV, { stiffness: 400, damping: 90 });
   useLayoutEffect(() => {
-    if (imagesRef.current) {
-      setWidth(imagesRef.current.offsetWidth);
-    }
-  }, []);
+    const handleResize = () => {
+      if (imagesRef.current) {
+        setWidth(imagesRef.current.offsetWidth);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [imagesRef]);
 
-  const blogContainerRef = useRef<HTMLDivElement>(null);
-  const dietaContainerRef = useRef<HTMLDivElement>(null);
-  const przepisyContainerRef = useRef<HTMLDivElement>(null);
-  const kalkulatoryContainerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const tl = gsap.timeline({
       scrollTrigger: {
