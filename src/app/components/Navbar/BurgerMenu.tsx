@@ -1,5 +1,5 @@
 "use client";
-import { cn } from "@/app/lib/cn";
+import { motion } from "framer-motion";
 import React from "react";
 
 interface BurgerMenuProps {
@@ -8,13 +8,23 @@ interface BurgerMenuProps {
 
 const BurgerMenu: React.FC<BurgerMenuProps> = ({ open }) => {
   return (
-    <div className="absolute self-center right-11 translate-x-1/2 -z-10">
-      <div
-        className={cn(
-          "md:hidden h-1 w-1 bg-[#FBA100] duration-1000 transition-all rounded-full ease-in-out z-40 ",
-          open && "h-[300vh] w-[300vw] rounded-none"
-        )}
-      ></div>
+    <div className="absolute self-center top-0 origin-center -z-10">
+      <motion.div
+        className="md:hidden h-1 w-screen bg-[#FBA100] z-40"
+        initial={{ height: 0 }}
+        animate={{
+          height: open ? "100vh" : 0,
+        }}
+        transition={{
+          duration: 0.5,
+          ease: "easeInOut",
+          delay: 0,
+        }}
+        exit={{
+          height: 0,
+          transition: { duration: 0.5, ease: "easeInOut" }, // Ensure exit has a smooth transition too
+        }}
+      />
     </div>
   );
 };

@@ -9,7 +9,6 @@ const Profie: React.FC = () => {
   const session = useSession();
   const [selected, setSelected] = React.useState<string>("Public");
 
-  // Always call the hook, but handle the logic in the component render
   const fallbackColor = useNameToRGB(session.data?.user?.email || "");
   const color = session.data?.user?.image ? "" : fallbackColor;
 

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "../../lib/cn";
 import NavLink from "./NavLink";
 import {
@@ -17,7 +17,9 @@ import { animatePageOut } from "@/app/lib/pageTransition";
 import { useSession } from "next-auth/react";
 import BurgerMenu from "./BurgerMenu";
 import Link from "next/link";
+import BurgerMenuItem from "./BurgerMenuItem";
 
+// REMAKE NAVBAR - BURGER MENU
 const Navbar = () => {
   const [scrollProgress, setScrollProgress] = React.useState(0);
   const [scrollDirection, setScrollDirection] = React.useState("up");
@@ -26,7 +28,40 @@ const Navbar = () => {
   const pathname = usePathname();
   const router = useRouter();
   const session = useSession();
-
+  const menuItemList = [
+    {
+      title: "Kalkulatory",
+      items: [
+        { name: "BMI", href: "/calculator/bmi" },
+        { name: "BMR", href: "/calculator/bmr" },
+        { name: "TDEE", href: "/calculator/tdee" },
+      ],
+    },
+    {
+      title: "Blog",
+      items: [
+        { name: "Latest Posts", href: "/blog/latest" },
+        { name: "Popular Posts", href: "/blog/popular" },
+        { name: "Categories", href: "/blog/categories" },
+      ],
+    },
+    {
+      title: "Dieta",
+      items: [
+        { name: "Meal Plans", href: "/dieta/meal-plans" },
+        { name: "Recipes", href: "/dieta/recipes" },
+        { name: "Nutrition Facts", href: "/dieta/nutrition-facts" },
+      ],
+    },
+    {
+      title: "Przepisy",
+      items: [
+        { name: "Breakfast Recipes", href: "/przepisy/breakfast" },
+        { name: "Lunch Recipes", href: "/przepisy/lunch" },
+        { name: "Dinner Recipes", href: "/przepisy/dinner" },
+      ],
+    },
+  ];
   const handleScroll = () => {
     if (isMenuOpen) return;
 
@@ -136,7 +171,9 @@ const Navbar = () => {
           </div>
         </motion.div>
         <div
-          className="md:hidden bg-[#FBA100] rounded-full flex items-center self-center absolute right-4 h-14 w-14"
+          className={cn(
+            "md:hidden bg-[#FBA100] rounded-full flex items-center self-center absolute right-4 h-14 w-14"
+          )}
           onClick={(event: any) => {
             event.stopPropagation();
             setMenuOpen((prev: any) => !prev);
@@ -152,62 +189,80 @@ const Navbar = () => {
             )}
           />
         </div>
-        <BurgerMenu open={isMenuOpen} />
-        {isMenuOpen && (
-          <div
-            className={
-              "w-screen h-screen flex justify-center items-center md:hidden"
-            }
-          >
-            <div className="w-full p-8">
-              <p className="border-b-black border-b-2 text-center text-2xl font-medium mb-8">
-                Welcome
-              </p>
-              <div className="flex flex-col text-5xl gap-6">
-                <div className="flex flex-col w-full items-center">
-                  <div
-                    className="flex justify-between w-full items-center"
-                    onClick={() =>
-                      setActiveMenu((prev: any) => {
-                        return prev === "Calculator" ? "" : "Calculator";
-                      })
-                    }
-                  >
-                    <p className="">Kalkulatory</p>
-                    <div className="relative h-10 w-10 self-end">
-                      <Image
-                        src={"/arrowMenu.svg"}
-                        alt="arrow"
-                        layout="fill"
-                        className={
-                          activeMenu === "Calculator"
-                            ? "transform rotate-90"
-                            : ""
-                        }
-                      />
-                    </div>
-                  </div>
-                  <div className="w-full h-full flex px-8 pt-4 relative gap-4 overflow-hidden">
-                    {activeMenu === "Calculator" && (
-                      <>
-                        <div className="w-1 h-full bg-black absolute -translate-x-[400%]" />
-                        <div className="flex flex-col gap-2 text-2xl font-medium">
-                          <div>BMI</div>
-                          <div>BMR</div>
-                          <div>TDEE</div>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </div>
-                <div>Blog</div>
-                <div>Dieta</div>
-                <div>Przepisy</div>
-                <Link href="/">Produkty</Link>
-              </div>
+        <AnimatePresence mode="wait">
+          {isMenuOpen && (
+            <div
+              className={
+                "w-screen h-screen flex justify-between flex-col items-center md:hidden py-8 group"
+              }
+            >
+              <BurgerMenu open={isMenuOpen} />
+              <motion.div
+                className="w-full p-8"
+                initial={{ opacity: 0, x: -100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{
+                  opacity: 0,
+                  x: -100,
+                  transition: { delay: 0, duration: 0.2 },
+                }}
+                transition={{ duration: 0.4, delay: 0.2 }}
+              >
+                <motion.p
+                  className="border-b-black border-b-2 text-center text-2xl font-medium mb-8"
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  Welcome
+                </motion.p>
+                <motion.div
+                  className="flex flex-col text-5xl gap-6"
+                  transition={{
+                    staggerChildren: 0.1,
+                    delayChildren: 0.1,
+                  }}
+                >
+                  {menuItemList.map((item, index) => (
+                    <BurgerMenuItem
+                      key={index}
+                      title={item.title}
+                      activeMenu={activeMenu}
+                      setActiveMenu={setActiveMenu}
+                      items={item.items}
+                      setIsMenuOpen={setMenuOpen}
+                    />
+                  ))}
+                  <Link href="/" className="text-3xl">
+                    Produkty
+                  </Link>
+                </motion.div>
+              </motion.div>
+              <motion.div
+                className="flex flex-col gap-4 w-full px-8"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{
+                  opacity: 0,
+                  y: -20,
+                  transition: { delay: 0, duration: 0.1 },
+                }}
+                transition={{ duration: 0.4, delay: 0.5 }}
+              >
+                <Link
+                  href="/"
+                  className="text-2xl font-medium tracking-wider text-white bg-[#023047] text-center w-full rounded-xl p-4"
+                >
+                  Wypełnij Quiz
+                </Link>
+                <SignInButton className="text-2xl text-black font-medium border-[#023047] border-4 text-center w-full rounded-xl p-4">
+                  Zaloguj / Zarejestruj się
+                </SignInButton>
+              </motion.div>
             </div>
-          </div>
-        )}
+          )}
+        </AnimatePresence>
       </nav>
     </div>
   );
