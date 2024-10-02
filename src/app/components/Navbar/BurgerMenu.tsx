@@ -10,7 +10,7 @@ const BurgerMenu: React.FC<BurgerMenuProps> = ({ open }) => {
   return (
     <div className="absolute self-center top-0 origin-center -z-10">
       <motion.div
-        className="md:hidden h-1 w-screen bg-[#FBA100] z-40"
+        className="xl:hidden h-1 w-screen bg-[#FBA100] z-40"
         initial={{ height: 0 }}
         animate={{
           height: open ? "100vh" : 0,
@@ -22,7 +22,7 @@ const BurgerMenu: React.FC<BurgerMenuProps> = ({ open }) => {
         }}
         exit={{
           height: 0,
-          transition: { duration: 0.5, ease: "easeInOut" }, // Ensure exit has a smooth transition too
+          transition: { duration: 0.5, ease: "easeInOut" },
         }}
       />
     </div>

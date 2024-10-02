@@ -19,7 +19,6 @@ import BurgerMenu from "./BurgerMenu";
 import Link from "next/link";
 import BurgerMenuItem from "./BurgerMenuItem";
 
-// REMAKE NAVBAR - BURGER MENU
 const Navbar = () => {
   const [scrollProgress, setScrollProgress] = React.useState(0);
   const [scrollDirection, setScrollDirection] = React.useState("up");
@@ -110,7 +109,7 @@ const Navbar = () => {
       >
         <motion.div
           className={cn(
-            "h-full duration-300 transition-all bg-[#FFB703] relative w-[100vw] px-4 md:block hidden",
+            "h-full duration-300 transition-all bg-[#FFB703] relative w-[100vw] px-4 xl:block hidden",
             scrollProgress > 30 && "w-[50vw] rounded-b-xl px-2"
           )}
         >
@@ -172,7 +171,7 @@ const Navbar = () => {
         </motion.div>
         <div
           className={cn(
-            "md:hidden bg-[#FBA100] rounded-full flex items-center self-center absolute right-4 h-14 w-14"
+            "xl:hidden bg-[#FBA100] rounded-full flex items-center self-center absolute right-4 h-14 w-14"
           )}
           onClick={(event: any) => {
             event.stopPropagation();
@@ -193,7 +192,7 @@ const Navbar = () => {
           {isMenuOpen && (
             <div
               className={
-                "w-screen h-screen flex justify-between flex-col items-center md:hidden py-8 group"
+                "w-screen h-screen flex justify-between flex-col items-center xl:hidden py-8 group"
               }
             >
               <BurgerMenu open={isMenuOpen} />
@@ -218,7 +217,7 @@ const Navbar = () => {
                   Welcome
                 </motion.p>
                 <motion.div
-                  className="flex flex-col text-5xl gap-6"
+                  className="flex flex-col text-5xl gap-1"
                   transition={{
                     staggerChildren: 0.1,
                     delayChildren: 0.1,
@@ -234,7 +233,7 @@ const Navbar = () => {
                       setIsMenuOpen={setMenuOpen}
                     />
                   ))}
-                  <Link href="/" className="text-3xl">
+                  <Link href="/" className="text-2xl">
                     Produkty
                   </Link>
                 </motion.div>
@@ -256,9 +255,19 @@ const Navbar = () => {
                 >
                   Wypełnij Quiz
                 </Link>
-                <SignInButton className="text-2xl text-black font-medium border-[#023047] border-4 text-center w-full rounded-xl p-4">
-                  Zaloguj / Zarejestruj się
-                </SignInButton>
+                {session ? (
+                  <Link
+                    href="account/settings"
+                    onClick={() => setMenuOpen(false)}
+                    className="text-2xl text-black font-medium border-[#023047] border-4 text-center w-full rounded-xl p-4"
+                  >
+                    Profil
+                  </Link>
+                ) : (
+                  <SignInButton className="text-2xl text-black font-medium border-[#023047] border-4 text-center w-full rounded-xl p-4">
+                    Zaloguj / Zarejestruj się
+                  </SignInButton>
+                )}
               </motion.div>
             </div>
           )}
