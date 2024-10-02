@@ -257,7 +257,7 @@ const Navbar = () => {
                 </Link>
                 {session ? (
                   <Link
-                    href="account/settings"
+                    href="/account/settings"
                     onClick={() => setMenuOpen(false)}
                     className="text-2xl text-black font-medium border-[#023047] border-4 text-center w-full rounded-xl p-4"
                   >
