@@ -5,6 +5,9 @@ import {
   ProfileImageForm,
   ProfileNameForm,
   ProfileDescriptionForm,
+  ProfileEmailForm,
+  ProfilePasswordForm,
+  ProfileNotificationForm,
 } from "./Forms";
 import { useSearchParams } from "next/navigation";
 
@@ -28,16 +31,14 @@ const Options = () => {
         </>
       ) : menuOption === "Private" ? (
         <>
-          <Card title="Prywatne ustawienia">
-            {/* Możesz tu umieścić formularze lub komponenty dotyczące prywatnych ustawień */}
-            <p>Tutaj mogą znaleźć się opcje prywatności.</p>
+          <Card title="Zmień adres email">
+            <ProfileEmailForm />
           </Card>
-        </>
-      ) : menuOption === "Notifications" ? (
-        <>
+          <Card title="Zmień hasło">
+            <ProfilePasswordForm />
+          </Card>
           <Card title="Powiadomienia">
-            {/* Tutaj możesz umieścić formularze dotyczące ustawień powiadomień */}
-            <p>Tutaj mogą być ustawienia powiadomień.</p>
+            <ProfileNotificationForm />
           </Card>
         </>
       ) : menuOption === "Help" ? (

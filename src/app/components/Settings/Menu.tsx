@@ -19,7 +19,7 @@ const Menu: React.FC = () => {
   const changeSelection = React.useCallback(
     (val: string) => {
       setSelected(val);
-      router.push(`?menu=${val}`); // Aktualizacja parametru URL
+      router.push(`?menu=${val}`);
     },
     [router]
   );
@@ -71,15 +71,6 @@ const Menu: React.FC = () => {
           onClick={() => changeSelection("Private")}
         >
           Prywatne
-        </button>
-        <button
-          className={cn(
-            "p-2 rounded-2xl px-4",
-            selected === "Notifications" ? "bg-[#019E52]" : "hover:bg-[#27BDDF]"
-          )}
-          onClick={() => changeSelection("Notifications")}
-        >
-          Powiadomienia
         </button>
         <button
           className={cn(
