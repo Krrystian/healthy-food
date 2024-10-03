@@ -3,26 +3,33 @@ import { useNameToRGB } from "@/app/hooks/useNameToRGB";
 import { cn } from "@/app/lib/cn";
 import { useSession } from "next-auth/react";
 import Image from "next/legacy/image";
+import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
-const Profie: React.FC = () => {
+const Menu: React.FC = () => {
   const session = useSession();
-  const [selected, setSelected] = React.useState<string>("Public");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const currentMenu = searchParams.get("menu") || "Public"; // Domyślnie "Public"
+  const [selected, setSelected] = React.useState<string>(currentMenu);
 
   const fallbackColor = useNameToRGB(session.data?.user?.email || "");
   const color = session.data?.user?.image ? "" : fallbackColor;
 
-  const changeSelection = React.useCallback((val: string) => {
-    localStorage.setItem("menuItemValue", val);
-    setSelected(val);
-  }, []);
+  const changeSelection = React.useCallback(
+    (val: string) => {
+      setSelected(val);
+      router.push(`?menu=${val}`); // Aktualizacja parametru URL
+    },
+    [router]
+  );
 
   React.useEffect(() => {
-    const item = localStorage.getItem("menuItemValue");
-    if (item) {
-      setSelected(item);
+    const menuItem = searchParams.get("menu");
+    if (menuItem) {
+      setSelected(menuItem);
     }
-  }, [selected]);
+  }, [searchParams]);
 
   return (
     <div className="w-full h-full bg-black/60 flex items-center p-8 flex-col gap-8 col-span-3">
@@ -88,4 +95,4 @@ const Profie: React.FC = () => {
   );
 };
 
-export default Profie;
+export default Menu;
