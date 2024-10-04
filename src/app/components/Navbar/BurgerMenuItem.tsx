@@ -21,7 +21,7 @@ const BurgerMenuItem: React.FC<BurgerMenuItemProps> = ({
   const isActive = activeMenu === title;
 
   return (
-    <div className="flex flex-col text-3xl gap-6 group group:overflow-hidden">
+    <div className="flex flex-col text-2xl gap-6 group group:overflow-hidden">
       <div className="flex flex-col w-full items-center">
         <div
           className="flex justify-between w-full items-center cursor-pointer"
@@ -38,7 +38,7 @@ const BurgerMenuItem: React.FC<BurgerMenuItemProps> = ({
           </div>
         </div>
         <motion.div
-          className="w-full flex px-8 pt-4 relative gap-4 overflow-hidden"
+          className="w-full flex px-8  relative gap-4 overflow-hidden"
           style={{
             maxHeight: isActive ? "200" : "0px",
           }}
