@@ -9,12 +9,18 @@ import {
   ProfilePasswordForm,
   ProfileNotificationForm,
 } from "./Forms";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const Options = () => {
   const searchParams = useSearchParams();
-  const menuOption = searchParams.get("menu"); // Odbieranie parametru "menu" z URL
-
+  const menuOption = searchParams.get("menu");
+  const session = useSession();
+  const router = useRouter();
+  if (session.status !== "authenticated" || !session.data) {
+    router.push("/");
+    return null;
+  }
   return (
     <div className="w-full col-span-9 p-16 grid grid-cols-2 gap-8">
       {menuOption === "Public" || menuOption === null ? (
@@ -23,22 +29,27 @@ const Options = () => {
             <ProfileImageForm />
           </Card>
           <Card title="Zmień swoją nazwę">
-            <ProfileNameForm />
+            <ProfileNameForm defaultName={session.data.user.name || ""} />
           </Card>
           <Card title="Opis profilu" className="col-span-2">
-            <ProfileDescriptionForm />
+            <ProfileDescriptionForm
+              defaultDescription={session.data.user.description}
+            />
           </Card>
         </>
       ) : menuOption === "Private" ? (
         <>
           <Card title="Zmień adres email">
-            <ProfileEmailForm />
+            <ProfileEmailForm defaultEmail={session.data.user.email} />
           </Card>
           <Card title="Zmień hasło">
             <ProfilePasswordForm />
           </Card>
           <Card title="Powiadomienia">
-            <ProfileNotificationForm />
+            <ProfileNotificationForm
+              defaultNotifications={session.data.notifications}
+              defaultAds={session.data.ads}
+            />
           </Card>
         </>
       ) : menuOption === "Help" ? (

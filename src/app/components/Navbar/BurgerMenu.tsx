@@ -22,7 +22,7 @@ const BurgerMenu: React.FC<BurgerMenuProps> = ({ open }) => {
         }}
         exit={{
           height: 0,
-          transition: { duration: 0, ease: "easeInOut", delay: 0.2 },
+          transition: { duration: 0.5, ease: "easeInOut", delay: 0.2 },
         }}
       />
     </div>
