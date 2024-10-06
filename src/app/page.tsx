@@ -13,7 +13,6 @@ import Button from "./components/MainPage/Button";
 import ImageHorizontal from "./components/MainPage/ImageHorizontal";
 
 export default function Home() {
-  const session = useSession();
   useSmoothScroll();
 
   // First and second section

@@ -20,11 +20,9 @@ const LoginForm = () => {
   const [disabled, setDisabled] = React.useState<boolean>(false);
   const session = useSession();
   const router = useRouter();
-  React.useEffect(() => {
-    if (session.status === "authenticated") {
-      router.push("/");
-    }
-  }, []);
+  if (session.status === "authenticated") {
+    router.push("/");
+  }
   const {
     register,
     handleSubmit,
@@ -43,16 +41,16 @@ const LoginForm = () => {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setDisabled(true);
     const result = await signIn("credentials", {
-      redirect: false,
       email: data.email,
       password: data.password,
+      callbackUrl: "/",
     });
     setDisabled(false);
     setLoading(false);
     if (result?.error) {
       console.log(result.error);
     } else {
-      router.push("/");
+      window.location.href = "/";
     }
   };
 

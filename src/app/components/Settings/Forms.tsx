@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import Image from "next/legacy/image";
 import { motion } from "framer-motion";
 import useProfileForm from "@/app/hooks/useProfileForm";
+import { profileSchemas } from "@/app/lib/zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signOut, useSession } from "next-auth/react";
 
 type FormValues = {
   image: File | null;
@@ -18,6 +21,15 @@ export function ProfileImageForm() {
   });
 
   const submitData = useProfileForm("image");
+  const { data: session } = useSession();
+
+  const onSubmit = async (data: FormValues) => {
+    const response = await submitData(data);
+
+    if (response && response.status === 200 && session) {
+      await signOut({ callbackUrl: "/login" });
+    }
+  };
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const imageFile = watch("image");
 
@@ -30,10 +42,6 @@ export function ProfileImageForm() {
       };
     }
   }, [imageFile]);
-
-  const onSubmit = (data: FormValues) => {
-    submitData(data);
-  };
 
   const onClick = () => {
     const input = document.querySelector(
@@ -92,16 +100,26 @@ export function ProfileImageForm() {
 
 export function ProfileNameForm({ defaultName }: { defaultName: string }) {
   const [focused, setFocused] = useState(false);
-  const { register, handleSubmit } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(profileSchemas.name),
     defaultValues: {
       name: defaultName,
     },
   });
 
   const submitData = useProfileForm("name");
+  const { data: session } = useSession();
+  const onSubmit = async (data: { name: string }) => {
+    const response = await submitData(data);
 
-  const onSubmit = (data: { name: string }) => {
-    submitData(data);
+    if (response && response.status === 200 && session) {
+      console.log("User name updated");
+      await signOut({ callbackUrl: "/login" });
+    }
   };
 
   return (
@@ -125,6 +143,7 @@ export function ProfileNameForm({ defaultName }: { defaultName: string }) {
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
         />
+        {errors.name && <p className="text-red-500">{errors.name.message}</p>}
       </div>
       <button
         type="submit"
@@ -142,16 +161,26 @@ export function ProfileDescriptionForm({
   defaultDescription: string;
 }) {
   const [focused, setFocused] = useState(false);
-  const { register, handleSubmit } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(profileSchemas.description),
     defaultValues: {
       description: defaultDescription || "",
     },
   });
 
   const submitData = useProfileForm("description");
+  const { data: session } = useSession();
 
-  const onSubmit = (data: { description: string }) => {
-    submitData(data);
+  const onSubmit = async (data: { description: string }) => {
+    const response = await submitData(data);
+
+    if (response && response.status === 200 && session) {
+      await signOut({ callbackUrl: "/login" });
+    }
   };
 
   return (
@@ -163,7 +192,7 @@ export function ProfileDescriptionForm({
         <motion.label
           htmlFor="description"
           className="text-white absolute cursor-text duration-200 transition-all text-white/70"
-          style={{ top: focused ? "-10%" : "0%" }}
+          style={{ top: "-10%" }}
         >
           Podaj swój nowy opis
         </motion.label>
@@ -175,6 +204,9 @@ export function ProfileDescriptionForm({
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
         />
+        {errors.description && (
+          <p className="text-red-500">{errors.description.message}</p>
+        )}
       </div>
       <button
         type="submit"
@@ -190,17 +222,30 @@ export function ProfileDescriptionForm({
 export function ProfileEmailForm({ defaultEmail }: { defaultEmail: string }) {
   const [focused, setFocused] = useState(false);
   const [focused2, setFocused2] = useState(false);
-  const { register, handleSubmit } = useForm({
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(profileSchemas.email),
     defaultValues: {
-      email: defaultEmail,
+      email: "",
       confirmEmail: "",
     },
   });
+  const email = watch("email");
+  const confirmEmail = watch("confirmEmail");
 
   const submitData = useProfileForm("email");
+  const { data: session } = useSession();
 
-  const onSubmit = (data: { email: string }) => {
-    submitData(data);
+  const onSubmit = async (data: { email: string; confirmEmail: string }) => {
+    const response = await submitData(data);
+
+    if (response && response.status === 200 && session) {
+      await signOut({ callbackUrl: "/login" });
+    }
   };
 
   return (
@@ -213,7 +258,7 @@ export function ProfileEmailForm({ defaultEmail }: { defaultEmail: string }) {
           <motion.label
             htmlFor="email"
             className="text-white absolute cursor-text duration-200 transition-all text-white/70"
-            style={{ top: focused || !!defaultEmail ? "-10%" : "40%" }}
+            style={{ top: focused || email ? "-10%" : "40%" }}
           >
             Podaj swój nowy email
           </motion.label>
@@ -225,12 +270,15 @@ export function ProfileEmailForm({ defaultEmail }: { defaultEmail: string }) {
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
           />
+          {errors.email && (
+            <p className="text-red-500">{errors.email.message}</p>
+          )}
         </div>
         <div className="relative">
           <motion.label
             htmlFor="confirmEmail"
             className="text-white absolute cursor-text duration-200 transition-all text-white/70"
-            style={{ top: focused2 ? "-10%" : "40%" }}
+            style={{ top: focused2 || confirmEmail ? "-10%" : "40%" }}
           >
             Wpisz ponownie swój nowy adres email
           </motion.label>
@@ -242,6 +290,9 @@ export function ProfileEmailForm({ defaultEmail }: { defaultEmail: string }) {
             onFocus={() => setFocused2(true)}
             onBlur={() => setFocused2(false)}
           />
+          {errors.confirmEmail && (
+            <p className="text-red-500">{errors.confirmEmail.message}</p>
+          )}
         </div>
       </div>
       <button
@@ -257,21 +308,35 @@ export function ProfileEmailForm({ defaultEmail }: { defaultEmail: string }) {
 export const ProfilePasswordForm = () => {
   const [focused, setFocused] = useState(false);
   const [focused2, setFocused2] = useState(false);
-  const { register, handleSubmit, watch } = useForm({
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(profileSchemas.password),
     defaultValues: {
       password: "",
       confirmPassword: "",
     },
   });
+
   const password = watch("password");
   const confirmPassword = watch("confirmPassword");
 
   const submitData = useProfileForm("password");
+  const { data: session } = useSession();
 
-  const onSubmit = (data: { password: string; confirmPassword: string }) => {
-    submitData(data);
+  const onSubmit = async (data: {
+    password: string;
+    confirmPassword: string;
+  }) => {
+    const response = await submitData(data);
+
+    if (response && response.status === 200 && session) {
+      await signOut({ callbackUrl: "/login" });
+    }
   };
-
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -291,12 +356,12 @@ export const ProfilePasswordForm = () => {
             type="password"
             id="password"
             className="p-2 bg-transparent border-b-2 outline-none duration-200 mt-2 w-full"
-            style={{
-              borderBottomColor: focused ? "#3b82f6" : "white",
-            }}
-            onFocus={() => setFocused(() => true)}
-            onBlur={() => setFocused(() => false)}
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
           />
+          {errors.password && (
+            <p className="text-red-500">{errors.password.message}</p>
+          )}
         </div>
         <div className="relative">
           <motion.label
@@ -304,19 +369,19 @@ export const ProfilePasswordForm = () => {
             className="text-white absolute cursor-text duration-200 transition-all text-white/70"
             style={{ top: focused2 || confirmPassword ? "-10%" : "40%" }}
           >
-            Wpisz ponownie swoje nowe hasło
+            Potwierdź nowe hasło
           </motion.label>
           <motion.input
             {...register("confirmPassword")}
             type="password"
             id="confirmPassword"
             className="p-2 bg-transparent border-b-2 outline-none duration-200 mt-2 w-full"
-            style={{
-              borderBottomColor: focused2 ? "#3b82f6" : "white",
-            }}
-            onFocus={() => setFocused2(() => true)}
-            onBlur={() => setFocused2(() => false)}
+            onFocus={() => setFocused2(true)}
+            onBlur={() => setFocused2(false)}
           />
+          {errors.confirmPassword && (
+            <p className="text-red-500">{errors.confirmPassword.message}</p>
+          )}
         </div>
       </div>
       <button
@@ -344,11 +409,15 @@ export const ProfileNotificationForm = ({
   });
 
   const submitData = useProfileForm("notifications");
+  const { data: session } = useSession();
 
-  const onSubmit = (data: { notifications: boolean; ads: boolean }) => {
-    submitData(data);
+  const onSubmit = async (data: { notifications: boolean; ads: boolean }) => {
+    const response = await submitData(data);
+
+    if (response && response.status === 200 && session) {
+      await signOut({ callbackUrl: "/login" });
+    }
   };
-
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}

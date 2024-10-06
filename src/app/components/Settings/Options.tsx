@@ -1,5 +1,6 @@
 "use client";
-import React from "react";
+
+import React, { useEffect } from "react";
 import Card from "./Card";
 import {
   ProfileImageForm,
@@ -15,48 +16,53 @@ import { useSession } from "next-auth/react";
 const Options = () => {
   const searchParams = useSearchParams();
   const menuOption = searchParams.get("menu");
-  const session = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
-  if (session.status !== "authenticated" || !session.data) {
+
+  useEffect(() => {}, [session, status]);
+
+  if (status === "loading") {
+    return <p>Ładowanie...</p>;
+  }
+
+  if (status !== "authenticated" || !session) {
     router.push("/");
     return null;
   }
+
   return (
     <div className="w-full col-span-9 p-16 grid grid-cols-2 gap-8">
+      {/* PUBLIC FORMS */}
       {menuOption === "Public" || menuOption === null ? (
         <>
           <Card title="Zmień zdjęcie profilowe">
             <ProfileImageForm />
           </Card>
           <Card title="Zmień swoją nazwę">
-            <ProfileNameForm defaultName={session.data.user.name || ""} />
+            <ProfileNameForm defaultName={session.user?.name || ""} />
           </Card>
           <Card title="Opis profilu" className="col-span-2">
             <ProfileDescriptionForm
-              defaultDescription={session.data.user.description}
+              defaultDescription={session.description || ""}
             />
           </Card>
         </>
-      ) : menuOption === "Private" ? (
+      ) : null}
+
+      {/* PRIVATE FORMS */}
+      {menuOption === "Private" ? (
         <>
           <Card title="Zmień adres email">
-            <ProfileEmailForm defaultEmail={session.data.user.email} />
+            <ProfileEmailForm defaultEmail={session.user?.email || ""} />
           </Card>
           <Card title="Zmień hasło">
             <ProfilePasswordForm />
           </Card>
           <Card title="Powiadomienia">
             <ProfileNotificationForm
-              defaultNotifications={session.data.notifications}
-              defaultAds={session.data.ads}
+              defaultNotifications={session.user?.notifications || false}
+              defaultAds={session.user?.ads || false}
             />
-          </Card>
-        </>
-      ) : menuOption === "Help" ? (
-        <>
-          <Card title="Pomoc">
-            {/* Formularze lub komponenty związane z pomocą */}
-            <p>To jest sekcja pomocy.</p>
           </Card>
         </>
       ) : null}

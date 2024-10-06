@@ -6,7 +6,6 @@ import prisma from "./lib/prisma";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
-// Twój CustomUser
 type CustomUser = {
   description: string;
   id: string;
@@ -18,10 +17,9 @@ type CustomUser = {
   roles: string[];
 };
 
-// Rozszerzenie DefaultSession
 declare module "next-auth" {
   interface Session {
-    user: CustomUser; // Ustawienie CustomUser
+    user: CustomUser;
     ads: boolean;
     notifications: boolean;
     roles: string[];
@@ -85,7 +83,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   callbacks: {
     async session({ session, token }) {
-      // Upewnienie się, że token jest prawidłowego typu
       session.ads = token.ads as boolean; 
       session.notifications = token.notifications as boolean;
       session.roles = token.roles as string[];

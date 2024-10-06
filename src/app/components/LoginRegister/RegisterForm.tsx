@@ -35,11 +35,9 @@ const RegisterForm = () => {
   });
   const router = useRouter();
   const session = useSession();
-  React.useEffect(() => {
-    if (session.status === "authenticated") {
-      router.push("/");
-    }
-  }, []);
+  if (session.status === "authenticated") {
+    router.push("/");
+  }
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       if (processing) return;
