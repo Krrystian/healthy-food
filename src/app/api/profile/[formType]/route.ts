@@ -28,13 +28,12 @@ const data = await req.json();
       return NextResponse.json({ message: error.errors }, { status: 400 });
     }
 
-    console.log("Data to submit:", validationResult);
 
     switch (formType) {
       case 'image':
         updatedUser = await prisma.user.update({
           where: { id: userId },
-          data: { image: (validationResult as { image: string }).image },
+          data: { image: (validationResult as { imageUrl: string }).imageUrl },
         });
         break;
 

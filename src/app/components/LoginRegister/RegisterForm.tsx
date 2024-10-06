@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 import Button from "./Button";
 import GoogleButton from "./GoogleButton";
@@ -35,9 +35,11 @@ const RegisterForm = () => {
   });
   const router = useRouter();
   const session = useSession();
-  if (session.status === "authenticated") {
-    router.push("/");
-  }
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      router.push("/");
+    }
+  }, [session.status, router]);
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       if (processing) return;

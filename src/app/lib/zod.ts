@@ -128,7 +128,7 @@ export const tdeeSchema = object({
 
 export const profileSchemas = {
   image: object({
-    image: string({ required_error: "Obraz jest wymagany" }),
+    imageUrl: string(),
   }),
   name: object({
     name: string({ required_error: "Imię jest wymagane" })

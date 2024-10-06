@@ -60,8 +60,8 @@ const Options = () => {
           </Card>
           <Card title="Powiadomienia">
             <ProfileNotificationForm
-              defaultNotifications={session.user?.notifications || false}
-              defaultAds={session.user?.ads || false}
+              defaultNotifications={session.notifications || false}
+              defaultAds={session.ads || false}
             />
           </Card>
         </>

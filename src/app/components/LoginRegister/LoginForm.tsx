@@ -3,7 +3,7 @@ import { loginSchema } from "@/app/lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 import Button from "./Button";
 import Input from "./Input";
@@ -20,9 +20,13 @@ const LoginForm = () => {
   const [disabled, setDisabled] = React.useState<boolean>(false);
   const session = useSession();
   const router = useRouter();
-  if (session.status === "authenticated") {
-    router.push("/");
-  }
+
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      router.push("/");
+    }
+  }, [session.status, router]);
+
   const {
     register,
     handleSubmit,
@@ -38,6 +42,7 @@ const LoginForm = () => {
   const handleLoad = () => {
     setLoading(false);
   };
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setDisabled(true);
     const result = await signIn("credentials", {

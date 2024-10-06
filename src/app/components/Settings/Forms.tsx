@@ -507,7 +507,7 @@ export const ProfileNotificationForm = ({
       </div>
       <button
         type="submit"
-        className="bg-white/10 p-2 rounded-xl duration-300 hover:bg-blue-500"
+        className="bg-white/10 p-2 rounded-xl duration-300 hover:bg-blue-500 mt-4"
       >
         Zapisz
       </button>
