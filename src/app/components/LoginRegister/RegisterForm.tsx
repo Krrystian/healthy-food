@@ -73,59 +73,62 @@ const RegisterForm = () => {
     <>
       <Background loading={handleLoad} />
       {!loading && (
-        <div className="absolute top-0 h-screen right-0 flex items-center z-20 w-[40vw]">
-          <div className="px-16 w-full bg-[#FFB703]/90 rounded-l-3xl h-[90vh] flex flex-col items-center justify-center shadow-xl">
+        <div className="absolute top-0 h-screen right-24 flex items-center z-20 w-[30vw]">
+          <div className="px-8 w-full bg-[#FFB703]/90 rounded-3xl h-[80vh] flex flex-col items-center justify-center shadow-xl">
             <div className="w-full flex gap-4 items-center pb-8">
-              <div className="h-1 rounded-xl w-full bg-black" />
-              <h1 className="text-5xl font-black">WELCOME</h1>
-              <div className="h-1 rounded-xl w-full bg-black" />
+              <div className="h-[2px] rounded-xl w-full bg-black" />
+              <h1 className="text-3xl font-black">WELCOME</h1>
+              <div className="h-[2px] rounded-xl w-full bg-black" />
             </div>
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="flex flex-col w-[60%] gap-10"
+              className="flex flex-col w-full gap-10 items-center"
             >
-              <Input
-                placeholder="Name"
-                type="text"
-                register={register}
-                name="nameReg"
-                autoComplete="name"
-                disabled={processing}
-                error={errors.name?.message as string}
-              />
-              <Input
-                placeholder="Email"
-                type="email"
-                register={register}
-                name="emailReg"
-                autoComplete="email"
-                disabled={processing}
-                error={errors.email?.message as string}
-              />
-              <Input
-                placeholder="Password"
-                type="password"
-                register={register}
-                name="passwordReg"
-                autoComplete="new-password"
-                disabled={processing}
-                error={errors.password?.message as string}
-              />
-              <Input
-                placeholder="Confirm password"
-                type="password"
-                register={register}
-                name="confirm_passwordReg"
-                autoComplete="new-password"
-                disabled={processing}
-                error={match}
-              />
+              <div className="flex flex-col w-[50%] gap-10 justify-center items-center">
+                <Input
+                  placeholder="Name"
+                  type="text"
+                  register={register}
+                  name="nameReg"
+                  autoComplete="name"
+                  disabled={processing}
+                  error={errors.name?.message as string}
+                />
+                <Input
+                  placeholder="Email"
+                  type="email"
+                  register={register}
+                  name="emailReg"
+                  autoComplete="email"
+                  disabled={processing}
+                  error={errors.email?.message as string}
+                />
+
+                <Input
+                  placeholder="Password"
+                  type="password"
+                  register={register}
+                  name="passwordReg"
+                  autoComplete="new-password"
+                  disabled={processing}
+                  error={errors.password?.message as string}
+                />
+                <Input
+                  placeholder="Confirm password"
+                  type="password"
+                  register={register}
+                  name="confirm_passwordReg"
+                  autoComplete="new-password"
+                  disabled={processing}
+                  error={match}
+                />
+              </div>
               <div className="flex w-full justify-center">
                 <Button
                   label="Register"
                   labelSecondary="Change your life!"
                   type="submit"
-                  className="w-full border-2 border-black"
+                  className=" border-2 border-black text-xl w-[60%]"
                   disabled={processing}
                   classNameLabel="bg-[#FFB703]/90"
                   classNameLabelSecondary=""
@@ -145,7 +148,7 @@ const RegisterForm = () => {
                 onClick={() => {
                   animatePageOut("/login", router);
                 }}
-                className="w-[60%] border-2 border-black"
+                className="w-[60%] border-2 border-black text-xl"
                 classNameLabel="bg-red-600"
                 labelSecondary="Login now!"
               />

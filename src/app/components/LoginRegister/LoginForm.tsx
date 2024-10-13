@@ -62,50 +62,52 @@ const LoginForm = () => {
   return (
     <>
       <Background loading={handleLoad} />
-      <div className="absolute top-0 h-screen right-0 flex items-center z-20 w-[40vw]">
-        <div className="px-16 w-full bg-[#FFB703]/90 rounded-l-3xl h-[80vh] flex flex-col items-center justify-center shadow-xl">
+      <div className="absolute top-0 h-screen right-24 flex items-center z-20 w-[30vw]">
+        <div className="px-8 w-full bg-[#FFB703]/90 rounded-3xl h-[60vh] flex flex-col items-center justify-center shadow-xl">
           <div className="w-full flex gap-4 items-center py-8">
-            <div className="h-1 rounded-xl w-full bg-black" />
-            <h1 className="text-5xl font-black">WELCOME</h1>
-            <div className="h-1 rounded-xl w-full bg-black" />
+            <div className="h-[2px] rounded-xl w-full bg-black" />
+            <h1 className="text-3xl font-black">WELCOME</h1>
+            <div className="h-[2px] rounded-xl w-full bg-black" />
           </div>
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col w-[60%] gap-10"
+            className="flex flex-col w-full gap-10 items-center"
           >
-            <Input
-              placeholder="Email"
-              type="email"
-              register={register}
-              name="email"
-              disabled={disabled}
-              autoComplete="email"
-              error={errors.email?.message as string}
-            />
-            <Input
-              placeholder="Password"
-              type="password"
-              register={register}
-              name="password"
-              disabled={disabled}
-              autoComplete="password"
-              error={errors.password?.message as string}
-            />
+            <div className="flex flex-col w-[50%] gap-10 justify-center items-center">
+              <Input
+                placeholder="Email"
+                type="email"
+                register={register}
+                name="email"
+                disabled={disabled}
+                autoComplete="email"
+                error={errors.email?.message as string}
+              />
+              <Input
+                placeholder="Password"
+                type="password"
+                register={register}
+                name="password"
+                disabled={disabled}
+                autoComplete="password"
+                error={errors.password?.message as string}
+              />
+            </div>
             <div className="flex w-full justify-center">
               <Button
                 label="Login"
                 labelSecondary="We missed you!"
                 type="submit"
-                className="w-full border-2 border-black"
+                className=" border-2 border-black text-xl w-[60%]"
                 disabled={disabled}
                 classNameLabel="bg-[#FFB703]/90"
               />
             </div>
           </form>
           <div className="w-full flex gap-4 items-center py-6">
-            <div className="h-1 rounded-xl w-full bg-black" />
-            <h1 className="text-2xl font-black">OR</h1>
-            <div className="h-1 rounded-xl w-full bg-black" />
+            <div className="h-[2px] rounded-xl w-full bg-black" />
+            <h1 className="text-xl font-black">OR</h1>
+            <div className="h-[2px] rounded-xl w-full bg-black" />
           </div>
           <div className="flex flex-col w-full  items-center gap-4">
             <GoogleButton />
@@ -115,7 +117,7 @@ const LoginForm = () => {
               onClick={() => {
                 animatePageOut("/register", router);
               }}
-              className="w-[60%] border-2 border-black"
+              className="w-[60%] border-2 border-black text-xl"
               classNameLabel="bg-red-600"
               labelSecondary="Register now!"
             />

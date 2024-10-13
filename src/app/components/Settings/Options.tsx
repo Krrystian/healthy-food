@@ -12,6 +12,7 @@ import {
 } from "./Forms";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 const Options = () => {
   const searchParams = useSearchParams();
@@ -64,6 +65,26 @@ const Options = () => {
               defaultAds={session.ads || false}
             />
           </Card>
+          {
+            // ADMIN FORMS
+            session.roles.includes("admin") ? (
+              <Card title="Panel administratora">
+                <div className="flex flex-col justify-between h-full">
+                  <div />
+                  <Link
+                    className="w-full h-12 bg-red-500 text-white rounded-lg flex justify-center items-center text-2xl hover:bg-blue-500 duration-300"
+                    href={"/account/adm"}
+                  >
+                    Przejdź na panel administatora
+                  </Link>
+                  <p className="text-white/50 italic">
+                    Uwaga: Wchodząc na panel administratora bierzesz
+                    odpowiedzialność za wszystkie wykonywane akcje
+                  </p>
+                </div>
+              </Card>
+            ) : null
+          }
         </>
       ) : null}
     </div>

@@ -7,7 +7,7 @@ export async function googleAuthenticate(
   formData: FormData,
 ) {
   try {
-    await signIn('google');
+    await signIn('google', {callbackUrl: '/'});
 
   } catch (error) {
     if (error instanceof AuthError) {

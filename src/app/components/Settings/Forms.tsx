@@ -19,9 +19,8 @@ export function ProfileImageForm() {
       image: null,
     },
   });
-
-  const submitData = useProfileForm("image");
   const { data: session } = useSession();
+  const submitData = useProfileForm("image", session?.user.email);
 
   const onSubmit = async (data: FormValues) => {
     const response = await submitData(data);
