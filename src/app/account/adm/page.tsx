@@ -5,7 +5,9 @@ import BackgroundPattern from "@/app/components/BackgroundPattern";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React from "react";
-
+// export const metadata: Metadata = {
+//   title: "Admin Panel",
+// };
 const Page = () => {
   const { data: session } = useSession();
   const router = useRouter();

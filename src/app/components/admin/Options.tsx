@@ -1,9 +1,9 @@
 "use client";
-
 import React, { useEffect } from "react";
 import Card from "../Settings/Card";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { Users } from "./Forms";
 
 const Options = () => {
   const searchParams = useSearchParams();
@@ -28,12 +28,13 @@ const Options = () => {
     router.push("/");
     return null;
   }
-
   return (
     <div className="w-full col-span-9 p-16 grid grid-cols-2 gap-8">
       {menuOption === "Users" || menuOption === null ? (
         <>
-          <Card title="Zmień zdjęcie profilowe"></Card>
+          <Card title="Użytkownicy" className="col-span-2">
+            <Users />
+          </Card>
         </>
       ) : null}
     </div>

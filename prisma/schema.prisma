@@ -14,6 +14,7 @@ model User {
   emailVerified DateTime?
   password      String?
   image         String?
+  active        Boolean      @default(true)
   description   String?      @default("")
   notifications Boolean      @default(true)
   ads           Boolean      @default(false)

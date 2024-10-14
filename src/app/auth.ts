@@ -90,8 +90,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       session.notifications = token.notifications as boolean;
       session.roles = token.roles as string[];
       session.description = token.description as string;
-
-      console.log("session", session);
       return session;
     },
     async jwt({ token, user }) {
