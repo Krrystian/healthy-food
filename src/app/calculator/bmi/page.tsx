@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { bmiSchema } from '@/app/lib/zod';
 import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
+import BackgroundPattern from "../../components/BackgroundPattern";
 
 export default function Page() {
   const {data: session} = useSession();
@@ -77,6 +78,7 @@ export default function Page() {
 
   return (
     <div className='flex w-screen justify-center px-10 mt-[80px]'>
+      <BackgroundPattern/>
       <div>
         <div className='text-center'>
           <h2 className='text-7xl text-[#26BDDC] mb-3'>KALKULATOR BMI</h2>
