@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
 import React, { FormEvent, useEffect, useState } from 'react'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import BackgroundPattern from "../../components/BackgroundPattern";
 
 export default function Page() {
   const {data: session} = useSession();
@@ -78,6 +79,7 @@ export default function Page() {
 
   return (
     <div className='flex w-screen justify-center px-10 mt-[80px]'>
+      <BackgroundPattern/>
       <div>
         <div className='text-center'>
           <h2 className='text-7xl text-[#26BDDC] mb-3'>KALKULATOR TDEE</h2>

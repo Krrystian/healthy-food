@@ -14,6 +14,7 @@ import ImageHorizontal from "./components/MainPage/ImageHorizontal";
 
 export default function Home() {
   useSmoothScroll();
+  console.log(session);
 
   // First and second section
   const container = useRef<HTMLDivElement>(null);
