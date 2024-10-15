@@ -13,7 +13,9 @@ export async function GET(req: Request) {
     const activeFilter = searchParams.get("active");
 
     console.log("Parsed query parameters", { page, searchById, searchByEmail, activeFilter });
+    console.log(req, process.env.AUTH_SECRET);
 
+    
     const user = await getToken({ req, secret: process.env.AUTH_SECRET } as any);
     console.log("Authenticated user", user);
 
