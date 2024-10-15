@@ -20,7 +20,7 @@
     "axios": "^1.7.2",
     "bcryptjs": "^2.4.3",
     "clsx": "^2.1.1",
-    "framer-motion": "^11.2.11",
+    "framer-motion": "^11.11.1",
     "framer-motion-3d": "^11.2.11",
     "gsap": "^3.12.5",
     "lenis": "^1.1.5",
@@ -31,7 +31,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.52.0",
     "split-type": "^0.3.4",
-    "tailwind-merge": "^2.3.0",
+    "tailwind-merge": "^2.5.3",
     "three": "^0.165.0",
     "zod": "^3.23.8"
   },
