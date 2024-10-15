@@ -33,6 +33,7 @@ const font = localFont({
 
 export const metadata: Metadata = {
   // metadataBase: new URL("https://5uxonw73zpjz7342oh3txyw5li.srv.us/"),
+  metadataBase: new URL("localhost:3000"),
   title: {
     default: "Healthy You",
     template: "%s | Healthy You",

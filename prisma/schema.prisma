@@ -8,15 +8,20 @@ generator client {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String       @id @default(cuid())
   name          String?
-  email         String    @unique
+  email         String       @unique
   emailVerified DateTime?
   password      String?
   image         String?
+  active        Boolean      @default(true)
+  description   String?      @default("")
+  notifications Boolean      @default(true)
+  ads           Boolean      @default(false)
   accounts      Account[]
   sessions      Session[]
   calculators   Calculator[]
+  roles         String[]     @default(["user"])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -53,26 +58,18 @@ model Session {
   updatedAt DateTime @updatedAt
 }
 
-model VerificationToken {
-  identifier String
-  token      String
-  expires    DateTime
-
-  @@id([identifier, token])
-}
-
 model Calculator {
-  id              String  @id @default(cuid())
-  userId          String  
-  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  type            String
-  result          Float
-  weight          Float
-  height          Float
-  gender          String?  
-  age             Int?     
-  activityLevel   Float?   
+  id            String  @id @default(cuid())
+  userId        String
+  user          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type          String
+  result        Float
+  weight        Float
+  height        Float
+  gender        String?
+  age           Int?
+  activityLevel Float?
 
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

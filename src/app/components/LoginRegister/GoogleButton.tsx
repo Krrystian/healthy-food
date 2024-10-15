@@ -14,7 +14,7 @@ const GoogleButton = () => {
       <Button
         label="Sign in with Google"
         type="submit"
-        className="w-[60%] border-2 border-black"
+        className="w-[60%] border-2 border-black text-xl"
         classNameLabel="bg-red-600"
         labelSecondary="Start your journey now!"
       />
