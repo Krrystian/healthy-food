@@ -94,6 +94,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async jwt({ token, user }) {
       if (user) {
         const customUser = user as CustomUser; // Rzutowanie do CustomUser
+        token.roles = customUser.roles;
         token.ads = customUser.ads; // Ustawienie ads na token
         token.notifications = customUser.notifications; // Ustawienie notifications na token
         token.roles = customUser.roles; // Ustawienie roles na token
@@ -102,6 +103,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return token;
     },
   },
+  secret: process.env.AUTH_SECRET,
   session: {
     strategy: "jwt",
   },

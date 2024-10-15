@@ -20,16 +20,18 @@ const Options = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  useEffect(() => {}, [session, status]);
+  useEffect(() => {
+    if (status === "loading") return; // Avoid running if still loading
+    if (status !== "authenticated" || !session) {
+      router.push("/");
+    }
+  }, [status, session, router]);
 
   if (status === "loading") {
     return <p>Ładowanie...</p>;
   }
 
-  if (status !== "authenticated" || !session) {
-    router.push("/");
-    return null;
-  }
+  if (!session) return null; // Ensures session is defined
 
   return (
     <div className="w-full col-span-9 p-16 grid grid-cols-2 gap-8">
@@ -65,26 +67,23 @@ const Options = () => {
               defaultAds={session.ads || false}
             />
           </Card>
-          {
-            // ADMIN FORMS
-            session.roles.includes("admin") ? (
-              <Card title="Panel administratora">
-                <div className="flex flex-col justify-between h-full">
-                  <div />
-                  <Link
-                    className="w-full h-12 bg-red-500 text-white rounded-lg flex justify-center items-center text-2xl hover:bg-blue-500 duration-300"
-                    href={"/account/adm"}
-                  >
-                    Przejdź na panel administatora
-                  </Link>
-                  <p className="text-white/50 italic">
-                    Uwaga: Wchodząc na panel administratora bierzesz
-                    odpowiedzialność za wszystkie wykonywane akcje
-                  </p>
-                </div>
-              </Card>
-            ) : null
-          }
+          {session.roles.includes("admin") && (
+            <Card title="Panel administratora">
+              <div className="flex flex-col justify-between h-full">
+                <div />
+                <Link
+                  className="w-full h-12 bg-red-500 text-white rounded-lg flex justify-center items-center text-2xl hover:bg-blue-500 duration-300"
+                  href={"/account/adm"}
+                >
+                  Przejdź na panel administratora
+                </Link>
+                <p className="text-white/50 italic">
+                  Uwaga: Wchodząc na panel administratora bierzesz
+                  odpowiedzialność za wszystkie wykonywane akcje
+                </p>
+              </div>
+            </Card>
+          )}
         </>
       ) : null}
     </div>

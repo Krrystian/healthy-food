@@ -10,7 +10,7 @@ const Menu: React.FC = () => {
   const session = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const currentMenu = searchParams.get("menu") || "Public"; // Domyślnie "Public"
+  const currentMenu = searchParams.get("menu") || "Public";
   const [selected, setSelected] = React.useState<string>(currentMenu);
 
   const fallbackColor = useNameToRGB(session.data?.user?.email || "");
