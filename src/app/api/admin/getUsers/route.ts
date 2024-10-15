@@ -1,9 +1,9 @@
 import prisma from "@/app/lib/prisma";
 import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
-import { act } from "react";
 
 export async function GET(req: Request) {
+  console.log("GET request received");
   try {
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get("page") || "1", 10);
@@ -12,8 +12,13 @@ export async function GET(req: Request) {
     const searchByEmail = searchParams.get("email");
     const activeFilter = searchParams.get("active");
 
+    console.log("Parsed query parameters", { page, searchById, searchByEmail, activeFilter });
+
     const user = await getToken({ req, secret: process.env.AUTH_SECRET } as any);
+    console.log("Authenticated user", user);
+
     const userRoles = user?.roles;
+    console.log("User roles", userRoles);
 
     if (userRoles && userRoles.includes("admin")) {
       const whereClause: any = {};
@@ -33,9 +38,12 @@ export async function GET(req: Request) {
         whereClause.active = false;
       }
 
+      console.log("Constructed where clause", whereClause);
+
       const totalUsers = await prisma.user.count({
         where: whereClause,
       });
+      console.log("Total users count", totalUsers);
 
       const users = await prisma.user.findMany({
         where: whereClause,
@@ -49,6 +57,7 @@ export async function GET(req: Request) {
           roles: true,
         },
       });
+      console.log("Fetched users", users);
 
       return NextResponse.json({
         users,
@@ -56,9 +65,10 @@ export async function GET(req: Request) {
         currentPage: page,
       });
     }
-
+    console.log("Unauthorized access attempt");
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   } catch (error: any) {
+    console.error("Error occurred", error);
     return NextResponse.json({ message: error.message }, { status: 400 });
   }
 }
