@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useLayoutEffect, useRef } from "react";
 import useSmoothScroll from "./hooks/useSmoothScroll";
-import { useSession } from "next-auth/react";
 import BackgroundPattern from "./components/BackgroundPattern";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -14,7 +13,6 @@ import ImageHorizontal from "./components/MainPage/ImageHorizontal";
 
 export default function Home() {
   useSmoothScroll();
-  console.log(session);
 
   // First and second section
   const container = useRef<HTMLDivElement>(null);
