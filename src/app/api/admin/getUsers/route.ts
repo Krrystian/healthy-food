@@ -6,7 +6,7 @@ export async function GET(req: Request) {
     try {
       const { searchParams } = new URL(req.url);
       const page = parseInt(searchParams.get("page") || "1", 10);
-      const pageSize = 10; // Number of users per page
+      const pageSize = 7; // Number of users per page
   
       const user = await getToken({ req, secret: process.env.AUTH_SECRET } as any);
       const userRoles = user?.roles;
@@ -20,6 +20,8 @@ export async function GET(req: Request) {
             id: true,
             name: true,
             email: true,
+            active: true,
+            roles: true,
           },
         });
   
