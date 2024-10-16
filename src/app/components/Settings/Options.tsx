@@ -31,10 +31,10 @@ const Options = () => {
     return <p>Ładowanie...</p>;
   }
 
-  if (!session) return null; // Ensures session is defined
+  if (!session) return null;
 
   return (
-    <div className="w-full col-span-9 p-16 grid grid-cols-2 gap-8">
+    <div className="w-full col-span-9 p-8 grid grid-cols-2 gap-8">
       {/* PUBLIC FORMS */}
       {menuOption === "Public" || menuOption === null ? (
         <>
