@@ -13,7 +13,6 @@ import ImageHorizontal from "./components/MainPage/ImageHorizontal";
 
 export default function Home() {
   useSmoothScroll();
-
   // First and second section
   const container = useRef<HTMLDivElement>(null);
   const stickyMask = useRef<HTMLDivElement>(null);
