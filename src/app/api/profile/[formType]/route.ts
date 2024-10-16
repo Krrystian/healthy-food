@@ -2,12 +2,12 @@ import { NextResponse } from 'next/server';
 import prisma from '@/app/lib/prisma';
 import bcrypt from 'bcryptjs';
 import { profileSchemas } from '@/app/lib/zod';
-import { getToken } from 'next-auth/jwt';
 import { auth } from '@/app/auth';
 
 export async function POST(req: Request, {params}: {params: {formType: string}}) {
   const session = await auth();
   const userId = session?.user.id;
+  console.log("session", session);
   if (!userId) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
