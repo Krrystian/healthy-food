@@ -10,10 +10,12 @@ import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import Footer from "./components/Footer";
 import Button from "./components/MainPage/Button";
 import ImageHorizontal from "./components/MainPage/ImageHorizontal";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
   useSmoothScroll();
-
+  const session = useSession();
+  console.log(session);
   // First and second section
   const container = useRef<HTMLDivElement>(null);
   const stickyMask = useRef<HTMLDivElement>(null);

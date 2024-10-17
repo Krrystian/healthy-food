@@ -63,8 +63,8 @@ const LoginForm = () => {
     <>
       <Background loading={handleLoad} />
       <div className="absolute top-0 h-screen right-24 flex items-center z-20 w-[30vw]">
-        <div className="px-8 w-full bg-[#FFB703]/90 rounded-3xl h-[60vh] flex flex-col items-center justify-center shadow-xl">
-          <div className="w-full flex gap-4 items-center py-8">
+        <div className="px-8 w-full bg-[#FFB703]/90 rounded-3xl min-h-[60vh] py-8 flex flex-col items-center justify-center shadow-xl">
+          <div className="w-full flex gap-4 pb-4 items-center ">
             <div className="h-[2px] rounded-xl w-full bg-black" />
             <h1 className="text-3xl font-black">WELCOME</h1>
             <div className="h-[2px] rounded-xl w-full bg-black" />
@@ -73,7 +73,7 @@ const LoginForm = () => {
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col w-full gap-10 items-center"
           >
-            <div className="flex flex-col w-[50%] gap-10 justify-center items-center">
+            <div className="flex flex-col w-[80%] gap-10 justify-center items-center">
               <Input
                 placeholder="Email"
                 type="email"

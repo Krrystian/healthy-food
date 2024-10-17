@@ -84,7 +84,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   callbacks: {
     async session({ session, token }) {
-      // Upewnienie się, że token jest prawidłowego typu
+      session.user.id = token.id as string;
       session.ads = token.ads as boolean; 
       session.notifications = token.notifications as boolean;
       session.roles = token.roles as string[];
@@ -94,6 +94,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async jwt({ token, user }) {
       if (user) {
         const customUser = user as CustomUser; // Rzutowanie do CustomUser
+        token.id = customUser.id;
         token.roles = customUser.roles;
         token.ads = customUser.ads; // Ustawienie ads na token
         token.notifications = customUser.notifications; // Ustawienie notifications na token
