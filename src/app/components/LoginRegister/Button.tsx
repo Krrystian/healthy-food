@@ -50,7 +50,7 @@ const Button: React.FC<ButtonProps> = ({
         </div>
         <div
           className={cn(
-            "w-full h-full absolute bg-black text-white text-center p-2 top-full",
+            "w-full h-full absolute bg-black text-white text-center flex items-center justify-center p-2 top-full",
             classNameLabelSecondary
           )}
         >

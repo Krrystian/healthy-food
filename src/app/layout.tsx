@@ -31,31 +31,32 @@ const font = localFont({
   ],
 });
 
-export const metadata: Metadata = {
-  // metadataBase: new URL("https://5uxonw73zpjz7342oh3txyw5li.srv.us/"),
-  title: {
-    default: "Healthy You",
-    template: "%s | Healthy You",
-  },
-  description:
-    "Kompleksowe podejście do zdrowego odżywiania. Zdrowy ty, szczęśliwy ty.",
-  openGraph: {
-    images: [
-      {
-        url: "/opengraph-image.png",
-        // url: new URL(
-        //   "https://5uxonw73zpjz7342oh3txyw5li.srv.us/opengraph-image.png"
-        // ),
-        width: 1200,
-        height: 630,
-        alt: "Healthy You",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-  },
-};
+// export const metadata: Metadata = {
+//   metadataBase: new URL("https://5uxonw73zpjz7342oh3txyw5li.srv.us/"),
+//   // metadataBase: new URL("localhost:3000"),
+//   title: {
+//     default: "Healthy You",
+//     template: "%s | Healthy You",
+//   },
+//   description:
+//     "Kompleksowe podejście do zdrowego odżywiania. Zdrowy ty, szczęśliwy ty.",
+//   openGraph: {
+//     images: [
+//       {
+//         // url: "/opengraph-image.png",
+//         url: new URL(
+//           "https://5uxonw73zpjz7342oh3txyw5li.srv.us/opengraph-image.png"
+//         ),
+//         width: 1200,
+//         height: 630,
+//         alt: "Healthy You",
+//       },
+//     ],
+//   },
+//   twitter: {
+//     card: "summary_large_image",
+//   },
+// };
 
 export default async function RootLayout({
   children,
@@ -65,7 +66,7 @@ export default async function RootLayout({
   const session = await auth();
   return (
     <html lang="en">
-      <body className={font.className}>
+      <body className={font.className + " " + "overflow-x-hidden"}>
         <AuthProvider session={session}>
           <Navbar />
           {children}

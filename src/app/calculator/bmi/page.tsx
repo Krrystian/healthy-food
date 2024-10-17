@@ -1,21 +1,39 @@
 "use client";
-import { parse } from 'path';
-import React, { FormEvent, useState } from 'react'
+import { useSession } from 'next-auth/react';
+import React, { useState, useEffect } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { bmiSchema } from '@/app/lib/zod';
+import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
+import BackgroundPattern from "../../components/BackgroundPattern";
 
 export default function Page() {
-  const [weight, setWeight] = useState<number | string>('');
-  const [height, setHeight] = useState<number | string>('');
+  const {data: session} = useSession();
+  const [weight, setWeight] = useState<any>('');
+  const [height, setHeight] = useState<any>('');
   const [bmi, setBmi] = useState<number | null>(null);
   const [row, setRow] = useState<number | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
 
-  const calculateBMI = (e : FormEvent<HTMLFormElement>) : void => {
-    e.preventDefault();
-    const weightVal = parseFloat(weight as string);
-    const heightVal = parseFloat(height as string);
+  useEffect(() => {
+    if (!session) {
+      setMessage("Zaloguj się, aby móc zapisać wynik kalkulatora.");
+    }
+  }, [session]);
 
-    if (heightVal > 0 && weightVal > 0) {
-      const heightInMeters = heightVal / 100;
-      const valueBMI = (weightVal / (heightInMeters * heightInMeters)).toFixed(2);
+  const {register, handleSubmit, formState: { errors }} = useForm<FieldValues>({
+    resolver: zodResolver(bmiSchema),
+    defaultValues: {
+      weight: '',
+      height: ''
+    }
+  })
+  
+  const calculateBMI : SubmitHandler<FieldValues> = async (data) => {
+    try{
+      const { weight, height } = data;
+
+      const heightInMeters = Number(height) / 100;
+      const valueBMI = (Number(weight) / (heightInMeters * heightInMeters)).toFixed(2);
       const bmiVal = parseFloat(valueBMI);
       setBmi(bmiVal);
 
@@ -30,11 +48,37 @@ export default function Page() {
       else rowToHighlight = 8;
 
       setRow(rowToHighlight);
-    }    
+
+      if(session){
+        const response = await fetch('/api/auth/calculator', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId: session.user?.id,
+            type: "BMI",
+            weight: weight,
+            height: height,
+            result: bmiVal,
+          }),
+        });
+
+        if (response.ok) {
+          setMessage('Wynik został zapisany pomyślnie.');
+        } else {
+          setMessage('Wystąpił problem podczas zapisywania wyniku.');
+        }
+      }
+     
+    } catch{
+      console.log(errors)
+    }
   }
 
   return (
-    <div className='flex w-screen justify-center px-10 mt-24'>
+    <div className='flex w-screen justify-center px-10 mt-[80px]'>
+      <BackgroundPattern/>
       <div>
         <div className='text-center'>
           <h2 className='text-7xl text-[#26BDDC] mb-3'>KALKULATOR BMI</h2>
@@ -94,16 +138,18 @@ export default function Page() {
 
             <div className='w-1/2 pl-4'>
               <h3 className='text-4xl text-[#009E52] mb-4'>Oblicz swoje BMI!</h3>
-              <form onSubmit={calculateBMI}>
+              <form onSubmit={handleSubmit(calculateBMI)}>
                 <table className='w-full'>
                   <tbody>
                     <tr className='p-2'>
                       <td className='pr-4 text-left'><label>Waga (kg):</label></td>
-                      <td><input type='number' value={weight} onChange={(e) => setWeight(e.target.value)} required className='w-full p-2 border border-gray-300 rounded focus:border-[#009E52] focus:outline-none'/></td>
+                      <td><input type='text' {...register('weight', {required: true, onChange: (e) => setWeight(e.target.value), })}  className='w-full p-2 border border-gray-300 rounded focus:border-[#009E52] focus:outline-none'/></td>
                     </tr>
                     <tr className='p-2'>
                       <td className='text-left pr-4'><label>Wzrost (cm):</label></td>
-                      <td><input type='number' value={height} onChange={(e) => setHeight(e.target.value)} required className='w-full p-2 border border-gray-300 rounded focus:border-[#009E52] focus:outline-none'/></td>
+                      <td><input type='text'
+                        {...register('height', {required: true, onChange: (e) => setHeight(e.target.value), })} 
+                        className='w-full p-2 border border-gray-300 rounded focus:border-[#009E52] focus:outline-none'/></td>
                     </tr>
                     <tr>
                       <td colSpan={2} className='text-center p-2'>
@@ -113,24 +159,27 @@ export default function Page() {
                   </tbody>
                 </table>
               </form>
-              {bmi !== null && (
-                <div className='mt-4 text-center font-semibold'>
-                  Twoje BMI: {bmi}
-                  <br />
-                  {row === 1 || row === 2 || row === 3 ? "Twoje BMI jest zbyt niskie. Zaleca się konsultację z lekarzem."
-                    : row === 4 ? "Twoje BMI jest w normie!"
-                    : (row === 5 || row === 6 || row === 7 || row === 8)
-                    ? "Twoje BMI jest za wysokie. Rozważ zmianę diety i stylu życia."
-                    : ""
-                  }
+              {(bmi !== null || message) && (
+                <div className='mt-4 text-center'>
+                  <div className='font-semibold'>
+                    Twoje BMI: {bmi}
+                    <br />
+                    {row === 1 || row === 2 || row === 3 ? "Twoje BMI jest zbyt niskie. Zaleca się konsultację z lekarzem."
+                      : row === 4 ? "Twoje BMI jest w normie!"
+                      : (row === 5 || row === 6 || row === 7 || row === 8)
+                      ? "Twoje BMI jest za wysokie. Rozważ zmianę diety i stylu życia."
+                      : ""
+                    }
+                  </div>
+                  <div className='text-[#DC2626]'>
+                    {message}                
+                  </div>
                 </div>
               )}
             </div>            
-
           </div>
         </div>
       </div>
     </div>
   )
-  
 }
