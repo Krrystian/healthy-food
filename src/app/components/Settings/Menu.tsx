@@ -72,15 +72,6 @@ const Menu: React.FC = () => {
         >
           Prywatne
         </button>
-        <button
-          className={cn(
-            "p-2 rounded-2xl px-4",
-            selected === "Help" ? "bg-[#019E52]" : "hover:bg-[#27BDDF]"
-          )}
-          onClick={() => changeSelection("Help")}
-        >
-          Pomoc
-        </button>
       </div>
     </div>
   );

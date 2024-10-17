@@ -1,4 +1,4 @@
-import { object, string, number } from "zod"
+import { object, string, number, boolean } from "zod"
  
 export const signInSchema = object({
   email: string({ required_error: "Email is required" })
@@ -125,3 +125,36 @@ export const tdeeSchema = object({
   gender: string(),
   activityLevel: string(),
 })
+
+export const profileSchemas = {
+  image: object({
+    imageUrl: string(),
+  }),
+  name: object({
+    name: string({ required_error: "Imię jest wymagane" })
+      .min(2, "Imię musi mieć co najmniej 2 znaki")
+      .max(50, "Imię nie może przekraczać 50 znaków"),
+  }),
+  email: object({
+    email: string({ required_error: "Email jest wymagany" })
+      .email("Nieprawidłowy adres email"),
+  }),
+  description: object({
+    description: string(),
+  }),
+  password: object({
+    password: string({ required_error: "Hasło jest wymagane" })
+      .min(8, "Hasło musi mieć co najmniej 8 znaków")
+      .max(32, "Hasło nie może przekraczać 32 znaków"),
+    confirmPassword: string({ required_error: "Potwierdzenie hasła jest wymagane" })
+      .min(8, "Potwierdzenie hasła musi mieć co najmniej 8 znaków")
+      .max(32, "Potwierdzenie hasła nie może przekraczać 32 znaków"),
+  }).refine((data) => data.password === data.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "Hasła nie są zgodne",
+  }),
+  notifications: object({
+    notifications: boolean(),
+    ads: boolean(),
+  }),
+};
