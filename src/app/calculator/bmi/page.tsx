@@ -49,8 +49,9 @@ export default function Page() {
 
       setRow(rowToHighlight);
 
+      console.log(session);
       if(session){
-        const response = await fetch('/api/auth/calculator', {
+        const response = await fetch('/api/calculator', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
