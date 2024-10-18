@@ -2,6 +2,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import BackgroundPattern from "../../components/BackgroundPattern";
+import axios from 'axios';
 
 export default function Page() {
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
@@ -24,7 +25,7 @@ export default function Page() {
     });
     
 
-    const onSubmit = (data: any) => {
+    const onSubmit = async (data: any) => {
         let dietGoal = [0, 0, 0];
         const currentWeight = parseFloat(data.weight);
         const targetWeight = parseFloat(data.targetWeight);
@@ -66,8 +67,8 @@ export default function Page() {
         } else if(foodAvoidance[0] === 1 && foodAvoidance?.slice(1).includes(1)){
             foodAvoidance[0] = 0;
         }
-    
-        console.log({
+        
+        const response = await axios.post('/api/diet/getDietType', {
             ...data,
             dietGoal,
             foodIntolerances,
