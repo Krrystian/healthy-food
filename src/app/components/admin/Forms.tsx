@@ -6,6 +6,7 @@ import { EmailTemplate } from "../email-template";
 import { SubmitHandler, useForm } from "react-hook-form";
 import dynamic from "next/dynamic";
 import DOMPurify from "dompurify";
+import "react-quill/dist/quill.snow.css";
 
 export const Users = () => {
   const [users, setUsers] = React.useState<
@@ -241,41 +242,33 @@ export const Users = () => {
   );
 };
 
-// Dynamically import ReactQuill for SSR compatibility
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 export const Notifications = () => {
   type FormValues = {
     title: string;
-
     body: string;
   };
-
   const {
     register,
-
     handleSubmit,
-
     setValue,
-
     formState: { errors },
   } = useForm<FormValues>();
 
   const [previewData, setPreviewData] = React.useState<FormValues | null>(null);
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    // Sanitize the body content before using it
-
     const sanitizedBody = DOMPurify.sanitize(data.body);
-
-    console.log({ title: data.title, body: sanitizedBody });
-
-    setPreviewData({ title: data.title, body: sanitizedBody });
+    const response = axios.post("/api/admin/sendNotification", {
+      title: data.title,
+      body: sanitizedBody,
+    });
+    console.log(response);
   };
 
   const handlePreview = (data: FormValues) => {
     const sanitizedBody = DOMPurify.sanitize(data.body);
-
     setPreviewData({ title: data.title, body: sanitizedBody });
   };
 
@@ -304,7 +297,6 @@ export const Notifications = () => {
 
           <div className="col-span-2">
             <ReactQuill
-              theme="snow"
               onChange={(content: any) => setValue("body", content)}
               className="bg-white/10 text-white rounded"
             />
@@ -338,9 +330,11 @@ export const Notifications = () => {
           className="mt-8 bg-black/80 rounded flex justify-center absolute w-full h-full -top-8 left-1/2 -translate-x-1/2"
           onClick={() => setPreviewData(null)}
         >
-          <EmailTemplate title={previewData.title} button>
-            <div dangerouslySetInnerHTML={{ __html: previewData.body }} />
-          </EmailTemplate>
+          <EmailTemplate
+            title={previewData.title}
+            button
+            children={previewData.body}
+          ></EmailTemplate>
         </div>
       )}
     </>

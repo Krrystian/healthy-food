@@ -13,8 +13,6 @@ export async function GET(req: Request) {
     const searchByEmail = searchParams.get("email");
     const activeFilter = searchParams.get("active");
 
-    // const user = await getToken({ req, secret: process.env.AUTH_SECRET }) ;
-    // const userRoles = user?.roles;
     const session = await auth()
     const userRoles = session?.roles;
     

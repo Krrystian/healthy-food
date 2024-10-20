@@ -1,9 +1,8 @@
-import Image from "next/image";
 import * as React from "react";
 
 interface EmailTemplateProps {
   title: string;
-  children: React.ReactNode;
+  children: string;
   button?: boolean;
 }
 
@@ -12,30 +11,79 @@ export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
   children,
   button = false,
 }) => (
-  <div className="w-[600px] text-black flex bg-[#FBA100] flex-col py-4 justify-center items-center">
-    <div className="flex gap-4 items-center w-full px-8 py-4">
-      <Image src="/logo.png" alt="logo" width={100} height={100} />
-      <h1 className="text-6xl font-bold">Healthy You</h1>
+  <div
+    style={{
+      width: "600px",
+      backgroundColor: "#FBA100",
+      color: "black",
+      textAlign: "center",
+      fontFamily: "Arial, sans-serif",
+    }}
+  >
+    <div
+      style={{
+        display: "flex",
+        gap: "16px",
+        alignItems: "center",
+        padding: "16px",
+      }}
+    >
+      <img
+        src="https://healthy-food-indol.vercel.app/logo.png"
+        alt="logo"
+        width="100"
+        height="100"
+      />
+      <h1 style={{ fontSize: "48px", fontWeight: "bold" }}>Healthy You</h1>
     </div>
-    <div className="bg-[#023047] w-full px-8 py-4 gap-4 flex flex-col">
-      <h2 className="text-[#FBA100] text-3xl font-bold">{title}</h2>
-      <p className="text-white/80">{children}</p>
+    <div
+      style={{ backgroundColor: "#023047", color: "#FBA100", padding: "16px" }}
+    >
+      <h2 style={{ fontSize: "24px", fontWeight: "bold", textAlign: "start" }}>
+        {title}
+      </h2>
+      <div
+        style={{ color: "white", opacity: 0.8, textAlign: "left" }}
+        dangerouslySetInnerHTML={{ __html: children }}
+      ></div>
       {button && (
         <a
           href="https://healthy-food-indol.vercel.app/"
-          className="bg-[#FBA100] cursor-pointer text-[#023047] py-2 px-4 rounded-lg flex justify-center items-center font-medium"
+          style={{
+            display: "inline-block",
+            backgroundColor: "#FBA100",
+            color: "#023047",
+            padding: "8px 16px",
+            marginTop: "16px",
+            textDecoration: "none",
+            borderRadius: "8px",
+            fontWeight: "medium",
+          }}
         >
           Sprawdź nowości
         </a>
       )}
     </div>
-    <div className="w-full grid grid-cols-5">
-      <p className="text-white/50 italic bg-slate-700 w-full px-8 col-span-4 flex items-center">
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        color: "white",
+        backgroundColor: "#023047",
+      }}
+    >
+      <p style={{ opacity: 0.5, fontStyle: "italic", margin: 0 }}>
         Proszę nie odpowiadaj na ten email.
       </p>
-      <div className="flex flex-col items-center justify-center">
-        <p className="font-semibold">Healthy You</p>
-        <p className="italic">2024</p>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          backgroundColor: "#023047",
+        }}
+      >
+        <p style={{ fontWeight: "bold" }}>Healthy You 2024</p>
       </div>
     </div>
   </div>
