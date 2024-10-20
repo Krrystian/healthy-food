@@ -2,13 +2,13 @@ import * as React from "react";
 
 interface EmailTemplateProps {
   title: string;
-  children: string;
+  htmlContent: string;
   button?: boolean;
 }
 
 export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
   title,
-  children,
+  htmlContent,
   button = false,
 }) => (
   <div
@@ -44,7 +44,7 @@ export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
       </h2>
       <div
         style={{ color: "white", opacity: 0.8, textAlign: "left" }}
-        dangerouslySetInnerHTML={{ __html: children }}
+        dangerouslySetInnerHTML={{ __html: htmlContent }}
       ></div>
       {button && (
         <a

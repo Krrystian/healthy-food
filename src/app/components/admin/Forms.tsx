@@ -333,7 +333,7 @@ export const Notifications = () => {
           <EmailTemplate
             title={previewData.title}
             button
-            children={previewData.body}
+            htmlContent={previewData.body}
           ></EmailTemplate>
         </div>
       )}

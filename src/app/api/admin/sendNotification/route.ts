@@ -24,7 +24,7 @@ export async function POST(req: Request) {
             subject: body.title,
             react: EmailTemplate({
                 title: body.title,
-                children: body.body,
+                htmlContent: body.body,
                 button: true
             }),
         });
