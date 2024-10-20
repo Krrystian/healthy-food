@@ -2,8 +2,11 @@
 import { cn } from "@/app/lib/cn";
 import axios from "axios";
 import React from "react";
+import { EmailTemplate } from "../email-template";
+import { SubmitHandler, useForm } from "react-hook-form";
+import dynamic from "next/dynamic";
+import DOMPurify from "dompurify";
 
-// TODO: Profile page, profile link
 export const Users = () => {
   const [users, setUsers] = React.useState<
     {
@@ -235,5 +238,111 @@ export const Users = () => {
         </button>
       </div>
     </div>
+  );
+};
+
+// Dynamically import ReactQuill for SSR compatibility
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
+export const Notifications = () => {
+  type FormValues = {
+    title: string;
+
+    body: string;
+  };
+
+  const {
+    register,
+
+    handleSubmit,
+
+    setValue,
+
+    formState: { errors },
+  } = useForm<FormValues>();
+
+  const [previewData, setPreviewData] = React.useState<FormValues | null>(null);
+
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    // Sanitize the body content before using it
+
+    const sanitizedBody = DOMPurify.sanitize(data.body);
+
+    console.log({ title: data.title, body: sanitizedBody });
+
+    setPreviewData({ title: data.title, body: sanitizedBody });
+  };
+
+  const handlePreview = (data: FormValues) => {
+    const sanitizedBody = DOMPurify.sanitize(data.body);
+
+    setPreviewData({ title: data.title, body: sanitizedBody });
+  };
+
+  return (
+    <>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-4 w-full"
+      >
+        <div className="grid w-full grid-cols-3">
+          <label className="text-white">Title:</label>
+
+          <input
+            type="text"
+            {...register("title", { required: "Title is required" })}
+            className="px-4 py-2 bg-white/10 rounded text-white outline-none col-span-2"
+          />
+
+          {errors.title && (
+            <span className="text-red-500">{errors.title.message}</span>
+          )}
+        </div>
+
+        <div className="grid w-full grid-cols-3">
+          <label className="text-white">Body:</label>
+
+          <div className="col-span-2">
+            <ReactQuill
+              theme="snow"
+              onChange={(content: any) => setValue("body", content)}
+              className="bg-white/10 text-white rounded"
+            />
+          </div>
+
+          {errors.body && (
+            <span className="text-red-500">{errors.body.message}</span>
+          )}
+        </div>
+
+        <div className="w-full grid grid-cols-2 gap-8">
+          <button
+            type="submit"
+            className="bg-blue-500/50 hover:bg-blue-500/70 duration-300 px-4 py-2 rounded text-white"
+          >
+            Wyślij
+          </button>
+
+          <button
+            type="button"
+            onClick={handleSubmit(handlePreview)}
+            className="bg-blue-500/50 hover:bg-blue-500/70 duration-300 px-4 py-2 rounded text-white"
+          >
+            Zobacz podgląd
+          </button>
+        </div>
+      </form>
+
+      {previewData && (
+        <div
+          className="mt-8 bg-black/80 rounded flex justify-center absolute w-full h-full -top-8 left-1/2 -translate-x-1/2"
+          onClick={() => setPreviewData(null)}
+        >
+          <EmailTemplate title={previewData.title} button>
+            <div dangerouslySetInnerHTML={{ __html: previewData.body }} />
+          </EmailTemplate>
+        </div>
+      )}
+    </>
   );
 };
