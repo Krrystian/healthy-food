@@ -1,6 +1,6 @@
 "use client";
-import Menu from "@/app/components/admin/Menu";
-import Options from "@/app/components/admin/Options";
+import Menu from "@/app/components/Admin/Menu";
+import Options from "@/app/components/Admin/Options";
 import BackgroundPattern from "@/app/components/BackgroundPattern";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";

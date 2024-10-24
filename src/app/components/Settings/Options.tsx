@@ -56,7 +56,7 @@ const Options = () => {
       {menuOption === "Private" ? (
         <>
           <Card title="Zmień adres email">
-            <ProfileEmailForm defaultEmail={session.user?.email || ""} />
+            <ProfileEmailForm />
           </Card>
           <Card title="Zmień hasło">
             <ProfilePasswordForm />

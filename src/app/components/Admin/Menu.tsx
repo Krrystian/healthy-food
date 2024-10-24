@@ -2,7 +2,6 @@
 import { useNameToRGB } from "@/app/hooks/useNameToRGB";
 import { cn } from "@/app/lib/cn";
 import { useSession } from "next-auth/react";
-import Image from "next/legacy/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
