@@ -1,12 +1,13 @@
 "use client";
 import { cn } from "@/app/lib/cn";
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { EmailTemplate } from "../email-template";
 import { SubmitHandler, useForm } from "react-hook-form";
 import dynamic from "next/dynamic";
 import DOMPurify from "dompurify";
 import "react-quill/dist/quill.snow.css";
+import { set } from "zod";
 
 export const Users = () => {
   const [users, setUsers] = React.useState<
@@ -257,15 +258,42 @@ export const Notifications = () => {
   } = useForm<FormValues>();
 
   const [previewData, setPreviewData] = React.useState<FormValues | null>(null);
-
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
+  const [emails, setEmails] = React.useState<[]>([]);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const skeletons = Array(3)
+    .fill(null)
+    .map((_, index) => (
+      <tr key={index} className="border-b-2 border-white/10">
+        <td className="px-6 py-4 text-sm text-white/30 rounded w-1/4">
+          <span className="animate-pulse text-white block h-4 bg-white/30 rounded"></span>
+        </td>
+        <td className="px-6 py-4 text-sm text-white/30 rounded w-1/4">
+          <span className="animate-pulse text-white block h-4 bg-white/30 rounded"></span>
+        </td>
+        <td className="px-6 py-4 text-sm text-white/30 rounded w-1/4">
+          <span className="animate-pulse text-white block h-4 bg-white/30 rounded"></span>
+        </td>
+        <td className="px-6 py-4 text-sm text-white/30 rounded w-1/4">
+          <span className="animate-pulse text-white block h-4 bg-white/30 rounded"></span>
+        </td>
+      </tr>
+    ));
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
     const sanitizedBody = DOMPurify.sanitize(data.body);
-    const response = axios.post("/api/admin/sendNotification", {
+    await axios.post("/api/admin/sendNotification", {
       title: data.title,
       body: sanitizedBody,
     });
-    console.log(response);
   };
+  useEffect(() => {
+    const getEmails = async () => {
+      setIsLoading(true);
+      const response = await axios.get("/api/admin/getEmails");
+      setEmails(response.data);
+      setIsLoading(false);
+    };
+    getEmails();
+  }, []);
 
   const handlePreview = (data: FormValues) => {
     const sanitizedBody = DOMPurify.sanitize(data.body);
@@ -324,6 +352,50 @@ export const Notifications = () => {
           </button>
         </div>
       </form>
+      <table className="w-full text-center mt-8">
+        <thead>
+          <tr className="border-b-2 border-white/60">
+            <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r-2 border-white/60 w-1/4">
+              Id
+            </th>
+            <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r-2 border-white/60 w-1/4">
+              Title
+            </th>
+            <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r-2 border-white/60 w-1/4">
+              Created At
+            </th>
+            <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider  border-white/60 w-1/4">
+              User
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {isLoading
+            ? skeletons
+            : emails.map((email: any) => (
+                <tr
+                  key={email.id}
+                  className={cn(
+                    "hover:bg-white/5 duration-200 border-b-2 border-white/10"
+                  )}
+                >
+                  <td className="px-6 py-4 text-sm text-white">{email.id}</td>
+                  <td className="px-6 py-4 text-sm text-white">
+                    {email.title}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-white">
+                    {email.createdAt}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-white">
+                    {email.user.name}
+                  </td>
+                </tr>
+              ))}
+        </tbody>
+      </table>
+      <p className="text-white/60 italic text-center w-full">
+        Tylko 5 najnowszych wiadomości
+      </p>
 
       {previewData && (
         <div

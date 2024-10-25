@@ -38,7 +38,7 @@ const Options = () => {
         </>
       ) : menuOption === "Notifications" ? (
         <>
-          <Card title="Powiadomienia" className="col-span-2 relative">
+          <Card title="Powiadomienia" className="col-span-2">
             <Notifications />
           </Card>
         </>
