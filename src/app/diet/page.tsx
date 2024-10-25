@@ -19,12 +19,3 @@ export default function Page() {
   );
 };
 
-
-//twoje ciało pokocha diete, a ty pokochasz swoje ciało
-//chroni przed wieloma chorobami oraz zwiększa odporność organizmu
-//wywiera pozytywny wpływ na flore jelitową
-//kontrola wagi
-//poprawa wyglądu zewnętrzengo (skóry, włosów, paznokci, sylwetki)
-//zwiększenie energii i witalności
-//lepsze funckjonowanie mózgu
-//nawet spowolnienieprocesu starzenia!

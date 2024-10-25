@@ -122,23 +122,6 @@ export const DietaContent = () => {
   );
 };
 
-export const PrzepisyContent = () => {
-  return (
-    <div className="w-52 bg-white flex flex-col p-6">
-      <div className="text-center gap-2 flex flex-col">
-        <Link href="#" className="relative group font-semibold py-1">
-          Przeglądaj przepisy
-          <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
-        </Link>
-        <Link href="#" className="relative group font-semibold py-1">
-          Utwórz przepis
-          <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
-        </Link>
-      </div>
-    </div>
-  );
-};
-
 export const KontoContent = () => {
   const router = useRouter();
   const path = usePathname();
