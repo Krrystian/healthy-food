@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Quagga from 'quagga';
 import axios from 'axios';
+import Product from './Product';
 
 const BarcodeScanner: React.FC = () => {
   const [mode, setMode] = useState<'camera' | 'image' | null>(null);
@@ -78,6 +79,7 @@ const BarcodeScanner: React.FC = () => {
       });
       if (response.data && response.data.products.length > 0) {
         setProduct(response.data.products[0]);
+        console.log(response.data.products[0]);
       } else {
         console.log('Nie znaleziono produktu.');
       }
@@ -141,9 +143,7 @@ const BarcodeScanner: React.FC = () => {
         {product && (
           <div>
             <h3 className='font-semibold text-2xl text-[#009E52]'>Informacje o produkcie:</h3>
-            <p className='pt-2'><strong>Nazwa:</strong> {product.product_name}</p>
-            <p><strong>Marka:</strong> {product.brands}</p>
-            <p><strong>Składniki:</strong> {product.ingredients_text}</p>
+            <Product product={product}/>
           </div>
         )}
       </div>
