@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <div className="w-screen h-screen xl:pt-[80px] relative grid grid-cols-12">
+    <div className="w-screen min-h-screen xl:pt-[80px] relative xl:grid xl:grid-cols-12">
       <BackgroundPattern />
       <Menu />
       <Options />

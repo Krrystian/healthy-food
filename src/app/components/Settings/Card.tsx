@@ -9,7 +9,7 @@ const Card: React.FC<CardProps> = ({ title, children, className }) => {
   return (
     <div
       className={cn(
-        `bg-black/60 w-full text-white select-none p-4 rounded-xl flex flex-col`,
+        `bg-black/60 w-full text-white select-none p-4 rounded-xl flex flex-col relative`,
         className
       )}
     >

@@ -109,7 +109,7 @@ export function ProfileFieldForm({
       className="flex flex-col gap-4 h-full justify-between relative"
     >
       {loading && <Loader text={loadingState} />}
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-6 p-2">
         {fields.map(({ name, label, type }) => (
           <div key={name} className="relative">
             <motion.label
@@ -280,6 +280,7 @@ export const ProfileDescriptionForm = ({
     formType="description"
   />
 );
+
 // PRIVATE FORMS
 export const ProfileEmailForm = () => (
   <ProfileFieldForm

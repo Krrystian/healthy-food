@@ -36,6 +36,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.52.0",
     "react-quill": "^2.0.0",
+    "recharts": "^2.13.0",
     "resend": "^4.0.0",
     "split-type": "^0.3.4",
     "tailwind-merge": "^2.5.3",

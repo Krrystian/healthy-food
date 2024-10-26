@@ -32,7 +32,7 @@ const Menu: React.FC = () => {
   }, [searchParams]);
 
   return (
-    <div className="relative col-span-3 w-full h-full">
+    <div className="relative xl:col-span-3 w-full xl:h-full">
       <div className="w-full h-full bg-black/60 flex items-center flex-col gap-8 py-8">
         <div className="flex-col flex items-center gap-2">
           <div className="relative w-16 h-16 rounded-full overflow-hidden">
@@ -54,7 +54,7 @@ const Menu: React.FC = () => {
           </p>
         </div>
         <div className="w-full h-1 bg-white/30 rounded-xl" />
-        <div className="w-1/2 text-xl text-white tracking-wider flex flex-col gap-4 items-start *:duration-300 *:transition-all">
+        <div className="xl:w-1/2 text-xl text-white tracking-wider flex xl:flex-col gap-4 xl:items-start items-center justify-center *:duration-300 *:transition-all">
           <button
             className={cn(
               "p-2 rounded-2xl px-4",
