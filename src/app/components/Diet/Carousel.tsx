@@ -11,83 +11,81 @@ import Mouse from "../Mouse";
 
 
 export default function HorizontalScrollCarousel() {
-    const targetRef = useRef(null);
-    const { scrollYProgress } = useScroll({
-      target: targetRef,
-    });
-  
-    const x = useTransform(scrollYProgress, [0, 1], ["1%", "-72%"]);
-  
-    return (
-      <section ref={targetRef} className="relative h-[300vh]">
-        <div className="sticky top-0 flex h-screen  overflow-hidden">
-          <motion.div style={{ x }} className="flex gap-4">
-            {cards.map((card) => {
-              return <Card card={card} key={card.id} />;
-            })}
-            <div>
-                <CardScreen/>
-            </div>
-            
-          </motion.div>
-        </div>
-      </section>
-    );
-  };
-  
-  const Card = ({ card }:{card:any}) => {
-    const { scrollYProgress } = useScroll();
-    const descriptionOpacity = useTransform(scrollYProgress, [0.1, 0.13], [0, 1]);
+  const targetRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+  });
 
-    return (
-      <div
-        key={card.id}
-        className="group relative h-screen w-[550px] overflow-hidden bg-neutral-200"
-      >
-        <div
-          style={{
-            backgroundImage: `url(${card.url})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-          className="absolute inset-0 z-0 transition-transform duration-300 group-hover:scale-110"
-        ></div>
-        <div className="absolute inset-0 z-10 bg-white/10">
-          <div className="mt-48 h-96 bg-gray-600 m-4 rounded-lg bg-opacity-75">
-            <p className="p-8 text-6xl font-black uppercase text-white">
-              {card.title}
-            </p>
-            <div className="">
-            <motion.p 
-              style={{ opacity: descriptionOpacity }} 
-              className="text-base font-medium p-8 text-white"
-            >
-              {card.description}
-            </motion.p>
+  const x = useTransform(scrollYProgress, [0, 1], ["1%", "-72%"]);
+
+  return (
+    <section ref={targetRef} className="relative h-[300vh]">
+      <div className="sticky top-0 flex h-screen  overflow-hidden">
+        <motion.div style={{ x }} className="flex gap-4">
+          {cards.map((card) => {
+            return <Card card={card} key={card.id} />;
+          })}
+          <div>
+              <CardScreen/>
           </div>
           
-        </div>
-        </div>
+        </motion.div>
       </div>
-    );
-  };
-  {/*
-  const CardScreen = () => {
-    return (
-    
-
-      <div className="h-screen w-screen flex flex-col justify-center items-center text-center">
-        <TextRevealCard
-          text="Twoje ciało pokocha naszą dietę"
-          revealText="Ty pokochasz swoje ciało"
-        >
-        </TextRevealCard>
-        
-      <Link href="/diet/form" className='p-2 text-white  border-2 border-white rounded-md hover:bg-[#FB8500]/90 duration-300 transition-all text-lg font-medium w-fit'>Wypełnij quiz, aby poznać dietę</Link>
+    </section>
+  );
+};
+  
+const Card = ({ card }:{card:any}) => {
+  const { scrollYProgress } = useScroll();
+  const descriptionOpacity = useTransform(scrollYProgress, [0.1, 0.13], [0, 1]);
+  return (
+    <div
+      key={card.id}
+      className="group relative h-screen w-[550px] overflow-hidden bg-neutral-200"
+    >
+      <div
+        style={{
+          backgroundImage: `url(${card.url})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+        className="absolute inset-0 z-0 transition-transform duration-300 group-hover:scale-110"
+      ></div>
+      <div className="absolute inset-0 z-10 bg-white/10">
+        <div className="mt-48 h-96 bg-gray-600 m-4 rounded-lg bg-opacity-75">
+          <p className="p-8 text-6xl font-black uppercase text-white">
+            {card.title}
+          </p>
+          <div className="">
+          <motion.p 
+            style={{ opacity: descriptionOpacity }} 
+            className="text-base font-medium p-8 text-white"
+          >
+            {card.description}
+          </motion.p>
+        </div>
         
       </div>
-    );
-  };
+      </div>
+    </div>
+  );
+};
+{/*
+const CardScreen = () => {
+  return (
+  
+    <div className="h-screen w-screen flex flex-col justify-center items-center text-center">
+      <TextRevealCard
+        text="Twoje ciało pokocha naszą dietę"
+        revealText="Ty pokochasz swoje ciało"
+      >
+      </TextRevealCard>
+      
+    <Link href="/diet/form" className='p-2 text-white  border-2 border-white rounded-md hover:bg-[#FB8500]/90 duration-300 transition-all text-lg font-medium w-fit'>Wypełnij quiz, aby poznać dietę</Link>
+      
+    </div>
+  );
+};
 */}
   
 const CardScreen = () => {

@@ -102,28 +102,10 @@ export const DietaContent = () => {
           Po co komu dieta?
           <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
         </Link>
-        <Link href="#" className="relative group font-semibold py-1">
+        <Link href="/diet/diets" className="relative group font-semibold py-1">
           Przeglądaj diety
           <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
         </Link>
-        <div className="flex flex-col text-sm">
-          <Link href="#" className="relative group pb-1">
-            Wegetariańska
-            <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
-          </Link>
-          <Link href="#" className="relative group py-1">
-            Niskotłuszczowa
-            <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
-          </Link>
-          <Link href="#" className="relative group py-1">
-            Bezglutenowa
-            <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
-          </Link>
-          <Link href="#" className="relative group py-1">
-            Niskowęglowodanowa
-            <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
-          </Link>
-        </div>
         <Link
           href="/diet/form"
           className="relative group py-1 border-2 rounded-xl border-black text-center flex items-center justify-center group overflow-hidden"
@@ -134,23 +116,6 @@ export const DietaContent = () => {
           <p className="absolute translate-y-full font-semibold bg-black text-[#FFB703] w-full h-full flex justify-center items-center duration-300 group-hover:translate-y-0">
             Przystąp do quizu
           </p>
-        </Link>
-      </div>
-    </div>
-  );
-};
-
-export const PrzepisyContent = () => {
-  return (
-    <div className="w-52 bg-white flex flex-col p-6">
-      <div className="text-center gap-2 flex flex-col">
-        <Link href="#" className="relative group font-semibold py-1">
-          Przeglądaj przepisy
-          <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
-        </Link>
-        <Link href="#" className="relative group font-semibold py-1">
-          Utwórz przepis
-          <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
         </Link>
       </div>
     </div>

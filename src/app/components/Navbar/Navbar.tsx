@@ -8,7 +8,6 @@ import {
   DietaContent,
   KalkulatoryContent,
   KontoContent,
-  PrzepisyContent,
 } from "./NavLinkBody";
 import { SignInButton } from "../SignInOut/SignInButton";
 import Image from "next/legacy/image";
@@ -47,17 +46,8 @@ const Navbar = () => {
     {
       title: "Dieta",
       items: [
-        { name: "Meal Plans", href: "/dieta/meal-plans" },
-        { name: "Recipes", href: "/dieta/recipes" },
-        { name: "Nutrition Facts", href: "/dieta/nutrition-facts" },
-      ],
-    },
-    {
-      title: "Przepisy",
-      items: [
-        { name: "Breakfast Recipes", href: "/przepisy/breakfast" },
-        { name: "Lunch Recipes", href: "/przepisy/lunch" },
-        { name: "Dinner Recipes", href: "/przepisy/dinner" },
+        { name: "Po co komu dieta?", href: "/diet" },
+        { name: "Przeglądaj diety", href: "/diet/diets" },
       ],
     },
   ];
@@ -142,13 +132,7 @@ const Navbar = () => {
                 prefetch={true}
                 Content={DietaContent}
               />
-              <NavLink
-                label="Przepisy"
-                href="/"
-                prefetch={true}
-                Content={PrzepisyContent}
-              />
-              <NavLink label="Produkty" href="/" prefetch={true} />
+              <NavLink label="Produkty" href="/products" prefetch={true} />
             </div>
             <div className="flex flex-row gap-8">
               {loggedIn ? (
@@ -171,7 +155,7 @@ const Navbar = () => {
         </motion.div>
         <div
           className={cn(
-            "xl:hidden bg-[#FBA100] rounded-full flex items-center self-center absolute right-4 h-14 w-14"
+            "xl:hidden bg-[#FBA100] rounded-full flex items-center self-center absolute right-4 h-14 w-14 z-50"
           )}
           onClick={(event: any) => {
             event.stopPropagation();
@@ -233,7 +217,7 @@ const Navbar = () => {
                       setIsMenuOpen={setMenuOpen}
                     />
                   ))}
-                  <Link href="/" className="text-2xl">
+                  <Link href="/products" className="text-2xl">
                     Produkty
                   </Link>
                 </motion.div>
@@ -250,7 +234,7 @@ const Navbar = () => {
                 transition={{ duration: 0.4, delay: 0.5 }}
               >
                 <Link
-                  href="/"
+                  href="/diet/form"
                   className="text-2xl font-medium tracking-wider text-white bg-[#023047] text-center w-full rounded-xl p-4"
                 >
                   Wypełnij Quiz

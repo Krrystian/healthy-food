@@ -8,20 +8,21 @@ generator client {
 }
 
 model User {
-  id            String       @id @default(cuid())
-  name          String?
-  email         String       @unique
-  emailVerified DateTime?
-  password      String?
-  image         String?
-  active        Boolean      @default(true)
-  description   String?      @default("")
-  notifications Boolean      @default(true)
-  ads           Boolean      @default(false)
-  accounts      Account[]
-  sessions      Session[]
-  calculators   Calculator[]
-  roles         String[]     @default(["user"])
+  id                    String                  @id @default(cuid())
+  name                  String?
+  email                 String                  @unique
+  emailVerified         DateTime?
+  password              String?
+  image                 String?
+  active                Boolean                 @default(true)
+  description           String?                 @default("")
+  notifications         Boolean                 @default(true)
+  ads                   Boolean                 @default(false)
+  accounts              Account[]
+  sessions              Session[]
+  calculators           Calculator[]
+  broadcastNotification BroadcastNotification[]
+  roles                 String[]                @default(["user"])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -72,4 +73,16 @@ model Calculator {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model BroadcastNotification {
+  id        String   @id @default(cuid())
+  title     String
+  message   String
+  sendTo    String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

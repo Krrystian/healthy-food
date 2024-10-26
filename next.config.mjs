@@ -4,6 +4,7 @@ const nextConfig = {
     domains: [
       "lh3.googleusercontent.com",
       "software-inz.s3.eu-north-1.amazonaws.com",
+      "images.openfoodfacts.org",
     ],
   },
 };

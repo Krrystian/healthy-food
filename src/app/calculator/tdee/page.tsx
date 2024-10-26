@@ -49,7 +49,7 @@ export default function Page() {
     
 
       if(session){
-        const response = await fetch('/api/auth/calculator', {
+        const response = await fetch('/api/calculator', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

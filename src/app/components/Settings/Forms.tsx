@@ -11,8 +11,158 @@ import { signOut, useSession } from "next-auth/react";
 type FormValues = {
   image: File | null;
 };
+const Loader = ({ text }: { text: string }) => {
+  const status = text === "Ładowanie" ? "loading" : "success";
+  return (
+    <div className="absolute bg-black/70 rounded-xl z-10 h-full w-full flex items-center justify-center">
+      <div className="flex items-center">
+        <span className="text-3xl mr-4">{text}</span>
+        {status === "loading" ? (
+          <svg
+            className="animate-spin h-8 w-8 text-gray-800"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            ></circle>
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+        ) : (
+          <svg
+            className="h-8 w-8 text-green-500"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              fill="currentColor"
+              d="M9 16.2l-3.5-3.5-1.4 1.4L9 19 21 7l-1.4-1.4z"
+            ></path>
+          </svg>
+        )}
+      </div>
+    </div>
+  );
+};
 
-//PUBLIC FORMS
+export function ProfileFieldForm({
+  fields,
+  formType,
+  schema,
+  defaultValues = {},
+}: {
+  fields: { name: string; label: string; type: string }[];
+  formType: keyof typeof profileSchemas;
+  schema: any;
+  defaultValues?: Record<string, string>;
+}) {
+  const [focused, setFocused] = useState<string | null>(null);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(schema),
+    defaultValues,
+  });
+  const [loading, setLoading] = useState(true);
+  const [loadingState, setLoadingState] = useState("Ładowanie");
+  const values = watch();
+  const submitData = useProfileForm(formType);
+  const { data: session } = useSession();
+
+  const onSubmit = async (data: Record<string, string>) => {
+    setLoading(true);
+    const schema = profileSchemas[formType as keyof typeof profileSchemas];
+    const result = schema.safeParse(data);
+    if (!result.success) {
+      console.error(result.error);
+      setLoading(false);
+      return;
+    }
+    const response = await submitData(result.data);
+    if (response && response.status === 200 && session) {
+      setLoading(false);
+      setLoadingState("Za chwilę zostaniesz wylogowany");
+      setTimeout(async () => {
+        await signOut({ callbackUrl: "/login" });
+      }, 2000);
+    }
+    setLoading(false);
+  };
+
+  return (
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col gap-4 h-full justify-between relative"
+    >
+      {loading && <Loader text={loadingState} />}
+      <div className="flex flex-col gap-6 p-2">
+        {fields.map(({ name, label, type }) => (
+          <div key={name} className="relative">
+            <motion.label
+              htmlFor={name}
+              className="text-white absolute cursor-text duration-200 transition-all text-white/70"
+              style={{
+                top:
+                  focused === name || values[name]
+                    ? type === "textarea"
+                      ? "-5%"
+                      : "-10%"
+                    : type === "textarea"
+                    ? "5%"
+                    : "40%",
+              }}
+            >
+              {label}
+            </motion.label>
+            {type === "textarea" ? (
+              <motion.textarea
+                {...register(name)}
+                id={name}
+                className="p-2 bg-transparent border-b-2 outline-none duration-200 mt-2 w-full"
+                onFocus={() => setFocused(name)}
+                onBlur={() => setFocused(null)}
+                rows={7}
+              />
+            ) : (
+              <motion.input
+                {...register(name)}
+                type={type}
+                id={name}
+                className="p-2 bg-transparent border-b-2 outline-none duration-200 mt-2 w-full"
+                onFocus={() => setFocused(name)}
+                onBlur={() => setFocused(null)}
+              />
+            )}
+            {errors[name] && (
+              <p className="text-red-500">{errors[name].message}</p>
+            )}
+          </div>
+        ))}
+      </div>
+      <button
+        type="submit"
+        className="bg-white/10 p-2 rounded-xl duration-300 hover:bg-blue-500"
+      >
+        Zmień
+      </button>
+    </form>
+  );
+}
+
 export function ProfileImageForm() {
   const { register, handleSubmit, setValue, watch } = useForm<FormValues>({
     defaultValues: {
@@ -97,301 +247,70 @@ export function ProfileImageForm() {
   );
 }
 
-export function ProfileNameForm({ defaultName }: { defaultName: string }) {
-  const [focused, setFocused] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(profileSchemas.name),
-    defaultValues: {
-      name: defaultName,
-    },
-  });
+export const ProfileNameForm = ({ defaultName }: { defaultName: string }) => (
+  <ProfileFieldForm
+    fields={[
+      {
+        name: "name",
+        label: "Podaj swoją nową nazwę",
+        type: "text",
+      },
+    ]}
+    defaultValues={{ name: defaultName }}
+    schema={profileSchemas.name}
+    formType="name"
+  />
+);
 
-  const submitData = useProfileForm("name");
-  const { data: session } = useSession();
-  const onSubmit = async (data: { name: string }) => {
-    const response = await submitData(data);
-
-    if (response && response.status === 200 && session) {
-      console.log("User name updated");
-      await signOut({ callbackUrl: "/login" });
-    }
-  };
-
-  return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 h-full justify-between"
-    >
-      <div className="relative">
-        <motion.label
-          htmlFor="name"
-          className="text-white absolute cursor-text duration-200 transition-all text-white/70"
-          style={{ top: focused || !!defaultName ? "-10%" : "40%" }}
-        >
-          Podaj swoją nową nazwę
-        </motion.label>
-        <motion.input
-          {...register("name")}
-          type="text"
-          id="name"
-          className="p-2 bg-transparent border-b-2 outline-none duration-200 mt-2 w-full"
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-        />
-        {errors.name && <p className="text-red-500">{errors.name.message}</p>}
-      </div>
-      <button
-        type="submit"
-        className="bg-white/10 p-2 rounded-xl duration-300 hover:bg-blue-500"
-      >
-        Zmień
-      </button>
-    </form>
-  );
-}
-
-export function ProfileDescriptionForm({
+export const ProfileDescriptionForm = ({
   defaultDescription,
 }: {
   defaultDescription: string;
-}) {
-  const [focused, setFocused] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(profileSchemas.description),
-    defaultValues: {
-      description: defaultDescription || "",
-    },
-  });
-
-  const submitData = useProfileForm("description");
-  const { data: session } = useSession();
-
-  const onSubmit = async (data: { description: string }) => {
-    const response = await submitData(data);
-
-    if (response && response.status === 200 && session) {
-      await signOut({ callbackUrl: "/login" });
-    }
-  };
-
-  return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 h-full justify-between"
-    >
-      <div className="relative">
-        <motion.label
-          htmlFor="description"
-          className="text-white absolute cursor-text duration-200 transition-all text-white/70"
-          style={{ top: "-10%" }}
-        >
-          Podaj swój nowy opis
-        </motion.label>
-        <motion.textarea
-          {...register("description")}
-          id="description"
-          className="p-2 bg-transparent border-b-2 outline-none resize-none duration-200 w-full"
-          rows={7}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-        />
-        {errors.description && (
-          <p className="text-red-500">{errors.description.message}</p>
-        )}
-      </div>
-      <button
-        type="submit"
-        className="bg-white/10 p-2 rounded-xl duration-300 hover:bg-blue-500"
-      >
-        Zmień
-      </button>
-    </form>
-  );
-}
+}) => (
+  <ProfileFieldForm
+    fields={[
+      {
+        name: "description",
+        label: "Podaj swój nowy opis",
+        type: "textarea",
+      },
+    ]}
+    defaultValues={{ description: defaultDescription }}
+    schema={profileSchemas.description}
+    formType="description"
+  />
+);
 
 // PRIVATE FORMS
-export function ProfileEmailForm({ defaultEmail }: { defaultEmail: string }) {
-  const [focused, setFocused] = useState(false);
-  const [focused2, setFocused2] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(profileSchemas.email),
-    defaultValues: {
-      email: "",
-      confirmEmail: "",
-    },
-  });
-  const email = watch("email");
-  const confirmEmail = watch("confirmEmail");
+export const ProfileEmailForm = () => (
+  <ProfileFieldForm
+    fields={[
+      { name: "email", label: "Podaj swój nowy email", type: "text" },
+      {
+        name: "confirmEmail",
+        label: "Wpisz ponownie swój nowy adres email",
+        type: "text",
+      },
+    ]}
+    formType="email"
+    schema={profileSchemas.email}
+  />
+);
 
-  const submitData = useProfileForm("email");
-  const { data: session } = useSession();
-
-  const onSubmit = async (data: { email: string; confirmEmail: string }) => {
-    const response = await submitData(data);
-
-    if (response && response.status === 200 && session) {
-      await signOut({ callbackUrl: "/login" });
-    }
-  };
-
-  return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 h-full justify-between"
-    >
-      <div className="flex flex-col gap-6">
-        <div className="relative">
-          <motion.label
-            htmlFor="email"
-            className="text-white absolute cursor-text duration-200 transition-all text-white/70"
-            style={{ top: focused || email ? "-10%" : "40%" }}
-          >
-            Podaj swój nowy email
-          </motion.label>
-          <motion.input
-            {...register("email")}
-            type="text"
-            id="email"
-            className="p-2 bg-transparent border-b-2 outline-none duration-200 mt-2 w-full"
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
-          />
-          {errors.email && (
-            <p className="text-red-500">{errors.email.message}</p>
-          )}
-        </div>
-        <div className="relative">
-          <motion.label
-            htmlFor="confirmEmail"
-            className="text-white absolute cursor-text duration-200 transition-all text-white/70"
-            style={{ top: focused2 || confirmEmail ? "-10%" : "40%" }}
-          >
-            Wpisz ponownie swój nowy adres email
-          </motion.label>
-          <motion.input
-            {...register("confirmEmail")}
-            type="text"
-            id="confirmEmail"
-            className="p-2 bg-transparent border-b-2 outline-none duration-200 mt-2 w-full"
-            onFocus={() => setFocused2(true)}
-            onBlur={() => setFocused2(false)}
-          />
-          {errors.confirmEmail && (
-            <p className="text-red-500">{errors.confirmEmail.message}</p>
-          )}
-        </div>
-      </div>
-      <button
-        type="submit"
-        className="bg-white/10 p-2 rounded-xl duration-300 hover:bg-blue-500"
-      >
-        Zmień
-      </button>
-    </form>
-  );
-}
-
-export const ProfilePasswordForm = () => {
-  const [focused, setFocused] = useState(false);
-  const [focused2, setFocused2] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(profileSchemas.password),
-    defaultValues: {
-      password: "",
-      confirmPassword: "",
-    },
-  });
-
-  const password = watch("password");
-  const confirmPassword = watch("confirmPassword");
-
-  const submitData = useProfileForm("password");
-  const { data: session } = useSession();
-
-  const onSubmit = async (data: {
-    password: string;
-    confirmPassword: string;
-  }) => {
-    const response = await submitData(data);
-
-    if (response && response.status === 200 && session) {
-      await signOut({ callbackUrl: "/login" });
-    }
-  };
-  return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 h-full justify-between"
-    >
-      <div className="flex flex-col gap-6">
-        <div className="relative">
-          <motion.label
-            htmlFor="password"
-            className="text-white absolute cursor-text duration-200 transition-all text-white/70"
-            style={{ top: focused || password ? "-10%" : "40%" }}
-          >
-            Podaj swoje nowe hasło
-          </motion.label>
-          <motion.input
-            {...register("password")}
-            type="password"
-            id="password"
-            className="p-2 bg-transparent border-b-2 outline-none duration-200 mt-2 w-full"
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
-          />
-          {errors.password && (
-            <p className="text-red-500">{errors.password.message}</p>
-          )}
-        </div>
-        <div className="relative">
-          <motion.label
-            htmlFor="confirmPassword"
-            className="text-white absolute cursor-text duration-200 transition-all text-white/70"
-            style={{ top: focused2 || confirmPassword ? "-10%" : "40%" }}
-          >
-            Potwierdź nowe hasło
-          </motion.label>
-          <motion.input
-            {...register("confirmPassword")}
-            type="password"
-            id="confirmPassword"
-            className="p-2 bg-transparent border-b-2 outline-none duration-200 mt-2 w-full"
-            onFocus={() => setFocused2(true)}
-            onBlur={() => setFocused2(false)}
-          />
-          {errors.confirmPassword && (
-            <p className="text-red-500">{errors.confirmPassword.message}</p>
-          )}
-        </div>
-      </div>
-      <button
-        type="submit"
-        className="bg-white/10 p-2 rounded-xl duration-300 hover:bg-blue-500"
-      >
-        Zmień
-      </button>
-    </form>
-  );
-};
+export const ProfilePasswordForm = () => (
+  <ProfileFieldForm
+    fields={[
+      { name: "password", label: "Podaj swoje nowe hasło", type: "password" },
+      {
+        name: "confirmPassword",
+        label: "Potwierdź nowe hasło",
+        type: "password",
+      },
+    ]}
+    formType="password"
+    schema={profileSchemas.password}
+  />
+);
 
 export const ProfileNotificationForm = ({
   defaultNotifications,
