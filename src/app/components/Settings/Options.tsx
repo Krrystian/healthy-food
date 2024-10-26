@@ -34,7 +34,7 @@ const Options = () => {
   if (!session) return null;
 
   return (
-    <div className="w-full col-span-9 p-8 grid grid-cols-2 gap-8">
+    <div className="w-full xl:col-span-9 xl:p-8 p-4 xl:grid xl:grid-cols-2 flex flex-col gap-8">
       {/* PUBLIC FORMS */}
       {menuOption === "Public" || menuOption === null ? (
         <>
@@ -72,12 +72,12 @@ const Options = () => {
               <div className="flex flex-col justify-between h-full">
                 <div />
                 <Link
-                  className="w-full h-12 bg-red-500 text-white rounded-lg flex justify-center items-center text-2xl hover:bg-blue-500 duration-300"
+                  className="w-full h-12 bg-red-500 text-white rounded-lg flex justify-center items-center xl:text-2xl text-md hover:bg-blue-500 duration-300"
                   href={"/account/adm"}
                 >
                   Przejdź na panel administratora
                 </Link>
-                <p className="text-white/50 italic">
+                <p className="text-white/50 italic text-sm xl:text-base xL:mt-0 mt-4">
                   Uwaga: Wchodząc na panel administratora bierzesz
                   odpowiedzialność za wszystkie wykonywane akcje
                 </p>

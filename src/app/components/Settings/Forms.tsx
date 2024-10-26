@@ -280,6 +280,7 @@ export const ProfileDescriptionForm = ({
     formType="description"
   />
 );
+
 // PRIVATE FORMS
 export const ProfileEmailForm = () => (
   <ProfileFieldForm

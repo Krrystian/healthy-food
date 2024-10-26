@@ -98,7 +98,7 @@ export const Users = () => {
   return (
     <div className="overflow-x-auto select-text flex flex-col justify-between h-full">
       <div>
-        <div className="flex items-center gap-4 mb-4">
+        <div className="flex xl:items-center xl:flex-row flex-col gap-4 mb-4">
           <label className="text-white">Wyszukaj:</label>
           <input
             type="text"
@@ -138,84 +138,88 @@ export const Users = () => {
             <option value="inactive">Zablokowani</option>
           </select>
         </div>
-        <table className="min-w-full table-fixed">
-          <thead>
-            <tr className="border-b-2 border-white/60">
-              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r-2 border-white/60 w-1/4">
-                ID
-              </th>
-              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r-2 border-white/60 w-1/4">
-                Nazwa
-              </th>
-              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r-2 border-white/60 w-1/4">
-                Email
-              </th>
-              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r-2 border-white/60 w-1/4">
-                Role
-              </th>
-              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">
-                Funkcje
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {isLoading
-              ? skeletons
-              : users.map((user) => (
-                  <tr
-                    key={user.id}
-                    className={cn(
-                      "hover:bg-white/5 duration-200 border-b-2 border-white/10",
-                      !user.active && "bg-red-500/20"
-                    )}
-                  >
-                    <td className="px-6 py-4 text-sm text-white">{user.id}</td>
-                    <td className="px-6 py-4 text-sm text-white">
-                      {user.name}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-white">
-                      {user.email}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-white text-center">
-                      {user.roles.map((role) => (
-                        <span
-                          key={role}
-                          className={cn(
-                            "bg-slate-400/40 px-2 py-1 mr-2 rounded-xl",
-                            role === "admin" && "bg-orange-500/40"
-                          )}
-                        >
-                          {role}
-                        </span>
-                      ))}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-white flex gap-4 w-full justify-center">
-                      <button
-                        className={cn(
-                          "bg-green-500/50 hover:bg-green-500/60 px-3 py-1 rounded-xl duration-300 transition-all"
-                        )}
-                      >
-                        Profil
-                      </button>
-                      {!user.roles.includes("admin") ? (
+        <div className="overflow-x-auto">
+          <table className="min-w-full table-fixed">
+            <thead>
+              <tr className="border-b-2 border-white/60">
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r-2 border-white/60 w-1/4">
+                  ID
+                </th>
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r-2 border-white/60 w-1/4">
+                  Nazwa
+                </th>
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r-2 border-white/60 w-1/4">
+                  Email
+                </th>
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r-2 border-white/60 w-1/4">
+                  Role
+                </th>
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">
+                  Funkcje
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {isLoading
+                ? skeletons
+                : users.map((user) => (
+                    <tr
+                      key={user.id}
+                      className={cn(
+                        "hover:bg-white/5 duration-200 border-b-2 border-white/10",
+                        !user.active && "bg-red-500/20"
+                      )}
+                    >
+                      <td className="px-6 py-4 text-sm text-white">
+                        {user.id}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-white">
+                        {user.name}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-white">
+                        {user.email}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-white text-center">
+                        {user.roles.map((role) => (
+                          <span
+                            key={role}
+                            className={cn(
+                              "bg-slate-400/40 px-2 py-1 mr-2 rounded-xl",
+                              role === "admin" && "bg-orange-500/40"
+                            )}
+                          >
+                            {role}
+                          </span>
+                        ))}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-white flex gap-4 w-full justify-center">
                         <button
                           className={cn(
-                            "bg-red-500/50 hover:bg-red-500/70 px-3 py-1 rounded-xl duration-300 transition-all",
-                            !user.active &&
-                              "bg-green-500/50 hover:bg-green-500/70"
+                            "bg-green-500/50 hover:bg-green-500/60 px-3 py-1 rounded-xl duration-300 transition-all"
                           )}
-                          onClick={() => {
-                            suspendUser(user.id);
-                          }}
                         >
-                          {user.active ? "Zablokuj" : "Odblokuj"}
+                          Profil
                         </button>
-                      ) : null}
-                    </td>
-                  </tr>
-                ))}
-          </tbody>
-        </table>
+                        {!user.roles.includes("admin") ? (
+                          <button
+                            className={cn(
+                              "bg-red-500/50 hover:bg-red-500/70 px-3 py-1 rounded-xl duration-300 transition-all",
+                              !user.active &&
+                                "bg-green-500/50 hover:bg-green-500/70"
+                            )}
+                            onClick={() => {
+                              suspendUser(user.id);
+                            }}
+                          >
+                            {user.active ? "Zablokuj" : "Odblokuj"}
+                          </button>
+                        ) : null}
+                      </td>
+                    </tr>
+                  ))}
+            </tbody>
+          </table>
+        </div>
       </div>
       <div className="flex justify-center mt-4 gap-4 items-center">
         <button
@@ -244,7 +248,6 @@ export const Users = () => {
 };
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
-
 export const Notifications = () => {
   type FormValues = {
     title: string;
@@ -307,7 +310,7 @@ export const Notifications = () => {
         className="flex flex-col gap-4 w-full"
       >
         <div className="grid w-full grid-cols-3">
-          <label className="text-white">Title:</label>
+          <label className="text-white">Tytuł:</label>
 
           <input
             type="text"
@@ -320,8 +323,8 @@ export const Notifications = () => {
           )}
         </div>
 
-        <div className="grid w-full grid-cols-3">
-          <label className="text-white">Body:</label>
+        <div className="xl:grid w-full xl:grid-cols-3 flex flex-col gap-4 xl:gap-0">
+          <label className="text-white">Treść:</label>
 
           <div className="col-span-2">
             <ReactQuill
@@ -352,47 +355,49 @@ export const Notifications = () => {
           </button>
         </div>
       </form>
-      <table className="w-full text-center mt-8">
-        <thead>
-          <tr className="border-b-2 border-white/60">
-            <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r-2 border-white/60 w-1/4">
-              Id
-            </th>
-            <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r-2 border-white/60 w-1/4">
-              Title
-            </th>
-            <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r-2 border-white/60 w-1/4">
-              Created At
-            </th>
-            <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider  border-white/60 w-1/4">
-              User
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {isLoading
-            ? skeletons
-            : emails.map((email: any) => (
-                <tr
-                  key={email.id}
-                  className={cn(
-                    "hover:bg-white/5 duration-200 border-b-2 border-white/10"
-                  )}
-                >
-                  <td className="px-6 py-4 text-sm text-white">{email.id}</td>
-                  <td className="px-6 py-4 text-sm text-white">
-                    {email.title}
-                  </td>
-                  <td className="px-6 py-4 text-sm text-white">
-                    {email.createdAt}
-                  </td>
-                  <td className="px-6 py-4 text-sm text-white">
-                    {email.user.name}
-                  </td>
-                </tr>
-              ))}
-        </tbody>
-      </table>
+      <div className="overflow-x-auto">
+        <table className="w-full text-center mt-8">
+          <thead>
+            <tr className="border-b-2 border-white/60">
+              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r-2 border-white/60 w-1/4">
+                Id
+              </th>
+              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r-2 border-white/60 w-1/4">
+                Title
+              </th>
+              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r-2 border-white/60 w-1/4">
+                Created At
+              </th>
+              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider  border-white/60 w-1/4">
+                User
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {isLoading
+              ? skeletons
+              : emails.map((email: any) => (
+                  <tr
+                    key={email.id}
+                    className={cn(
+                      "hover:bg-white/5 duration-200 border-b-2 border-white/10"
+                    )}
+                  >
+                    <td className="px-6 py-4 text-sm text-white">{email.id}</td>
+                    <td className="px-6 py-4 text-sm text-white">
+                      {email.title}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-white">
+                      {email.createdAt}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-white">
+                      {email.user.name}
+                    </td>
+                  </tr>
+                ))}
+          </tbody>
+        </table>
+      </div>
       <p className="text-white/60 italic text-center w-full">
         Tylko 5 najnowszych wiadomości
       </p>
@@ -411,4 +416,15 @@ export const Notifications = () => {
       )}
     </>
   );
+};
+
+export const Statistics = () => {
+  useEffect(() => {
+    const getStatistics = async () => {
+      const response = await axios.get("/api/admin/getDatabaseStatistics");
+      console.log(response.data);
+    };
+    getStatistics();
+  }, []);
+  return <div>Statistics</div>;
 };

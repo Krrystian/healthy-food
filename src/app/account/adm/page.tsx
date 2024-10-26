@@ -21,7 +21,7 @@ const Page = () => {
   }
 
   return (
-    <div className="grid grid-cols-12 pt-16 h-screen">
+    <div className="w-screen min-h-screen xl:pt-[80px] relative xl:grid xl:grid-cols-12">
       <BackgroundPattern />
       <Menu />
       <Options />

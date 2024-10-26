@@ -6,17 +6,19 @@ import { usePathname } from "next/navigation";
 export default function Template({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const previousPathname = useRef<string | null>(null);
+
   useEffect(() => {
-    if (
-      previousPathname.current !== null &&
-      previousPathname.current !== pathname
-    )
-      previousPathname.current = pathname;
     const isRootPage = pathname === "/";
-    if (isRootPage) {
-      animatePageInForce();
-    } else {
-      animatePageIn();
+
+    // Trigger animation depending on the path change.
+    if (previousPathname.current !== pathname) {
+      if (isRootPage) {
+        animatePageInForce();
+      } else {
+        animatePageIn();
+      }
+      // Update previousPathname after animation
+      previousPathname.current = pathname;
     }
   }, [pathname]);
 
