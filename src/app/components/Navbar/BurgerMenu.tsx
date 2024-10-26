@@ -8,7 +8,7 @@ interface BurgerMenuProps {
 
 const BurgerMenu: React.FC<BurgerMenuProps> = ({ open }) => {
   return (
-    <div className="absolute self-center top-0 origin-center -z-10">
+    <div className="absolute self-center top-0 origin-center -z-20">
       <motion.div
         className="xl:hidden h-1 w-screen bg-[#FBA100] z-40"
         initial={{ height: 0 }}

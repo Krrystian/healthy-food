@@ -1,10 +1,8 @@
 import { auth } from "@/app/auth";
 import prisma from "@/app/lib/prisma";
-import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
-  console.log("GET request received");
   try {
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get("page") || "1", 10);
@@ -13,8 +11,6 @@ export async function GET(req: Request) {
     const searchByEmail = searchParams.get("email");
     const activeFilter = searchParams.get("active");
 
-    // const user = await getToken({ req, secret: process.env.AUTH_SECRET }) ;
-    // const userRoles = user?.roles;
     const session = await auth()
     const userRoles = session?.roles;
     

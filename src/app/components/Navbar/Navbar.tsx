@@ -155,7 +155,7 @@ const Navbar = () => {
         </motion.div>
         <div
           className={cn(
-            "xl:hidden bg-[#FBA100] rounded-full flex items-center self-center absolute right-4 h-14 w-14"
+            "xl:hidden bg-[#FBA100] rounded-full flex items-center self-center absolute right-4 h-14 w-14 z-50"
           )}
           onClick={(event: any) => {
             event.stopPropagation();
