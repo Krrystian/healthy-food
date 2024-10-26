@@ -3,8 +3,10 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import BackgroundPattern from "../../components/BackgroundPattern";
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 export default function Page() {
+    const router = useRouter();
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
         defaultValues: {
             gender: "male",
@@ -75,6 +77,11 @@ export default function Page() {
             optionalDiseases,
             foodAvoidance
         });
+
+        console.log(response.data.result)
+        const resultString = response.data.result.join(",")
+        window.open("/diet/result/"+resultString, "_blank")
+        //router.push("/diet/result/"+resultString)
     };
     
 
