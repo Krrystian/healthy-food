@@ -102,28 +102,10 @@ export const DietaContent = () => {
           Po co komu dieta?
           <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
         </Link>
-        <Link href="#" className="relative group font-semibold py-1">
+        <Link href="/diet/diets" className="relative group font-semibold py-1">
           Przeglądaj diety
           <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
         </Link>
-        <div className="flex flex-col text-sm">
-          <Link href="#" className="relative group pb-1">
-            Wegetariańska
-            <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
-          </Link>
-          <Link href="#" className="relative group py-1">
-            Niskotłuszczowa
-            <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
-          </Link>
-          <Link href="#" className="relative group py-1">
-            Bezglutenowa
-            <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
-          </Link>
-          <Link href="#" className="relative group py-1">
-            Niskowęglowodanowa
-            <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
-          </Link>
-        </div>
         <Link
           href="/diet/form"
           className="relative group py-1 border-2 rounded-xl border-black text-center flex items-center justify-center group overflow-hidden"
