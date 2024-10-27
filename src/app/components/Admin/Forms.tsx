@@ -7,7 +7,18 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import dynamic from "next/dynamic";
 import DOMPurify from "dompurify";
 import "react-quill/dist/quill.snow.css";
-import { set } from "zod";
+import {
+  LineChart,
+  Line,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 export const Users = () => {
   const [users, setUsers] = React.useState<
@@ -419,12 +430,55 @@ export const Notifications = () => {
 };
 
 export const Statistics = () => {
+  const [data, setData] = React.useState([]);
+
   useEffect(() => {
     const getStatistics = async () => {
       const response = await axios.get("/api/admin/getDatabaseStatistics");
-      console.log(response.data);
+      setData(response.data);
     };
     getStatistics();
   }, []);
-  return <div>Statistics</div>;
+
+  return (
+    <div className="grid grid-cols-2">
+      <ResponsiveContainer height={300}>
+        <LineChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Line
+            type="monotone"
+            dataKey="newUsers"
+            stroke="#8884d8"
+            activeDot={{ r: 8 }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
+
+      <ResponsiveContainer height={300}>
+        <BarChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="newCalculators" fill="#82ca9d" />
+        </BarChart>
+      </ResponsiveContainer>
+
+      <ResponsiveContainer className="col-span-2" height={300}>
+        <BarChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="newNotifications" fill="#82ca9d" />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  );
 };

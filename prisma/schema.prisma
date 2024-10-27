@@ -86,3 +86,14 @@ model BroadcastNotification {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
+model DailyStatistics {
+  id               String   @id @default(cuid())
+  date             DateTime @unique
+  newUsers         Int      @default(0)
+  newCalculators   Int      @default(0)
+  newNotifications Int      @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -6,20 +6,46 @@ import { usePathname } from "next/navigation";
 export default function Template({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const previousPathname = useRef<string | null>(null);
+  const hideTimeout = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const isRootPage = pathname === "/";
+    const hideBannersInstantly = () => {
+      const banners = document.querySelectorAll(
+        "#banner-1, #banner-2, #banner-3, #banner-4"
+      );
+      banners.forEach((banner) => {
+        (banner as HTMLElement).style.display = "none";
+      });
+    };
+    const showBanners = () => {
+      const banners = document.querySelectorAll(
+        "#banner-1, #banner-2, #banner-3, #banner-4"
+      );
+      banners.forEach((banner) => {
+        (banner as HTMLElement).style.display = "block";
+      });
+    };
 
-    // Trigger animation depending on the path change.
     if (previousPathname.current !== pathname) {
+      showBanners();
+
       if (isRootPage) {
         animatePageInForce();
       } else {
         animatePageIn();
       }
-      // Update previousPathname after animation
+      if (hideTimeout.current) {
+        clearTimeout(hideTimeout.current);
+      }
+      hideTimeout.current = setTimeout(hideBannersInstantly, 1000);
       previousPathname.current = pathname;
     }
+    return () => {
+      if (hideTimeout.current) {
+        clearTimeout(hideTimeout.current);
+      }
+    };
   }, [pathname]);
 
   return (
