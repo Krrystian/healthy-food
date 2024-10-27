@@ -476,7 +476,12 @@ export const Statistics = () => {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="newNotifications" fill="#82ca9d" />
+          <Line
+            type="monotone"
+            dataKey="newNotifications"
+            stroke="#8884d8"
+            activeDot={{ r: 8 }}
+          />{" "}
         </BarChart>
       </ResponsiveContainer>
     </div>
