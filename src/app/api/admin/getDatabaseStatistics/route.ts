@@ -7,24 +7,29 @@ export async function GET(req: Request) {
     const session = await auth();
     const userRoles = session?.roles;
 
-    if (userRoles && userRoles.includes("admin")) {
-      // Znajdź datę ostatniego raportu
+    if (userRoles && userRoles.includes("admin")) {  
+      const startOfToday = new Date();
+      startOfToday.setUTCHours(0, 0, 0, 0);
+      
+      const endOfToday = new Date();
+      endOfToday.setUTCHours(23, 59, 59, 999);
+
       const lastReport = await prisma.dailyStatistics.findFirst({
+        where: {
+          date: {
+            gte: startOfToday,
+            lte: endOfToday,
+          },
+        },
         orderBy: {
           date: 'desc',
         },
       });
-
-      const startDate = lastReport ? lastReport.date : new Date();
-      const endDate = new Date();
-      endDate.setUTCHours(23, 59, 59, 999);
-
-      // Oblicz statystyki od ostatniego raportu
       const newUsers = await prisma.user.count({
         where: {
           createdAt: {
-            gte: startDate,
-            lt: endDate,
+            gte: startOfToday,
+            lt: endOfToday,
           },
         },
       });
@@ -32,28 +37,27 @@ export async function GET(req: Request) {
       const newCalculators = await prisma.calculator.count({
         where: {
           createdAt: {
-            gte: startDate,
-            lt: endDate,
+            gte: startOfToday,
+            lt: endOfToday,
           },
         },
       });
 
-      const dailyStats = await prisma.dailyStatistics.upsert({
+      await prisma.dailyStatistics.upsert({
         where: {
-          date: startDate,
+          date: startOfToday,
         },
         update: {
           newUsers,
           newCalculators,
         },
         create: {
-          date: startDate,
+          date: startOfToday,
           newUsers,
           newCalculators,
         },
       });
 
-      // Pobierz statystyki z ostatnich 7 dni
       const last7DaysStats = await prisma.dailyStatistics.findMany({
         where: {
           date: {
@@ -64,7 +68,6 @@ export async function GET(req: Request) {
           date: 'asc',
         },
       });
-
       const formattedStats = last7DaysStats.map((stat) => ({
         ...stat,
         date: new Date(stat.date).toLocaleDateString("pl-PL", {
@@ -72,7 +75,6 @@ export async function GET(req: Request) {
           month: "2-digit",
         }),
       }));
-
       return NextResponse.json(formattedStats, { status: 200 });
     }
 

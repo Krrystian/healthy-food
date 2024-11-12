@@ -459,14 +459,19 @@ export const Statistics = () => {
       </ResponsiveContainer>
 
       <ResponsiveContainer height={300}>
-        <BarChart data={data}>
+        <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="newCalculators" fill="#82ca9d" />
-        </BarChart>
+          <Line
+            type="monotone"
+            dataKey="newCalculators"
+            stroke="#8884d8"
+            activeDot={{ r: 8 }}
+          />
+        </LineChart>
       </ResponsiveContainer>
 
       <ResponsiveContainer className="col-span-2" height={300}>

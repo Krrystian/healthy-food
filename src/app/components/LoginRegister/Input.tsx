@@ -66,7 +66,7 @@ const Input: React.FC<InputProps> = ({
           {placeholder}
         </div>
       </div>
-      <div className="absolute text-red-700 font-medium bottom-0 translate-y-[100%] py-1">
+      <div className="absolute text-red-700 font-medium text-sm bottom-0 translate-y-[100%] py-1">
         {error}
       </div>
     </label>

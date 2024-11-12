@@ -43,18 +43,19 @@ const LoginForm = () => {
     setLoading(false);
   };
 
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data, event) => {
+    event?.preventDefault();
     setDisabled(true);
     const result = await signIn("credentials", {
       email: data.email,
       password: data.password,
-      callbackUrl: "/",
+      redirect: false,
     });
     setDisabled(false);
     setLoading(false);
     if (result?.error) {
       console.log(result.error);
-    } else {
+    } else if (result?.ok) {
       window.location.href = "/";
     }
   };

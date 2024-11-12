@@ -77,7 +77,7 @@ export function ProfileFieldForm({
     resolver: zodResolver(schema),
     defaultValues,
   });
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [loadingState, setLoadingState] = useState("Ładowanie");
   const values = watch();
   const submitData = useProfileForm(formType);
