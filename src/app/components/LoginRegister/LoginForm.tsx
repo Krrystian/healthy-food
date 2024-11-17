@@ -1,37 +1,43 @@
+//REFORMATTED
 "use client";
 import { loginSchema } from "@/app/lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
-import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
+import React, { useEffect, useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import dynamic from "next/dynamic";
 import Button from "./Button";
 import Input from "./Input";
 import GoogleButton from "./GoogleButton";
 import { animatePageOut } from "@/app/lib/pageTransition";
-import dynamic from "next/dynamic";
 
-const Background = dynamic(() => import("./Background"), {
-  ssr: false,
-});
+const Background = dynamic(() => import("./Background"), { ssr: false });
+
+type LoginFormValues = {
+  email: string;
+  password: string;
+};
 
 const LoginForm = () => {
-  const [loading, setLoading] = React.useState<boolean>(true);
-  const [disabled, setDisabled] = React.useState<boolean>(false);
-  const session = useSession();
+  const [loading, setLoading] = useState(true);
+  const [disabled, setDisabled] = useState(false);
+
+  const { status } = useSession();
   const router = useRouter();
 
   useEffect(() => {
-    if (session.status === "authenticated") {
+    if (status === "authenticated") {
       router.push("/");
     }
-  }, [session.status, router]);
+  }, [status, router]);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FieldValues>({
+    setError,
+  } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
@@ -39,12 +45,9 @@ const LoginForm = () => {
     },
   });
 
-  const handleLoad = () => {
-    setLoading(false);
-  };
+  const handleLoad = () => setLoading(false);
 
-  const onSubmit: SubmitHandler<FieldValues> = async (data, event) => {
-    event?.preventDefault();
+  const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     setDisabled(true);
     const result = await signIn("credentials", {
       email: data.email,
@@ -53,9 +56,11 @@ const LoginForm = () => {
     });
     setDisabled(false);
     setLoading(false);
-    if (result?.error) {
-      console.log(result.error);
-    } else if (result?.ok) {
+    console.log(result);
+    if (!result || result.error || result.url == null) {
+      console.log("User not found or password is incorrect");
+      setError("email", { type: "manual", message: "User not found" });
+    } else {
       window.location.href = "/";
     }
   };
@@ -65,11 +70,7 @@ const LoginForm = () => {
       <Background loading={handleLoad} />
       <div className="absolute top-0 h-screen right-24 flex items-center z-20 w-[30vw]">
         <div className="px-8 w-full bg-[#FFB703]/90 rounded-3xl min-h-[60vh] py-8 flex flex-col items-center justify-center shadow-xl">
-          <div className="w-full flex gap-4 pb-4 items-center ">
-            <div className="h-[2px] rounded-xl w-full bg-black" />
-            <h1 className="text-3xl font-black">WELCOME</h1>
-            <div className="h-[2px] rounded-xl w-full bg-black" />
-          </div>
+          <Header title="WELCOME" />
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col w-full gap-10 items-center"
@@ -82,7 +83,7 @@ const LoginForm = () => {
                 name="email"
                 disabled={disabled}
                 autoComplete="email"
-                error={errors.email?.message as string}
+                error={errors.email?.message}
               />
               <Input
                 placeholder="Password"
@@ -90,8 +91,8 @@ const LoginForm = () => {
                 register={register}
                 name="password"
                 disabled={disabled}
-                autoComplete="password"
-                error={errors.password?.message as string}
+                autoComplete="current-password"
+                error={errors.password?.message}
               />
             </div>
             <div className="flex w-full justify-center">
@@ -99,34 +100,46 @@ const LoginForm = () => {
                 label="Login"
                 labelSecondary="We missed you!"
                 type="submit"
-                className=" border-2 border-black text-xl w-[60%]"
+                className="border-2 border-black text-xl w-[60%]"
                 disabled={disabled}
                 classNameLabel="bg-[#FFB703]/90"
               />
             </div>
           </form>
-          <div className="w-full flex gap-4 items-center py-6">
-            <div className="h-[2px] rounded-xl w-full bg-black" />
-            <h1 className="text-xl font-black">OR</h1>
-            <div className="h-[2px] rounded-xl w-full bg-black" />
-          </div>
-          <div className="flex flex-col w-full  items-center gap-4">
+          <Divider text="OR" />
+          <div className="flex flex-col w-full items-center gap-4">
             <GoogleButton />
-            <Button
-              label="Don't have an account?"
-              type="button"
-              onClick={() => {
-                animatePageOut("/register", router);
-              }}
-              className="w-[60%] border-2 border-black text-xl"
-              classNameLabel="bg-red-600"
-              labelSecondary="Register now!"
-            />
+            <div className="flex w-full justify-center">
+              <Button
+                label="Don't have an account?"
+                type="button"
+                className="border-2 border-black text-xl w-[60%]"
+                onClick={() => animatePageOut("/register", router)}
+                classNameLabel="bg-red-600"
+                labelSecondary="Register now!"
+              />
+            </div>
           </div>
         </div>
       </div>
     </>
   );
 };
+
+const Header = ({ title }: { title: string }) => (
+  <div className="w-full flex gap-4 pb-4 items-center">
+    <div className="h-[2px] rounded-xl w-full bg-black" />
+    <h1 className="text-3xl font-black">{title}</h1>
+    <div className="h-[2px] rounded-xl w-full bg-black" />
+  </div>
+);
+
+const Divider = ({ text }: { text: string }) => (
+  <div className="w-full flex gap-4 items-center py-6">
+    <div className="h-[2px] rounded-xl w-full bg-black" />
+    <h1 className="text-xl font-black">{text}</h1>
+    <div className="h-[2px] rounded-xl w-full bg-black" />
+  </div>
+);
 
 export default LoginForm;

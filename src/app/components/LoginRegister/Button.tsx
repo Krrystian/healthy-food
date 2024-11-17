@@ -19,7 +19,7 @@ const Button: React.FC<ButtonProps> = ({
   onClick = () => {},
   className,
   labelSecondary,
-  disabled,
+  disabled = false,
   classNameLabel,
   classNameLabelSecondary,
 }) => {
