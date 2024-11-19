@@ -235,14 +235,16 @@ const Navbar = () => {
               >
                 <Link
                   href="/diet/form"
+                  onClick={() => setMenuOpen(false)}
                   className="text-2xl font-medium tracking-wider text-white bg-[#023047] text-center w-full rounded-xl p-4"
                 >
                   Wypełnij Quiz
                 </Link>
-                {session ? (
+                {session.status === "authenticated" ? (
                   <Link
                     href="/account/settings"
                     onClick={() => setMenuOpen(false)}
+                    prefetch={true}
                     className="text-2xl text-black font-medium border-[#023047] border-4 text-center w-full rounded-xl p-4"
                   >
                     Profil

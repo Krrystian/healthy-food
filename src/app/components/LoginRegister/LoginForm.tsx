@@ -1,4 +1,3 @@
-//REFORMATTED
 "use client";
 import { loginSchema } from "@/app/lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -39,10 +38,7 @@ const LoginForm = () => {
     setError,
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+    defaultValues: { email: "", password: "" },
   });
 
   const handleLoad = () => setLoading(false);
@@ -56,9 +52,8 @@ const LoginForm = () => {
     });
     setDisabled(false);
     setLoading(false);
-    console.log(result);
+
     if (!result || result.error || result.url == null) {
-      console.log("User not found or password is incorrect");
       setError("email", { type: "manual", message: "User not found" });
     } else {
       window.location.href = "/";
@@ -68,7 +63,7 @@ const LoginForm = () => {
   return (
     <>
       <Background loading={handleLoad} />
-      <div className="absolute top-0 h-screen right-24 flex items-center z-20 w-[30vw]">
+      <div className="absolute top-0 h-screen md:right-24 flex items-center z-20 lg:w-[30vw] md:w-1/2 w-full">
         <div className="px-8 w-full bg-[#FFB703]/90 rounded-3xl min-h-[60vh] py-8 flex flex-col items-center justify-center shadow-xl">
           <Header title="WELCOME" />
           <form

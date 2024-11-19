@@ -16,7 +16,7 @@ export default function Home() {
   useSmoothScroll();
   const session = useSession();
   console.log(session);
-  // First and second section
+
   const container = useRef<HTMLDivElement>(null);
   const stickyMask = useRef<HTMLDivElement>(null);
   const parallaxContainer = useRef<HTMLDivElement>(null);
@@ -89,7 +89,6 @@ export default function Home() {
     return 0;
   };
 
-  // About us section
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     if (aboutUsRef.current) {
@@ -113,7 +112,6 @@ export default function Home() {
     };
   }, []);
 
-  // Horizontal sections
   const blogContainerRef = useRef<HTMLDivElement>(null);
   const dietaContainerRef = useRef<HTMLDivElement>(null);
   const przepisyContainerRef = useRef<HTMLDivElement>(null);
@@ -177,6 +175,7 @@ export default function Home() {
         markers: false,
       },
     });
+
     tl.to(".blogBg", { width: "100%", duration: 0.7 }, 0)
       .to(".blogTitleBg", { width: "100%", duration: 0.7 }, 0.3)
       .to(".blogDescBg", { width: "100%", duration: 0.7 }, 0.6)
@@ -211,6 +210,7 @@ export default function Home() {
       .to(".przepisyTitleBg", { width: "0%", duration: 0.7 }, 1.2)
       .to(".przepisyDescBg", { width: "0%", duration: 0.6 }, 1.4)
       .to(".przepisyButton", { translateY: "0", duration: 0.7 }, 1.6);
+
     tlKalkulatory
       .to(".kalkulatoryBg", { width: "100%", duration: 0.7 }, 0)
       .to(".kalkulatoryTitleBg", { width: "100%", duration: 0.7 }, 0.3)
@@ -222,13 +222,6 @@ export default function Home() {
       .to(".kalkulatoryTitleBg", { width: "0%", duration: 0.7 }, 1.2)
       .to(".kalkulatoryDescBg", { width: "0%", duration: 0.6 }, 1.4)
       .to(".kalkulatoryButton", { translateY: "0", duration: 0.7 }, 1.6);
-
-    return () => {
-      tl.reverse();
-      tlDieta.reverse();
-      tlPrzepisy.reverse();
-      tlKalkulatory.reverse();
-    };
   }, []);
   return (
     <main className="min-h-screen w-screen relative">
