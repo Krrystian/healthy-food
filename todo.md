@@ -7,7 +7,8 @@
 - [x] Landing page
 - [x] Navbar page
 - [ ] Calculators pages
-- [ ] User Page
+- [ ] User page
+- [ ] Admin page
 
 ## Testy jednostkowe
 

@@ -73,7 +73,6 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [scrollProgress]);
 
-  //NO-SCROLL TO FIX
   React.useEffect(() => {
     if (isMenuOpen) {
       document.body.classList.add("no-scroll");
