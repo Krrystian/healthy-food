@@ -491,3 +491,68 @@ export const Statistics = () => {
     </div>
   );
 };
+
+//tagi dodac aby byly wyswietlane pod tagami
+export const Recipes = () => {
+  const [isRecipeCreatorOpen, setIsRecipeCreatorOpen] = React.useState(false);
+  return (
+    <div className="relative w-full h-full">
+      <button
+        className="bg-blue-500/50 hover:bg-blue-500/70 duration-300 px-4 py-2 rounded text-white"
+        onClick={() => setIsRecipeCreatorOpen(true)}
+      >
+        Dodaj nowy przepis
+      </button>
+      {isRecipeCreatorOpen && (
+        <div className="absolute top-0 left-0 w-full h-full bg-black/80 flex flex-col justify-center items-center px-8">
+          <form className="grid grid-cols-2 w-full gap-8 py-8">
+            <div className="flex flex-col gap-8">
+              <div className="flex gap-4 text-xl p-4 bg-[#023047] rounded-xl px-8 justify-center items-baseline">
+                <label htmlFor="Title">Nazwa:</label>
+                <input
+                  type="text"
+                  id="Title"
+                  className="bg-transparent border-2 border-transparent border-b-white/60 focus:outline-none focus:border-[#ffb703] px-1 w-full"
+                />
+              </div>
+              <div className="flex gap-4 text-xl p-4 bg-[#023047] rounded-xl px-8 justify-center items-baseline">
+                <label htmlFor="Tag">Tagi:</label>
+                <input
+                  type="text"
+                  id="Tag"
+                  className="bg-transparent border-2 border-transparent border-b-white/60 focus:outline-none focus:border-[#ffb703] px-1 w-full"
+                />
+                <button
+                  type="button"
+                  className="bg-blue-500/50 hover:bg-blue-500/70 duration-300 px-4 py-2 rounded text-white"
+                  onClick={() => console.log("click")}
+                >
+                  Dodaj
+                </button>
+              </div>
+            </div>
+            <div className="flex gap-4 text-xl p-4 bg-[#023047] rounded-xl px-8 justify-center items-top">
+              <label htmlFor="Description">Opis:</label>
+              <textarea
+                id="Description"
+                rows={5}
+                className="bg-transparent border-2 border-transparent border-b-white/60 focus:outline-none focus:border-[#ffb703] px-1 resize-none w-full"
+              />
+            </div>
+          </form>
+          <div className="w-full flex gap-8">
+            <button
+              className="bg-red-500/50 hover:bg-red-500/70 duration-300 px-4 py-2 rounded text-white w-full"
+              onClick={() => setIsRecipeCreatorOpen(false)}
+            >
+              Anuluj
+            </button>
+            <button className="bg-blue-500/50 hover:bg-blue-500/70 duration-300 px-4 py-2 rounded text-white w-full">
+              Dodaj
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};

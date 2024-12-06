@@ -102,7 +102,7 @@ const Navbar = () => {
             scrollProgress > 30 && "w-[50vw] rounded-b-xl px-2"
           )}
         >
-          <div className="flex flex-row justify-between items-center h-full">
+          <div className="relative flex flex-row justify-between items-center h-full">
             <Image
               src="/logo.png"
               width={60}
@@ -112,7 +112,7 @@ const Navbar = () => {
               className="cursor-pointer"
               onClick={() => animatePageOut("/", router)}
             />
-            <div className="flex flex-row items-center justify-center gap-1">
+            <div className="absolute flex flex-row items-center justify-center gap-1 w-full">
               <NavLink
                 label="Kalkulatory"
                 href="/calculator/bmi"

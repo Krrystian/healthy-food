@@ -69,6 +69,15 @@ const Menu: React.FC = () => {
         <button
           className={cn(
             "p-2 rounded-2xl px-4",
+            selected === "Recipes" ? "bg-[#019E52]" : "hover:bg-[#27BDDF]"
+          )}
+          onClick={() => changeSelection("Recipes")}
+        >
+          Przepisy
+        </button>
+        <button
+          className={cn(
+            "p-2 rounded-2xl px-4",
             selected === "Statistics" ? "bg-[#019E52]" : "hover:bg-[#27BDDF]"
           )}
           onClick={() => changeSelection("Statistics")}

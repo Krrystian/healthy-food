@@ -33,18 +33,20 @@ const Options = () => {
   const [tdeeData, setTdeeData] = React.useState<CalculatorStats[]>([]);
   const [bmiData, setBmiData] = React.useState<CalculatorStats[]>([]);
 
-  useEffect(() => {
-    if (status === "loading") return;
-    if (status !== "authenticated" || !session) {
-      router.push("/");
-    }
-  }, [status, session, router]);
-
   if (status === "loading") {
     return <p>Ładowanie...</p>;
   }
 
-  if (!session) return null;
+  if (!session) {
+    router.push("/");
+    return null;
+  }
+
+  useEffect(() => {
+    if (status !== "authenticated") {
+      router.push("/");
+    }
+  }, [status, router]);
 
   useEffect(() => {
     const getCalculatorStats = async () => {

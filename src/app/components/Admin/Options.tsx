@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import Card from "../Settings/Card";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { Notifications, Statistics, Users } from "./Forms";
+import { Notifications, Recipes, Statistics, Users } from "./Forms";
 
 const Options = () => {
   const searchParams = useSearchParams();
@@ -46,6 +46,12 @@ const Options = () => {
         <>
           <Card title="Statistics" className="col-span-2">
             <Statistics />
+          </Card>
+        </>
+      ) : menuOption === "Recipes" ? (
+        <>
+          <Card title="Przepisy" className="col-span-2">
+            <Recipes />
           </Card>
         </>
       ) : null}

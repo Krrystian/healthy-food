@@ -6,6 +6,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar/Navbar";
 import { AuthProvider } from "./lib/authProvider";
 import { auth } from "./auth";
+import Mouse from "./components/Mouse";
 const font = localFont({
   src: [
     {
@@ -69,6 +70,7 @@ export default async function RootLayout({
       <body className={font.className + " " + "overflow-x-hidden"}>
         <AuthProvider session={session}>
           <Navbar />
+          <Mouse />
           {children}
         </AuthProvider>
         <Analytics />
