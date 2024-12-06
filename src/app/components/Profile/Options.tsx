@@ -33,14 +33,12 @@ const Options = () => {
   const [tdeeData, setTdeeData] = React.useState<CalculatorStats[]>([]);
   const [bmiData, setBmiData] = React.useState<CalculatorStats[]>([]);
 
-  if (status === "loading") {
-    return <p>Ładowanie...</p>;
-  }
-
-  if (!session) {
-    router.push("/");
-    return null;
-  }
+  useEffect(() => {
+    if (status === "loading") return;
+    if (!session) {
+      router.push("/");
+    }
+  }, [status, session, router]);
 
   useEffect(() => {
     if (status !== "authenticated") {
@@ -78,6 +76,14 @@ const Options = () => {
     if (menuOption === "Statistics" || menuOption === null)
       getCalculatorStats();
   }, [menuOption]);
+
+  if (status === "loading") {
+    return <p>Ładowanie...</p>;
+  }
+
+  if (!session) {
+    return null;
+  }
 
   return (
     <div className="w-full xl:col-span-9 xl:p-8 p-4 xl:grid xl:grid-cols-2 flex flex-col gap-8">
