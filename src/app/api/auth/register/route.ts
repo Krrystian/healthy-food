@@ -5,7 +5,6 @@ import { registerSchema } from "@/app/lib/zod";
 
 
 export async function POST(request: Request) {
-    console.log("Request received");
     try{
     let user = null;
     const req =  await request.json();

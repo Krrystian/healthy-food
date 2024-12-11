@@ -21,7 +21,7 @@ type CustomUser = {
 // Rozszerzenie DefaultSession
 declare module "next-auth" {
   interface Session {
-    user: CustomUser; // Ustawienie CustomUser
+    user: CustomUser;
     ads: boolean;
     notifications: boolean;
     roles: string[];
