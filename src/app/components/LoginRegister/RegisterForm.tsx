@@ -84,7 +84,7 @@ const RegisterForm = () => {
       <Background loading={handleLoad} />
 
       {!loading && (
-        <div className="absolute top-0 h-screen right-24 flex items-center z-20 w-[30vw]">
+        <div className="absolute top-0 h-screen md:right-24 flex items-center z-20 lg:w-[30vw] md:w-1/2 w-full">
           <div className="px-8 w-full bg-[#FFB703]/90 rounded-3xl min-h-[80vh] py-8 flex flex-col items-center justify-center shadow-xl">
             <Header title="WELCOME" />
 

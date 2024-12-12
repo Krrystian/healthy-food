@@ -4,14 +4,15 @@
 
 - [x] Login page
 - [x] Register page
-- [] Landing page
-- [] Navbar page
-- [] Calculators pages
-- [] User Page
+- [x] Landing page
+- [x] Navbar page
+- [ ] Calculators pages
+- [ ] User page
+- [ ] Admin page
 
 ## Testy jednostkowe
 
 ## Inne (uwagi)
 
-- [] Responsywność strony logowania
-- [] Responsywność strony rejestracji
+- [x] Responsywność strony logowania
+- [x] Responsywność strony rejestracji

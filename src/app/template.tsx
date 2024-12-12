@@ -1,5 +1,6 @@
 "use client";
-import React, { useRef, useEffect } from "react";
+
+import React, { useRef, useEffect, useState } from "react";
 import { animatePageIn, animatePageInForce } from "./lib/pageTransition";
 import { usePathname } from "next/navigation";
 
@@ -7,46 +8,57 @@ export default function Template({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const previousPathname = useRef<string | null>(null);
   const hideTimeout = useRef<NodeJS.Timeout | null>(null);
+  const [hasAnimated, setHasAnimated] = useState(false); // Flaga animacji
+
+  const hideBannersInstantly = () => {
+    const banners = document.querySelectorAll(
+      "#banner-1, #banner-2, #banner-3, #banner-4"
+    );
+    banners.forEach((banner) => {
+      (banner as HTMLElement).style.display = "none";
+    });
+  };
+
+  const showBanners = () => {
+    const banners = document.querySelectorAll(
+      "#banner-1, #banner-2, #banner-3, #banner-4"
+    );
+    banners.forEach((banner) => {
+      (banner as HTMLElement).style.display = "block";
+    });
+  };
 
   useEffect(() => {
-    const isRootPage = pathname === "/";
-    const hideBannersInstantly = () => {
-      const banners = document.querySelectorAll(
-        "#banner-1, #banner-2, #banner-3, #banner-4"
-      );
-      banners.forEach((banner) => {
-        (banner as HTMLElement).style.display = "none";
-      });
-    };
-    const showBanners = () => {
-      const banners = document.querySelectorAll(
-        "#banner-1, #banner-2, #banner-3, #banner-4"
-      );
-      banners.forEach((banner) => {
-        (banner as HTMLElement).style.display = "block";
-      });
-    };
+    showBanners();
 
     if (previousPathname.current !== pathname) {
-      showBanners();
-
-      if (isRootPage) {
+      // Jeśli ścieżka się zmieniła, animuj
+      if (pathname === "/") {
         animatePageInForce();
       } else {
-        animatePageIn();
+        if (!hasAnimated) {
+          // Sprawdź, czy animacja już się wykonała
+          animatePageIn();
+          setHasAnimated(true); // Ustaw flagę, żeby nie wywołać animacji ponownie
+        }
       }
+
+      // Zabezpieczenie przed pokazywaniem banerów po animacji
       if (hideTimeout.current) {
         clearTimeout(hideTimeout.current);
       }
       hideTimeout.current = setTimeout(hideBannersInstantly, 1000);
+
       previousPathname.current = pathname;
     }
+
+    // Cleanup timeout on unmount
     return () => {
       if (hideTimeout.current) {
         clearTimeout(hideTimeout.current);
       }
     };
-  }, [pathname]);
+  }, [pathname, hasAnimated]);
 
   return (
     <div>

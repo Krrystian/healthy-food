@@ -140,8 +140,11 @@ export const KontoContent = () => {
           Ustawienia
           <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
         </Link>
-        <Link href="#" className="relative group font-semibold py-1">
-          Statystyki
+        <Link
+          href="/account/profile"
+          className="relative group font-semibold py-1"
+        >
+          Profil
           <div className="absolute bottom-0 left-0 w-0 duration-300 transition-all h-1 rounded-xl bg-[#219EBC] group-hover:w-full" />
         </Link>
         <SignOutButton />
