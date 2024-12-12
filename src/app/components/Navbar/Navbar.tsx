@@ -133,7 +133,7 @@ const Navbar = () => {
               />
               <NavLink label="Produkty" href="/products" prefetch={true} />
             </div>
-            <div className="flex flex-row gap-8">
+            <div className="flex flex-row gap-8 z-20">
               {loggedIn ? (
                 <NavLink
                   label="Konto"
