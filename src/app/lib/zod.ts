@@ -8,7 +8,7 @@ export const signInSchema = object({
     .min(1, "Password is required")
     .min(8, "Password must be more than 8 characters")
     .max(32, "Password must be less than 32 characters")
-    .regex(/(?=.*[0-9])(?=.*[!@#$%^&*])/, "Password must contain at least one special character and one number"),
+    //.regex(/(?=.*[0-9])(?=.*[!@#$%^&*])/, "Password must contain at least one special character and one number"),
 })
 
 export const registerSchema = object({

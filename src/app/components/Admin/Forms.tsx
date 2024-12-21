@@ -20,6 +20,7 @@ import {
 } from "recharts";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 
 export const Users = () => {
   const [users, setUsers] = React.useState<
@@ -517,9 +518,18 @@ export const Recipes = () => {
   };
   return (
     <div className="relative w-full h-full">
-      <button
+      {/* <button
         className="bg-blue-500/50 hover:bg-blue-500/70 duration-300 px-4 py-2 rounded text-white"
         onClick={() => setIsRecipeCreatorOpen(true)}
+      >
+        Dodaj nowy przepis
+      </button> */}
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          window.open("/account/adm/createRecipe", "_blank");
+        }}
+        className="bg-blue-500/50 hover:bg-blue-500/70 duration-300 px-4 py-2 rounded text-white"
       >
         Dodaj nowy przepis
       </button>
