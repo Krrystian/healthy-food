@@ -1,12 +1,12 @@
+import { auth } from "@/app/auth";
 import prisma from "@/app/lib/prisma";
-import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 
 export async function PUT(req: Request) {
     try {
         const body = await req.json();
-        const user = await getToken({ req, secret: process.env.AUTH_SECRET } as any);
-        const userRoles = user?.roles;
+        const session = await auth()
+        const userRoles = session?.roles;
         console.log(body, userRoles);
         if (userRoles && userRoles.includes("admin")) {
             const userToUpdate = await prisma.user.findUnique({
