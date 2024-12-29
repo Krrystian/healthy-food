@@ -7,7 +7,10 @@ import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { useForm, FieldValues } from 'react-hook-form';
 import axios from 'axios';
-//TODO: Zamienic obrazek na link do AWS S3
+import { useS3Uploader } from '@/app/hooks/useS3Uploader';
+import { createRecipeSchema } from '@/app/lib/zod';
+import { z } from 'zod';
+//TODO: dodać error message zamiast alert w wypadku kiedy nie jest to zrobione poprawnie
 type Product = {
   name: string;
   quantity: string;
@@ -30,6 +33,7 @@ type FormData = {
 const Page: React.FC = () => {
   const { data: session } = useSession();
   const router = useRouter();
+  const { uploadToS3 } = useS3Uploader();
 
   const {
     register,
@@ -105,13 +109,34 @@ const Page: React.FC = () => {
   const removeProduct = (name: string): void => {
     setValue('products', products.filter((p) => p.name !== name));
   };
-
   const onSubmit = async (data: FormData) => {
     console.log('Form Data:', data);
-    const response = await axios.post('/api/admin/createRecipe', data);
-    console.log('Response:', response.data);
-    reset();
-    alert('Zapisano!');
+    
+    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+    if (fileInput && fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
+      const path = 'recipe'; 
+      const imageUrl = await uploadToS3(file, "", path, data.title);
+      setValue('image', imageUrl);
+      const { tagInput, productName, productQuantity, productMetric, ...filteredData } = data;
+      try {
+        createRecipeSchema.parse(filteredData);
+        const response = await axios.post('/api/admin/createRecipe', {
+          ...filteredData,
+          image: imageUrl,
+        });
+        console.log('Response:', response.data);
+        reset();
+        alert('Zapisano!');
+    } catch (error) {
+        if (error instanceof z.ZodError) {
+          console.error("Validation failed:", error.errors);
+          alert("Validation failed. Please check the form fields.");
+        } else {
+          console.error("Unexpected error:", error);
+        }
+      }
+    }
   };
 
   return (
