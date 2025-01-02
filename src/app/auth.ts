@@ -21,7 +21,7 @@ type CustomUser = {
 // Rozszerzenie DefaultSession
 declare module "next-auth" {
   interface Session {
-    user: CustomUser; // Ustawienie CustomUser
+    user: CustomUser;
     ads: boolean;
     notifications: boolean;
     roles: string[];
@@ -45,25 +45,25 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
     Credentials({
+      name: "Credentials",
       credentials: {
-        email: {},
-        password: {},
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
         try {
           const { email, password } = await signInSchema.parseAsync(credentials);
           const user = await prisma.user.findFirst({ where: { email } });
-
+    
           if (!user) {
-            throw new Error("User not found.");
+            return null;
           }
-
+    
           const isValid = await bcrypt.compare(password, user.password!);
           if (!isValid) {
-            throw new Error("Invalid password.");
+            return null;          
           }
-
-          
+    
           return {
             id: user.id,
             name: user.name,
@@ -73,9 +73,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             notifications: user.notifications,
             roles: user.roles,
           } as CustomUser;
-        } catch (error) {
-          console.log(error);
-          return null;
+        } catch (error:any) {
+          throw new Error(error.message || "Login failed.");
         }
       },
     }),

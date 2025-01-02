@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect } from "react";
 import Card from "./Card";
 import {
@@ -21,7 +20,7 @@ const Options = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (status === "loading") return; // Avoid running if still loading
+    if (status === "loading") return;
     if (status !== "authenticated" || !session) {
       router.push("/");
     }

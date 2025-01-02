@@ -7,7 +7,20 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import dynamic from "next/dynamic";
 import DOMPurify from "dompurify";
 import "react-quill/dist/quill.snow.css";
-import { set } from "zod";
+import {
+  LineChart,
+  Line,
+  BarChart,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
 
 export const Users = () => {
   const [users, setUsers] = React.useState<
@@ -419,12 +432,220 @@ export const Notifications = () => {
 };
 
 export const Statistics = () => {
+  const [data, setData] = React.useState([]);
+
   useEffect(() => {
     const getStatistics = async () => {
       const response = await axios.get("/api/admin/getDatabaseStatistics");
-      console.log(response.data);
+      setData(response.data);
     };
     getStatistics();
   }, []);
-  return <div>Statistics</div>;
+
+  return (
+    <div className="grid grid-cols-2">
+      <ResponsiveContainer height={300}>
+        <LineChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Line
+            type="monotone"
+            dataKey="newUsers"
+            stroke="#8884d8"
+            activeDot={{ r: 8 }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
+
+      <ResponsiveContainer height={300}>
+        <LineChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Line
+            type="monotone"
+            dataKey="newCalculators"
+            stroke="#8884d8"
+            activeDot={{ r: 8 }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
+
+      <ResponsiveContainer className="col-span-2" height={300}>
+        <BarChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Line
+            type="monotone"
+            dataKey="newNotifications"
+            stroke="#8884d8"
+            activeDot={{ r: 8 }}
+          />{" "}
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  );
+};
+
+export const Recipes = () => {
+  const [isRecipeCreatorOpen, setIsRecipeCreatorOpen] = React.useState(false);
+  const [tags, setTags] = React.useState<string[]>([]);
+  const tagInputRef = React.useRef<HTMLInputElement>(null);
+  const [imagePreview, setImagePreview] = React.useState<string | null>(null);
+
+  const addTag = () => {
+    if (
+      tagInputRef.current &&
+      tagInputRef.current.value.trim() !== "" &&
+      !tags.includes(tagInputRef.current.value.trim())
+    ) {
+      const newTag = tagInputRef.current.value.trim();
+      setTags((prevTags) => [...prevTags, newTag]);
+      tagInputRef.current.value = "";
+    }
+  };
+  const removeTag = (e: React.MouseEvent<HTMLDivElement>) => {
+    const tag = e.currentTarget.textContent;
+    setTags((prevTags) => prevTags.filter((t) => t !== tag));
+  };
+  return (
+    <div className="relative w-full h-full">
+      {/* <button
+        className="bg-blue-500/50 hover:bg-blue-500/70 duration-300 px-4 py-2 rounded text-white"
+        onClick={() => setIsRecipeCreatorOpen(true)}
+      >
+        Dodaj nowy przepis
+      </button> */}
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          window.open("/account/adm/createRecipe", "_blank");
+        }}
+        className="bg-blue-500/50 hover:bg-blue-500/70 duration-300 px-4 py-2 rounded text-white"
+      >
+        Dodaj nowy przepis
+      </button>
+      {isRecipeCreatorOpen && (
+        <div className="absolute top-0 left-0 w-full h-full bg-black/80 flex flex-col justify-center items-center px-8">
+          <form className="grid grid-cols-2 w-full gap-8 py-8">
+            <div className="flex gap-4 text-xl p-4 bg-[#023047] rounded-xl px-8 justify-center items-baseline">
+              <label htmlFor="Title">Nazwa:</label>
+              <input
+                type="text"
+                id="Title"
+                className="bg-transparent border-2 border-transparent border-b-white/60 focus:outline-none focus:border-[#ffb703] px-1 w-full"
+              />
+            </div>
+            <div className="flex gap-4 text-xl p-4 bg-[#023047] rounded-xl px-8 justify-center items-top row-span-2">
+              <label htmlFor="Description">Opis:</label>
+              <textarea
+                id="Description"
+                rows={5}
+                className="bg-transparent border-2 border-transparent border-b-white/60 focus:outline-none focus:border-[#ffb703] px-1 resize-none w-full"
+              />
+            </div>
+            <div className="flex flex-col gap-4 text-xl p-4 bg-[#023047] rounded-xl px-8 justify-center items-baseline">
+              <div className="w-full flex gap-4 items-baseline">
+                <label htmlFor="Tag">Tagi:</label>
+                <input
+                  type="text"
+                  id="Tag"
+                  ref={tagInputRef}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      addTag();
+                    }
+                  }}
+                  className="bg-transparent border-2 border-transparent border-b-white/60 focus:outline-none focus:border-[#ffb703] px-1 w-full"
+                />
+                <button
+                  type="button"
+                  className="bg-blue-500/50 hover:bg-blue-500/70 duration-300 px-4 py-2 rounded text-white"
+                  onClick={addTag}
+                >
+                  Dodaj
+                </button>
+              </div>
+              <div className="flex flex-row flex-wrap gap-3">
+                {tags.map((tag, index) => (
+                  <div
+                    key={tag}
+                    className="bg-[#ffb703] px-2 rounded-xl text-black hover:bg-red-500 cursor-pointer"
+                    onClick={removeTag}
+                  >
+                    {tag}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <motion.div
+              className="h-full border-dotted border-2 flex items-center justify-center cursor-pointer"
+              whileHover={{ backgroundColor: "rgba(255 255 255 0.1)" }}
+              onClick={() => {
+                const input = document.querySelector(
+                  'input[type="file"]'
+                ) as HTMLInputElement;
+                if (input) {
+                  input.click();
+                }
+              }}
+            >
+              <input
+                type="file"
+                accept="image/*"
+                hidden
+                onChange={(e) => {
+                  if (e.target.files && e.target.files[0]) {
+                    const file = e.target.files[0];
+                    // setValue("image", file);
+                    setImagePreview(URL.createObjectURL(file));
+                  }
+                }}
+              />
+              {imagePreview ? (
+                <div className="w-full h-full relative overflow-hidden">
+                  <Image
+                    src={imagePreview}
+                    alt="Image preview"
+                    className="object-cover"
+                    layout="fill"
+                  />
+                </div>
+              ) : (
+                <p>Dodaj obrazek do przepisu</p>
+              )}
+            </motion.div>
+            <div className="flex gap-4 text-xl p-4 bg-[#023047] rounded-xl px-8 justify-center items-top">
+              <label htmlFor="Preparation">Przepis:</label>
+              <textarea
+                id="Preparation"
+                rows={5}
+                className="bg-transparent border-2 border-transparent border-b-white/60 focus:outline-none focus:border-[#ffb703] px-1 resize-none w-full"
+              />
+            </div>
+            <div className="w-full flex gap-8 col-span-2">
+              <button
+                className="bg-red-500/50 hover:bg-red-500/70 duration-300 px-4 py-2 rounded text-white w-full"
+                onClick={() => setIsRecipeCreatorOpen(false)}
+              >
+                Anuluj
+              </button>
+              <button className="bg-blue-500/50 hover:bg-blue-500/70 duration-300 px-4 py-2 rounded text-white w-full">
+                Dodaj
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+    </div>
+  );
 };

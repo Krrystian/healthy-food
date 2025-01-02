@@ -1,3 +1,4 @@
+"use client";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import React, { useState, useEffect } from "react";
 interface MouseProps {
@@ -15,10 +16,9 @@ const Mouse: React.FC<MouseProps> = ({ element }) => {
   }, [cursorSize, offset]);
 
   const manageMouse = (e: MouseEvent) => {
-  mouse.x.set(e.clientX - offset.get());
-  mouse.y.set(e.clientY - offset.get());
-};
-
+    mouse.x.set(e.clientX - offset.get());
+    mouse.y.set(e.clientY - offset.get());
+  };
 
   const smoothMouse = {
     x: useSpring(mouse.x, { stiffness: 300, damping: 20, mass: 0.5 }),

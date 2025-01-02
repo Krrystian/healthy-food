@@ -1,4 +1,4 @@
-import { object, string, number, boolean } from "zod"
+import { object, string, number, boolean, array } from "zod"
  
 export const signInSchema = object({
   email: string({ required_error: "Email is required" })
@@ -7,7 +7,8 @@ export const signInSchema = object({
   password: string({ required_error: "Password is required" })
     .min(1, "Password is required")
     .min(8, "Password must be more than 8 characters")
-    .max(32, "Password must be less than 32 characters"),
+    .max(32, "Password must be less than 32 characters")
+    //.regex(/(?=.*[0-9])(?=.*[!@#$%^&*])/, "Password must contain at least one special character and one number"),
 })
 
 export const registerSchema = object({
@@ -16,7 +17,8 @@ export const registerSchema = object({
     .email("Invalid email"),
   passwordReg: string({ required_error: "Password is required" })
     .min(8, "Password must be more than 8 characters")
-    .max(32, "Password must be less than 32 characters"),
+    .max(32, "Password must be less than 32 characters")
+    .regex(/(?=.*[0-9])(?=.*[!@#$%^&*])/, "Password must contain at least one special character and one number"),
   nameReg: string({ required_error: "Name is required" })
     .min(1, "Name is required")
     .max(32, "Name must be less than 32 characters"),
@@ -160,3 +162,18 @@ export const profileSchemas = {
     ads: boolean(),
   }),
 };
+
+export const productSchema = object({
+  name: string().min(1, "Nazwa produktu jest wymagana"),
+  quantity: string().min(1, "Ilość jest wymagana"),
+  metric: string().min(1, "Jednostka miary jest wymagana"),
+});
+
+export const createRecipeSchema = object({
+  title: string().min(1, "Tytuł jest wymagany"),
+  tags: array(string().min(1, "Tag jest wymagany")).nonempty("Wymagany jest co najmniej jeden tag"),
+  products: array(productSchema).nonempty("Wymagany jest co najmniej jeden produkt"),
+  image: string().url("Wymagany jest prawidłowy URL obrazu"),
+  description: string().min(1, "Opis jest wymagany"),
+  preparation: string().min(1, "Przygotowanie jest wymagane"),
+});

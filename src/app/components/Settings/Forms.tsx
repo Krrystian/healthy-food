@@ -77,7 +77,7 @@ export function ProfileFieldForm({
     resolver: zodResolver(schema),
     defaultValues,
   });
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [loadingState, setLoadingState] = useState("Ładowanie");
   const values = watch();
   const submitData = useProfileForm(formType);
@@ -163,53 +163,38 @@ export function ProfileFieldForm({
   );
 }
 
-export function ProfileImageForm() {
-  const { register, handleSubmit, setValue, watch } = useForm<FormValues>({
-    defaultValues: {
-      image: null,
-    },
+export const ProfileImageForm = () => {
+  const { register, handleSubmit, watch, setValue } = useForm<{ image: File | null }>({
+    defaultValues: { image: null },
   });
-  const { data: session } = useSession();
+  const {data: session } = useSession();
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const submitData = useProfileForm("image", session?.user.email);
 
-  const onSubmit = async (data: FormValues) => {
-    const response = await submitData(data);
-
-    if (response && response.status === 200 && session) {
+  const onSubmit = async (data: { image: File | null }) => {
+    try {
+      await submitData(data);
       await signOut({ callbackUrl: "/login" });
+    } catch (error) {
+      console.error("Error:", error);
     }
   };
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
   const imageFile = watch("image");
 
   useEffect(() => {
-    if (imageFile instanceof File) {
+    if (imageFile) {
       const objectUrl = URL.createObjectURL(imageFile);
       setImagePreview(objectUrl);
-      return () => {
-        URL.revokeObjectURL(objectUrl);
-      };
+      return () => URL.revokeObjectURL(objectUrl);
     }
   }, [imageFile]);
 
-  const onClick = () => {
-    const input = document.querySelector(
-      'input[type="file"]'
-    ) as HTMLInputElement;
-    if (input) {
-      input.click();
-    }
-  };
-
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 h-full justify-between"
-    >
-      <motion.div
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <div
         className="h-[150px] border-dotted border-2 flex items-center justify-center cursor-pointer"
-        onClick={onClick}
-        whileHover={{ backgroundColor: "rgba(255 255 255 0.1)" }}
+        onClick={() => document.querySelector<HTMLInputElement>('input[type="file"]')?.click()}
       >
         <input
           {...register("image")}
@@ -218,34 +203,21 @@ export function ProfileImageForm() {
           hidden
           onChange={(e) => {
             if (e.target.files && e.target.files[0]) {
-              const file = e.target.files[0];
-              setValue("image", file);
-              setImagePreview(URL.createObjectURL(file));
+              setValue("image", e.target.files[0]);
             }
           }}
         />
         {imagePreview ? (
-          <div className="w-24 h-24 relative rounded-full overflow-hidden">
-            <Image
-              src={imagePreview}
-              alt="Profile"
-              className="object-cover"
-              layout="fill"
-            />
-          </div>
+          <Image src={imagePreview} alt="Profile Preview" width={96} height={96} className="rounded-full" />
         ) : (
-          <p>Drop or upload your image</p>
+          <p>Upload your image</p>
         )}
-      </motion.div>
-      <button
-        type="submit"
-        className="bg-white/10 p-2 rounded-xl duration-300 hover:bg-blue-500"
-      >
-        Zmień
-      </button>
+      </div>
+      <button type="submit" className="bg-blue-500 text-white p-2 rounded-md">Save</button>
     </form>
   );
-}
+};
+
 
 export const ProfileNameForm = ({ defaultName }: { defaultName: string }) => (
   <ProfileFieldForm

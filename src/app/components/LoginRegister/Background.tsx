@@ -1,3 +1,4 @@
+//REFORMATTED
 "use client";
 import { cn } from "@/app/lib/cn";
 import React, { use } from "react";
@@ -144,7 +145,7 @@ const Background: React.FC<BackgroundProps> = ({ loading }) => {
   };
 
   return (
-    <div className={cn("absolute w-screen h-screen")}>
+    <div className={cn("absolute w-screen h-screen md:block hidden")}>
       <Canvas
         style={{ backgroundColor: "#023047" }}
         orthographic

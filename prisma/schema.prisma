@@ -23,7 +23,7 @@ model User {
   calculators           Calculator[]
   broadcastNotification BroadcastNotification[]
   roles                 String[]                @default(["user"])
-  recipes               Recipe[]               
+  recipes               Recipe[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -76,6 +76,16 @@ model Calculator {
   updatedAt DateTime @updatedAt
 }
 
+model DailyStatistics {
+  id               String   @id @default(cuid())
+  date             DateTime @unique
+  newUsers         Int      @default(0)
+  newCalculators   Int      @default(0)
+  newNotifications Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
 model BroadcastNotification {
   id        String   @id @default(cuid())
   title     String
@@ -89,26 +99,25 @@ model BroadcastNotification {
 }
 
 model Recipe {
-  id              String        @id @default(cuid())
-  name            String
-  description     String?
-  tags            String[]      @default([])
-  ingredients     Ingredient[]
-  dietaryPrefs    String[]      @default([]) 
-  userId          String
-  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String       @id @default(cuid())
+  name         String // nazwa przepisu
+  description  String? // opis przepisu
+  tags         String[]     @default([]) // rodzaj diety, np. wegetariańska, wegańska, bezglutenowa
+  ingredients  Ingredient[] // składniki
+  instructions String[] // kroki przygotowania
+  userId       String
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Ingredient {
-  id        String   @id @default(cuid())
-  name      String   
-  quantity  String? 
-  link      String? 
-  recipeId  String
-  recipe    Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  id       String  @id @default(cuid())
+  name     String
+  quantity String?
+  recipeId String
+  recipe   Recipe  @relation(fields: [recipeId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
