@@ -16,11 +16,13 @@ export default function HorizontalScrollCarousel() {
     target: targetRef,
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["1%", "-72%"]);
+  const targetOffset = `${-10 * (cards.length) - 30}%`;
+  const x = useTransform(scrollYProgress, [0, 1], ["1%", targetOffset]);
+  const sectionHeight = `calc(${cards.length * 100}vh )`;
 
   return (
-    <section ref={targetRef} className="relative h-[300vh]">
-      <div className="sticky top-0 flex h-screen  overflow-hidden">
+    <section ref={targetRef} style={{ height: sectionHeight }} className="relative ">
+      <div className="sticky top-0 flex h-screen">
         <motion.div style={{ x }} className="flex gap-4">
           {cards.map((card) => {
             return <Card card={card} key={card.id} />;
@@ -41,7 +43,7 @@ const Card = ({ card }:{card:any}) => {
   return (
     <div
       key={card.id}
-      className="group relative h-screen w-[550px] overflow-hidden bg-neutral-200"
+      className="group relative h-screen w-[400px] md:w-[550px] overflow-hidden bg-neutral-200 text-center"
     >
       <div
         style={{
@@ -53,19 +55,18 @@ const Card = ({ card }:{card:any}) => {
       ></div>
       <div className="absolute inset-0 z-10 bg-white/10">
         <div className="mt-48 h-96 bg-gray-600 m-4 rounded-lg bg-opacity-75">
-          <p className="p-8 text-6xl font-black uppercase text-white">
+          <p className="p-8 text-3xl md:text-6xl font-black uppercase text-white">
             {card.title}
           </p>
           <div className="">
-          <motion.p 
-            style={{ opacity: descriptionOpacity }} 
-            className="text-base font-medium p-8 text-white"
-          >
-            {card.description}
-          </motion.p>
+            <motion.p
+              //style={{ opacity: descriptionOpacity }}
+              className="text-base font-medium p-8 text-white text-justify"
+            >
+              {card.description}
+            </motion.p>
+          </div>
         </div>
-        
-      </div>
       </div>
     </div>
   );
@@ -94,7 +95,7 @@ const CardScreen = () => {
       <Mouse/>
       <div className="h-screen w-screen flex flex-col justify-center items-center">
       <motion.p 
-        className="p-8 text-center text-5xl font-semibold text-white cursor-default"
+        className="p-8 text-center text-4xl md:text-5xl font-semibold text-white cursor-default"
         whileHover={{ scale: 1.1 }}
         transition={{ duration: 0.3 }} 
       >

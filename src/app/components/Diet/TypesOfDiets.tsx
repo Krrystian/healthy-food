@@ -14,22 +14,22 @@ export default function Diets() {
         return (
           <motion.div
             key={diet.id}
-            className={`flex flex-col md:flex-row ${isLeft ? "" : "md:flex-row-reverse"} items-center mb-12`}
+            className={`flex flex-col xl:flex-row ${isLeft ? "" : "xl:flex-row-reverse"} items-center mb-3 xl:mb-12`}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: false, amount: 0.5 }}
           >
-            <div className="relative h-[600px] w-[600px]">
+            <div className="relative h-[250px] w-[300px] md:h-[320px] md:w-[400px] xl:h-[500px] xl:w-[600px]">
                 <Image src={diet.url} alt={diet.title} layout="fill" className="object-contain rounded-lg shadow-lg" />
             </div>
-            <div className={`md:w-1/2 md:pl-8 h-full flex flex-col justify-center text-white/85 ${isLeft ? "" : "pr-8"}`}>
-              <h2 className="text-4xl font-bold mb-4">{diet.title}</h2>
-              <p className="text-white/85">{diet.description}</p>
+            <div className={`xl:w-1/2 xl:pl-8 h-full flex flex-col justify-center text-white/85 ${isLeft ? "" : "xl:pr-8"}`}>
+              <h2 className="text-2xl xl:text-4xl font-bold mb-4 text-center xl:text-left">{diet.title}</h2>
+              <p className="text-white/85 text-justify">{diet.description}</p>
               
               <div className="text-sm pt-10">
-                <h3 className="font-semibold text-2xl text-[#009E52]">{diet.recipeTitle}</h3>
-                <div className="grid grid-cols-2">
+                <h3 className="font-semibold text-xl xl:text-2xl text-[#009E52]">{diet.recipeTitle}</h3>
+                <div className="grid grid-cols-1 xl:grid-cols-2">
                     <div className="w-full">
                         <ul className="list-disc list-inside text-white/85 mb-4">
                             {diet.recipeIng.map((ingredient, index) => (

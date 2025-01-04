@@ -78,22 +78,22 @@ export default function Page() {
   }
 
   return (
-    <div className='flex w-screen justify-center px-10 mt-[80px]'>
+    <div className='flex w-screen justify-center px-10 mt-[60px] md:mt-[80px] mb-2'>
       <BackgroundPattern/>
       <div>
         <div className='text-center'>
-          <h2 className='text-7xl text-[#26BDDC] mb-3'>KALKULATOR TDEE</h2>
+          <h2 className='text-4xl md:text-7xl text-[#26BDDC] mb-3'>KALKULATOR TDEE</h2>
         </div>
         <div className='bg-gray-100 p-8 rounded-lg shadow-lg'>
-          <div className='flex flex-row justify-between'>
-            <div className='w-1/2 pr-4'>
-              <h3 className='text-4xl text-[#009E52] mb-4'>Czym jest TDEE?</h3>
-              <p>TDEE to skrót od angielskiego &quot;Total Daily Energy Expenditure&quot;. Informuje o naszym całkowitym dziennym zapotrzebowaniu energetycznym, biorąc pod uwagę naszą aktywność fizyczną.
+          <div className='flex flex-col md:flex-row justify-between'>
+            <div className='w-full md:w-1/2 md:pr-4 mb-10 md:mb-0'>
+              <h3 className='text-3xl md:text-4xl text-[#009E52] mb-4 text-center md:text-left'>Czym jest TDEE?</h3>
+              <p className='text-justify'>TDEE to skrót od angielskiego &quot;Total Daily Energy Expenditure&quot;. Informuje o naszym całkowitym dziennym zapotrzebowaniu energetycznym, biorąc pod uwagę naszą aktywność fizyczną.
                 Jest ściśle związany ze wskaźnikiem BMR*, ale dodatkowo mnoży wynik poprzez współczynnik odpowiadający stopniowi naszej sprawności. Zatem wzór na wyznaczenie TDEE wygląda następująco:
                 <span className="block text-center font-bold my-2">TDEE = BMR * współczynnik_aktywności</span>
                 Współczynniki względem aktywności:<br/>
               </p>
-              <table className="border-collapse mt-3">
+              <table className="border-collapse mt-3 w-full md:w-auto text-center md:text-left">
                 <thead>
                   <tr>
                     <th className="border border-gray-300 px-4 py-1 text-left">Stopień aktywności</th>
@@ -128,8 +128,8 @@ export default function Page() {
               </span>
             </div>
           
-            <div className='w-1/2 pl-4'>
-              <h3 className='text-4xl text-[#009E52] mb-4'>Oblicz swoje TDEE!</h3>
+            <div className='w-full md:w-1/2 md:pl-4'>
+              <h3 className='text-3xl md:text-4xl text-[#009E52] mb-4 text-center md:text-left'>Oblicz swoje TDEE!</h3>
               <form onSubmit={handleSubmit(calculateTDEE)}>
                 <table className='w-full'>
                   <tbody>

@@ -76,17 +76,17 @@ export default function Page() {
 
   
   return (
-    <div className='flex w-screen justify-center px-10 mt-[80px]'>
+    <div className='flex w-screen justify-center px-10 mt-[60px] md:mt-[80px] mb-2'>
       <BackgroundPattern/>
       <div>
         <div className='text-center'>
-          <h2 className='text-7xl text-[#26BDDC] mb-3'>KALKULATOR BMR</h2>
+          <h2 className='text-4xl md:text-7xl text-[#26BDDC] mb-3'>KALKULATOR BMR</h2>
         </div>
         <div className='bg-gray-100 p-5 rounded-lg shadow-lg'>
-          <div className='flex flex-row justify-between'>
-            <div className='w-1/2 pr-4'>
-              <h3 className='text-4xl text-[#009E52] mb-4'>Czym jest BMR?</h3>
-              <p>BMR to skrót od angielskiego &quot;Basal Metabolic Rate&quot;. Korzystając z kalkulatora BMR możemy dowiedzieć się jakie jest nasze dzienne zapotrzebowanie kaloryczne. 
+          <div className='flex flex-col md:flex-row justify-between'>
+            <div className='w-full md:w-1/2 md:pr-4 mb-10 md:mb-0'>
+              <h3 className='text-3xl md:text-4xl text-[#009E52] mb-4 text-center md:text-left'>Czym jest BMR?</h3>
+              <p className='text-justify'>BMR to skrót od angielskiego &quot;Basal Metabolic Rate&quot;. Korzystając z kalkulatora BMR możemy dowiedzieć się jakie jest nasze dzienne zapotrzebowanie kaloryczne. 
                 Wiedza ta jest niezwykle przydatna, jeśli chcemy odżywiać się zdrowo względem naszego wzrostu, wagi, wieku oraz płci. 
                 Wzorów do wyznaczenia BMR jest kilka, jednakże w naszych obliczeniach korzystamy z równań Harrisa-Benedicta, opracowanych w 1984 roku, które wyglądają następująco:
                 <br/>Dla mężczyzn:<span className="block text-center font-bold my-2">BMR = 88.362 + (13.397 * waga) + (4.799 * wzrost_w_cm) - (5.677 * wiek)</span>
@@ -94,8 +94,8 @@ export default function Page() {
               </p>
             </div>
 
-            <div className='w-1/2 pl-4'>
-              <h3 className='text-4xl text-[#009E52] mb-4'>Oblicz swoje BMR!</h3>
+            <div className='w-full md:w-1/2 md:pl-4'>
+              <h3 className='text-3xl md:text-4xl text-[#009E52] mb-4 text-center md:text-left'>Oblicz swoje BMR!</h3>
               <form onSubmit={handleSubmit(calculateBMR)}>
                 <table className='w-full'>
                   <tbody>

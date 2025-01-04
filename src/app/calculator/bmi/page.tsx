@@ -78,22 +78,22 @@ export default function Page() {
   }
 
   return (
-    <div className='flex w-screen justify-center px-10 mt-[80px]'>
+    <div className='flex w-screen justify-center px-10 mt-[60px] md:mt-[80px] mb-2'>
       <BackgroundPattern/>
       <div>
         <div className='text-center'>
-          <h2 className='text-7xl text-[#26BDDC] mb-3'>KALKULATOR BMI</h2>
+          <h2 className='text-4xl md:text-7xl text-[#26BDDC] mb-3'>KALKULATOR BMI</h2>
         </div>
         <div className='bg-gray-100 p-5 rounded-lg shadow-lg'>
-          <div className='flex flex-row justify-between'>
-            <div className='w-1/2 pr-4'>
-              <h3 className='text-4xl text-[#009E52] mb-4'>Czym jest BMI?</h3>
-              <p>Wskaźnik BMI to skrót od angielskiego &quot;Body Mass Index&quot;. Informuje nas o stosunku naszej masy ciała (wagi) do wzrostu.
+          <div className='flex flex-col md:flex-row justify-between'>
+            <div className='w-full md:w-1/2 md:pr-4 mb-10 md:mb-0'>
+              <h3 className='text-3xl md:text-4xl text-[#009E52] mb-4 text-center md:text-left'>Czym jest BMI?</h3>
+              <p className='text-justify'>Wskaźnik BMI to skrót od angielskiego &quot;Body Mass Index&quot;. Informuje nas o stosunku naszej masy ciała (wagi) do wzrostu.
                 Kalkulator BMI to zatem przydatne narzędzie, dzięki któremu możemy dowiedzieć się czy nasza waga jest odpowiednia względem naszego wzrostu.
                 Wzór na wyznaczenie BMI stworzył Adolphe Quetelet już w 1832 roku i wygląda następująco:<span className="block text-center font-bold my-2">BMI = waga / (wzrost_w_metrach &sup2;)</span>
                 Normy BMI:<br/>
               </p>
-              <table className="border-collapse mt-3">
+              <table className="border-collapse mt-3 w-full md:w-auto text-center md:text-left">
                 <thead>
                   <tr>
                     <th className="border border-gray-300 px-4 py-1 text-left">BMI</th>
@@ -137,8 +137,8 @@ export default function Page() {
               </table>
             </div>
 
-            <div className='w-1/2 pl-4'>
-              <h3 className='text-4xl text-[#009E52] mb-4'>Oblicz swoje BMI!</h3>
+            <div className='w-full md:w-1/2 md:pl-4'>
+              <h3 className='text-3xl md:text-4xl text-[#009E52] mb-4 text-center md:text-left'>Oblicz swoje BMI!</h3>
               <form onSubmit={handleSubmit(calculateBMI)}>
                 <table className='w-full'>
                   <tbody>

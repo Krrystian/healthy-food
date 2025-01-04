@@ -127,7 +127,7 @@ const Navbar = () => {
               />
               <NavLink
                 label="Dieta"
-                href="/"
+                href="/diet"
                 prefetch={true}
                 Content={DietaContent}
               />
