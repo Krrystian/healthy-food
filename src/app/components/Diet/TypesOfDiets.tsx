@@ -8,7 +8,7 @@ export default function Diets() {
   const { scrollYProgress } = useScroll({ target: ref });
 
   return (
-    <div ref={ref} className="items-center">
+    <div ref={ref} className="items-center py-16">
       {diets.map((diet, index) => {
         const isLeft = index % 2 === 0; 
         return (
