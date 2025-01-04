@@ -103,14 +103,14 @@ const BarcodeScanner: React.FC = () => {
   };
 
   return (
-    <div className='my-[5px] grid grid-cols-2 gap-4'>
+    <div className='my-[5px] grid grid-cols-1 md:grid-cols-2 md:gap-4 text-center md:text-left'>
       <div className='w-full'>
-        <h3 className='font-semibold text-2xl text-[#009E52]'>Wyszukaj produkt:</h3>
-        <div className='py-5'>
-          <label>Wyszukaj produkt po nazwie lub kodzie</label>
+        <h3 className='font-semibold text-xl md:text-2xl text-[#009E52]'>Wyszukaj produkt:</h3>
+        <div className='py-2 md:py-5'>
+          <label>Wyszukaj produkt po nazwie lub kodzie:</label>
           <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
             placeholder='Wprowadź dane'
-            className='w-3/4 p-2 border border-gray-300 rounded focus:border-[#009E52] focus:outline-none text-black'
+            className='w-2/3 p-2 border border-gray-300 rounded focus:border-[#009E52] focus:outline-none text-black'
           />
           <button onClick={handleSearch} className='p-2 m-2 text-white border-2 border-white rounded-md hover:bg-[#FB8500]/90 duration-300 transition-all text-lg font-medium w-fit'>
             Szukaj
@@ -120,27 +120,27 @@ const BarcodeScanner: React.FC = () => {
         <div >
           <label>Prześlij zdjęcie kodu kreskowego:</label><br />
           <input type="file" accept="image/*" ref={fileInputRef} onChange={handleImageUpload}
-            className='p-2 mt-2 text-white border-2 border-white rounded-md hover:bg-[#FB8500]/90 duration-300 transition-all text-lg font-medium w-fit'
+            className='p-2 mt-2 text-white border-2 border-white rounded-md hover:bg-[#FB8500]/90 duration-300 transition-all text-lg font-medium w-[300px]'
           />
         </div>
 
 
         {searchMessage && ( 
           <div className='mt-10'>
-            <h2 className="text-2xl font-semibold text-[#FB8500] mt-2">{searchMessage}</h2>
+            <h2 className="text-md md:text-xl xl:text-2xl font-semibold text-[#FB8500] mt-2">{searchMessage}</h2>
           </div>
         )}
       </div>
       
 
-      <div className='w-full'>
+      <div className='w-full mt-10 md:mt-0'>
         {loading ? (
           <div className="flex justify-center items-center h-full">
             <Loader />
           </div>
         ) : products.length > 0 ? (
           <div>
-            <h3 className='font-semibold text-2xl text-[#009E52] mb-4'>Wyniki wyszukiwania:</h3>
+            <h3 className='font-semibold text-xl md:text-2xl text-[#009E52] mb-4'>Wyniki wyszukiwania:</h3>
             <motion.div
               className="flex overflow-x-scroll no-scrollbar space-x-4"
               drag="x"
@@ -154,7 +154,7 @@ const BarcodeScanner: React.FC = () => {
             </motion.div>
           </div>
         ) : (
-          <div className="relative h-[500px] w-full transform transition-transform duration-300 hover:scale-105">
+          <div className="relative h-[300px] md:h-[500px] w-full transform transition-transform duration-300 hover:scale-105">
             <Image src="/lupe.png" layout="fill" className="object-contain" />
           </div>
         )}
