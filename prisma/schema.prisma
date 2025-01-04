@@ -100,11 +100,11 @@ model BroadcastNotification {
 
 model Recipe {
   id           String       @id @default(cuid())
-  name         String // nazwa przepisu
-  description  String? // opis przepisu
-  tags         String[]     @default([]) // rodzaj diety, np. wegetariańska, wegańska, bezglutenowa
-  ingredients  Ingredient[] // składniki
-  instructions String[] // kroki przygotowania
+  name         String 
+  description  String? 
+  tags         String[]     @default([]) 
+  ingredients  Ingredient[] 
+  instructions String[] 
   userId       String
   user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 
