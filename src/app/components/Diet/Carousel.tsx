@@ -1,6 +1,6 @@
 "use client";
-import { motion, useTransform, useScroll } from "framer-motion";
-import { useRef } from "react";
+import { motion, useTransform, useScroll, useSpring } from "framer-motion";
+import { useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
   TextRevealCard,
@@ -11,31 +11,59 @@ import Mouse from "../Mouse";
 
 
 export default function HorizontalScrollCarousel() {
-  const targetRef = useRef(null);
+  const targetRef = useRef<HTMLDivElement>(null);
+  const imagesRef = useRef<HTMLDivElement>(null);
+  const [carouselWidth, setCarouselWidth] = useState(0);
+
   const { scrollYProgress } = useScroll({
     target: targetRef,
+    offset: ["start start", "end end"],
   });
 
-  const targetOffset = `${-10 * (cards.length) - 30}%`;
-  const x = useTransform(scrollYProgress, [0, 1], ["1%", targetOffset]);
-  const sectionHeight = `calc(${cards.length * 100}vh )`;
+  const xTransform = useTransform(scrollYProgress, [0, 1], [0, -carouselWidth]);
+  const x = useSpring(xTransform, { stiffness: 400, damping: 90 });
 
+  useLayoutEffect(() => {
+    const handleResize = () => {
+      if (imagesRef.current) {
+        // Pobierz wszystkie karty wewnątrz karuzeli
+        const cards = imagesRef.current.querySelectorAll(".card");
+        
+        // Oblicz szerokość jednej karty
+        const cardWidth = (cards[0] as HTMLElement)?.offsetWidth || 0;
+        
+        // Oblicz całkowitą szerokość karuzeli na podstawie liczby kart i odstępów
+        const totalWidth = cards.length * cardWidth + (cards.length - 1) * 16; // 16px to przerwa między kartami (zmień, jeśli masz inny gap)
+        
+        setCarouselWidth(totalWidth);
+      }
+    };
+  
+    // Nasłuchiwanie zmian rozmiaru okna
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Uruchom funkcję od razu
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+  
+
+  const sectionHeight = `calc(${(cards.length - 1) * 100}vh)`;
   return (
-    <section ref={targetRef} style={{ height: sectionHeight }} className="relative ">
-      <div className="sticky top-0 flex h-screen">
-        <motion.div style={{ x }} className="flex gap-4">
+    <section ref={targetRef} style={{ height: sectionHeight }} className="relative">
+      <div className="sticky top-0 flex">
+        <motion.div ref={imagesRef} style={{ x }} className="flex gap-4">
           {cards.map((card) => {
             return <Card card={card} key={card.id} />;
           })}
           <div>
-              <CardScreen/>
+            <CardScreen />
           </div>
-          
         </motion.div>
       </div>
     </section>
   );
-};
+}
   
 const Card = ({ card }:{card:any}) => {
   const { scrollYProgress } = useScroll();
@@ -43,7 +71,7 @@ const Card = ({ card }:{card:any}) => {
   return (
     <div
       key={card.id}
-      className="group relative h-screen w-[400px] md:w-[550px] overflow-hidden bg-neutral-200 text-center"
+      className="card group relative w-[400px] md:w-[550px] overflow-hidden bg-neutral-200 text-center"
     >
       <div
         style={{
