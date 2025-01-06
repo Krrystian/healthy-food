@@ -165,7 +165,8 @@ export const profileSchemas = {
 
 export const productSchema = object({
   name: string().min(1, "Nazwa produktu jest wymagana"),
-  quantity: string().min(1, "Ilość jest wymagana"),
+  quantity: string().regex(/^\d+([/]\d+)?$/, "Nieprawidłowa ilość. Wprowadź liczbę lub ułamek, np. 500 lub 1/2")
+    .min(1, "Ilość jest wymagana"),
   metric: string().min(1, "Jednostka miary jest wymagana"),
 });
 

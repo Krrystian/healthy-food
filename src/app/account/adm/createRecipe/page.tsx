@@ -109,6 +109,7 @@ const Page: React.FC = () => {
   const removeProduct = (name: string): void => {
     setValue('products', products.filter((p) => p.name !== name));
   };
+
   const onSubmit = async (data: FormData) => {
     console.log('Form Data:', data);
     
@@ -119,11 +120,14 @@ const Page: React.FC = () => {
       const imageUrl = await uploadToS3(file, "", path, data.title);
       setValue('image', imageUrl);
       const { tagInput, productName, productQuantity, productMetric, ...filteredData } = data;
+      const userId = session?.user?.id;
+
       try {
         createRecipeSchema.parse(filteredData);
         const response = await axios.post('/api/admin/createRecipe', {
           ...filteredData,
           image: imageUrl,
+          userId,
         });
         console.log('Response:', response.data);
         reset();
@@ -157,7 +161,7 @@ const Page: React.FC = () => {
         </div>
 
         <div className="flex flex-col gap-4 text-xl py-4 rounded-xl px-8 justify-center items-baseline bg-black/40">
-          <div className="grid grid-cols-8 w-full flex gap-4 items-baseline">
+          <div className="grid grid-cols-8 w-full gap-4 items-baseline">
             <label htmlFor="Tag">Tagi:</label>
             <div className="flex gap-4 col-span-7">
               <input
