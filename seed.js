@@ -44,21 +44,21 @@ async function main() {
       },
     });
 
-    // Dodawanie kalkulatorów dla użytkownika
-    for (let j = 1; j <= 5; j++) {
-      await prisma.calculator.create({
-        data: {
-          type: `Calculator Type ${j}`,
-          result: Math.random() * 100,
-          weight: Math.random() * 100,
-          height: Math.random() * 200,
-          gender: j % 2 === 0 ? "Male" : "Female",
-          age: Math.floor(Math.random() * 60) + 18,
-          activityLevel: Math.random(),
-          userId: user.id,
-        },
-      });
-    }
+    // // Dodawanie kalkulatorów dla użytkownika
+    // for (let j = 1; j <= 5; j++) {
+    //   await prisma.calculator.create({
+    //     data: {
+    //       type: `Calculator Type ${j}`,
+    //       result: Math.random() * 100,
+    //       weight: Math.random() * 100,
+    //       height: Math.random() * 200,
+    //       gender: j % 2 === 0 ? "Male" : "Female",
+    //       age: Math.floor(Math.random() * 60) + 18,
+    //       activityLevel: Math.random(),
+    //       userId: user.id,
+    //     },
+    //   });
+    // }
 
   }
 
