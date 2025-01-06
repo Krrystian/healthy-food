@@ -18,7 +18,7 @@ export async function POST(req: Request) {
             data: {
               name: parsedData.title,
               description: parsedData.description,
-              tags: parsedData.tags,
+              tags: parsedData.tags.map(tag => tag.toLowerCase()),
               instructions: parsedData.preparation.split("\n"),
               userId: body.userId,
               ingredients: {
@@ -39,54 +39,30 @@ export async function POST(req: Request) {
 }
 
 
-export async function GET(req: Request) {
-    try {
-      const recipes = await prisma.recipe.findMany({
-        include: { ingredients: true },
-      });
-      return NextResponse.json(recipes);
-    } catch (error: any) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-}
-
-
 export async function PUT(req: Request) {
     try {
       const body = await req.json();
       const parsedData = createRecipeSchema.parse(body);
   
       const updatedRecipe = await prisma.recipe.update({
-        where: { id: body.id }, /** o to może być jakieś złe */
+        where: { id: body.id },
         data: {
           name: parsedData.title,
           description: parsedData.description,
-          tags: parsedData.tags,
+          tags: parsedData.tags.map(tag => tag.toLowerCase()),
           instructions: parsedData.preparation.split("\n"),
           ingredients: {
-            deleteMany: {}, 
-            create: parsedData.products.map((product) => ({
-              name: product.name,
-              quantity: product.quantity,
-            })),
+        deleteMany: {}, 
+        create: parsedData.products.map((product) => ({
+          name: product.name,
+          quantity: product.quantity,
+          metric: product.metric,
+        })),
           },
         },
       });
   
       return NextResponse.json(updatedRecipe);
-    } catch (error: any) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-}
-  
-
-export async function DELETE(req: Request) {
-    try {
-      const { id } = await req.json();
-  
-      await prisma.recipe.delete({ where: { id } });
-  
-      return NextResponse.json({ message: "Recipe deleted" });
     } catch (error: any) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
