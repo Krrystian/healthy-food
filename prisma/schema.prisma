@@ -101,7 +101,8 @@ model BroadcastNotification {
 model Recipe {
   id           String       @id @default(cuid())
   name         String 
-  description  String? 
+  description  String?
+  image        String?
   tags         String[]     @default([]) 
   ingredients  Ingredient[] 
   instructions String[] 

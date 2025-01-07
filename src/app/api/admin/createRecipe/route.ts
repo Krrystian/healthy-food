@@ -19,6 +19,7 @@ export async function POST(req: Request) {
               name: parsedData.title,
               description: parsedData.description,
               tags: parsedData.tags.map(tag => tag.toLowerCase()),
+              image: parsedData.image,
               instructions: parsedData.preparation.split("\n"),
               userId: body.userId,
               ingredients: {
