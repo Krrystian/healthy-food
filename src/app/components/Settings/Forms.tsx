@@ -191,9 +191,9 @@ export const ProfileImageForm = () => {
   }, [imageFile]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 h-full justify-between">
       <div
-        className="h-[150px] border-dotted border-2 flex items-center justify-center cursor-pointer"
+        className="h-full border-dotted border-2 flex items-center justify-center cursor-pointer"
         onClick={() => document.querySelector<HTMLInputElement>('input[type="file"]')?.click()}
       >
         <input

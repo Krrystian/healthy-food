@@ -30,29 +30,21 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     showBanners();
-
     if (previousPathname.current !== pathname) {
-      // Jeśli ścieżka się zmieniła, animuj
       if (pathname === "/") {
         animatePageInForce();
       } else {
-        if (!hasAnimated) {
-          // Sprawdź, czy animacja już się wykonała
-          animatePageIn();
-          setHasAnimated(true); // Ustaw flagę, żeby nie wywołać animacji ponownie
-        }
+        console.log("animate");
+        animatePageIn();
       }
-
-      // Zabezpieczenie przed pokazywaniem banerów po animacji
-      if (hideTimeout.current) {
-        clearTimeout(hideTimeout.current);
-      }
-      hideTimeout.current = setTimeout(hideBannersInstantly, 1000);
-
-      previousPathname.current = pathname;
     }
-
-    // Cleanup timeout on unmount
+    // bugfix: clear timeout
+    // if (hideTimeout.current) {
+    //   console.log("clear timeout");
+    //   clearTimeout(hideTimeout.current);
+    // }
+    // hideTimeout.current = setTimeout(hideBannersInstantly, 3000);
+    previousPathname.current = pathname;
     return () => {
       if (hideTimeout.current) {
         clearTimeout(hideTimeout.current);
