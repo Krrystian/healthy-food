@@ -9,6 +9,7 @@ export async function GET(req: Request) {
     const pageSize = 7;
     const searchByName = searchParams.get("name");
     const searchByTag = searchParams.get("tag");
+    const searchById = searchParams.get("id");
     const whereClause: any = {};
     console.log(searchByName, searchByTag);
     if (searchByName) {
@@ -21,6 +22,17 @@ export async function GET(req: Request) {
         whereClause.tags = {
           hasSome: searchByTag.split(",").map(tag => tag.trim().toLowerCase()),
         };
+    }
+
+    if (searchById) {
+      const recipe = await prisma.recipe.findUnique({
+        where: { id: searchById },
+        include: { ingredients: true },
+      });
+      if (!recipe) {
+        return NextResponse.json({ message: "Recipe not found" }, { status: 404 });
+      }
+      return NextResponse.json({ recipe });
     }
 
       const totalRecipes = await prisma.recipe.count({

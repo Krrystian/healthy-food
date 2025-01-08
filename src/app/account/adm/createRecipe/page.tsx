@@ -283,8 +283,9 @@ const Page: React.FC = () => {
               <option value="lyzeczka">Łyżeczka</option>
               <option value="lyzka">Łyżka</option>
               <option value="ml">Mililitr</option>
-              <option value="l">Litry</option>
+              <option value="l">Litr</option>
               <option value="g">Gram</option>
+              <option value="dag">Dekagram</option>
               <option value="kg">Kilogram</option>
             </select>
             <button
