@@ -38,12 +38,6 @@ export default function Template({ children }: { children: React.ReactNode }) {
         animatePageIn();
       }
     }
-    // bugfix: clear timeout
-    // if (hideTimeout.current) {
-    //   console.log("clear timeout");
-    //   clearTimeout(hideTimeout.current);
-    // }
-    // hideTimeout.current = setTimeout(hideBannersInstantly, 3000);
     previousPathname.current = pathname;
     return () => {
       if (hideTimeout.current) {

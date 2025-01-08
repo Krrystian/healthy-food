@@ -296,30 +296,27 @@ export default function Home() {
             >
               <div className="w-full md:w-2/4 md:h-full h-[40%] relative flex-shrink-0 overflow-hidden">
                 <div className="relative w-full opacity-0 h-full blogImage select-none">
-                  <ImageHorizontal src="/sections/blog.webp" alt="blog" />
+                  <ImageHorizontal src="/sections/blog.webp" alt="kalkulatory" />
                 </div>
                 <div className="absolute top-0 h-full bg-[#019E52] blogBg z-10" />
               </div>
               <div className="w-[80%] md:w-full md:h-full h-[60%] flex flex-col gap-4 md:gap-12">
                 <div className="relative">
                   <h2 className="text-5xl md:text-6xl xl:text-8xl font-black text-[#FFB706] blogTitle opacity-0">
-                    Blog
+                    Kalkulatory
                   </h2>
                   <div className="bg-[#DC2528] absolute top-0 left-0 h-[115%] z-10 blogTitleBg" />
                 </div>
                 <div className="relative">
                   <p className="text-white text-xl md:text-2xl xl:text-3xl flex-grow opacity-0 blogDesc text-justify md:w-full">
-                    Miejsce w którym pasja do zdrowego stylu życia łączy się z
-                    miłością do jedzenia. Jesteś ekspertem lub dopiero stawiasz
-                    swoje pierwsze kroki w poprawie swojego zdrowia? Tutaj
-                    znajdziesz coś dla siebie! Dołącz do naszej społeczności i
-                    dziel się swoimi doświadczeniami.
+                  Chcesz lepiej zrozumieć swoje ciało i zadbać o zdrowie? Bez względu na to, czy dopiero zaczynasz swoją przygodę z fitnessem, 
+                  czy jesteś doświadczonym ekspertem, nasze kalkulatory pomogą Ci osiągnąć Twoje cele. Śledź swoje postępy, bądź dumny z tego co wypracowałeś!
                   </p>
                   <div className="bg-[#27BDDA] absolute top-0 left-0 h-full z-10 blogDescBg" />
                 </div>
                 <div className="items-end justify-end flex h-full p-4 translate-y-[100%] blogButton">
                   <Button
-                    text="Przejdź do bloga"
+                    text="Oblicz swoje BMI"
                     className="bg-[#DC2528] text-white"
                     href="/calculator/bmi"
                   />
@@ -343,10 +340,9 @@ export default function Home() {
                 </div>
                 <div className="relative">
                   <p className="text-white text-xl md:text-2xl xl:text-3xl flex-grow opacity-0 text-justify md:w-full dietaDesc">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Animi voluptate suscipit alias ratione quas atque illum quo
-                    porro. Quaerat architecto obcaecati harum vel repudiandae
-                    natus animi deleniti maiores sint voluptate!
+                    Jeżeli jesteś osobą niezdecydowaną, albo wybór odpowiedniej diety stanowi przed tobą nielada wyzwanie
+                    - nasz quiz pomoże Ci w podjęciu decyzji. Odpowiedz na kilka pytań, a my dobierzemy dla Ciebie spersonalizowany typ diety 
+                    wraz z przykładowymi przepisami.
                   </p>
                   <div className="bg-[#27BDDA] absolute top-0 left-0 h-full z-10 dietaDescBg" />
                 </div>
@@ -354,7 +350,7 @@ export default function Home() {
                   <Button
                     text="Zacznij dietę"
                     className="bg-[#DC2528] text-white"
-                    href="/calculator/bmi"
+                    href="/diet/bmi"
                   />
                 </div>
               </div>
@@ -375,10 +371,8 @@ export default function Home() {
                 </div>
                 <div className="relative">
                   <p className="text-white text-xl md:text-2xl xl:text-3xl flex-grow opacity-0 text-justify md:w-full przepisyDesc">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Animi voluptate suscipit alias ratione quas atque illum quo
-                    porro. Quaerat architecto obcaecati harum vel repudiandae
-                    natus animi deleniti maiores sint voluptate!
+                  Może po prostu szukasz inspiracji na zdrowe posiłki? W naszym serwisie znajdziesz przepisy na dania, 
+                  które zaspokoją Twoje podniebienie. Wyszukuj do woli, a z pewnością znajdziesz coś dla siebie!
                   </p>
                   <div className="bg-[#27BDDA] absolute top-0 left-0 h-full z-10 przepisyDescBg" />
                 </div>
@@ -386,7 +380,7 @@ export default function Home() {
                   <Button
                     text="Znajdź przepis"
                     className="bg-[#DC2528] text-white"
-                    href="/calculator/bmi"
+                    href="/blog"
                   />
                 </div>
               </div>
@@ -397,7 +391,7 @@ export default function Home() {
                 <div className="relative w-full opacity-0 h-full kalkulatoryImage">
                   <ImageHorizontal
                     src="/sections/blog.webp"
-                    alt="kalkulatory"
+                    alt="produkty"
                   />
                 </div>
                 <div className="absolute top-0 h-full bg-[#019E52] kalkulatoryBg z-10" />
@@ -405,24 +399,22 @@ export default function Home() {
               <div className="w-[80%] md:w-full md:h-full h-[60%] flex flex-col gap-4 md:gap-12">
                 <div className="relative">
                   <h2 className="text-5xl md:text-6xl xl:text-8xl font-black text-[#FFB706] kalkulatoryTitle opacity-0">
-                    Kalkulator
+                    Produkty
                   </h2>
                   <div className="bg-[#DC2528] absolute top-0 left-0 h-[115%] z-10 kalkulatoryTitleBg" />
                 </div>
                 <div className="relative">
                   <p className="text-white text-xl md:text-2xl xl:text-3xl flex-grow opacity-0 text-justify md:w-full kalkulatoryDesc">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Animi voluptate suscipit alias ratione quas atque illum quo
-                    porro. Quaerat architecto obcaecati harum vel repudiandae
-                    natus animi deleniti maiores sint voluptate!
+                    Dzięki połączeniu zbioru produktów wraz z rozpoznawaniem kodów kreskowych, możesz bez problemu wyszukać informacje 
+                    o składzie i wartościach odżywczych produktów, które znajdują się na Twoim talerzu lub w koszyku z zakupami.
                   </p>
                   <div className="bg-[#27BDDA] absolute top-0 left-0 h-full z-10 kalkulatoryDescBg" />
                 </div>
                 <div className="items-end justify-end flex h-full p-4 translate-y-[100%] kalkulatoryButton">
                   <Button
-                    text="Oblicz swoje BMI"
+                    text="Wyszukaj produkt"
                     className="bg-[#DC2528] text-white"
-                    href="/calculator/bmi"
+                    href="/products"
                   />
                 </div>
               </div>

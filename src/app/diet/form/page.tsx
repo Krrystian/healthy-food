@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import BackgroundPattern from "../../components/BackgroundPattern";
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { cn } from '@/app/lib/utils';
 
 export default function Page() {
     const router = useRouter();
@@ -25,9 +26,10 @@ export default function Page() {
             habits: 'nic'
         }
     });
-    
+    const [loading, setLoading] = React.useState(false);
 
     const onSubmit = async (data: any) => {
+        setLoading(true);
         let dietGoal = [0, 0, 0];
         const currentWeight = parseFloat(data.weight);
         const targetWeight = parseFloat(data.targetWeight);
@@ -77,7 +79,7 @@ export default function Page() {
             optionalDiseases,
             foodAvoidance
         });
-
+        setLoading(false);
         console.log(response.data.result)
         const resultString = response.data.result.join(",")
         window.open("/diet/result/"+resultString, "_blank")
@@ -278,7 +280,8 @@ export default function Page() {
                             </tr>
                             <tr className='py-4'>
                                 <td colSpan={2} className='text-center p-2'>
-                                    <button type='submit' className='p-2 border-2 border-[#023047] rounded-md hover:bg-[#FB8500]/90 duration-300 transition-all text-lg font-medium'>Poznaj dietę</button>
+                                    <button type='submit' className={cn('p-2 border-2 border-[#023047] rounded-md hover:bg-[#FB8500]/90 duration-300 transition-all text-lg font-medium')} 
+                                    disabled={loading}>{loading ? "Zaraz poznasz swoją diete" : "Poznaj dietę"}</button>
                                 </td>
                             </tr>
                         </tbody>
