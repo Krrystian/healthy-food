@@ -25,7 +25,7 @@ export const RecipesDisplay = () => {
   const [searchBy, setSearchBy] = React.useState<"name" | "tag">("name");
 
   const tagsOptions = [
-    "wegetariańska",
+    "wegetariańskie",
     "wegańskie",
     "pescowegetariańskie",
     "bezlaktozowe",
@@ -67,7 +67,7 @@ export const RecipesDisplay = () => {
 
   useEffect(() => {
     if (diets) {
-      const dietArray = Array.isArray(diets) ? diets : diets.split(","); // Upewniamy się, że mamy tablicę
+      const dietArray = Array.isArray(diets) ? diets : diets.split(","); 
       setSearchBy("tag");
       setSearchQuery(dietArray.join(",")); 
     }
@@ -102,14 +102,59 @@ export const RecipesDisplay = () => {
     ));
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex">
-        <div className="w-3/4">
+    <div className="container mx-auto px-4 py-0 lg:py-4">
+      <div className="flex flex-col md:flex-row">
+        <div className="w-full md:w-1/4 mb-4 md:mb-0 items-center justify-center mr-4 text-xs lg:text-base">
+          <div className="flex flex-col">
+            <input
+              type="text"
+              placeholder="Wyszukaj przepisy po nazwie..."
+              value={searchBy === "name" ? searchQuery : ""}
+              onChange={(e) => {
+                setSearchBy("name");
+                setSearchQuery(e.target.value);
+              }}
+              className="px-4 py-2 bg-gray-800 text-white rounded w-full"
+            />
+            <button
+              onClick={handleSearch}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mt-2"
+            >
+              Szukaj
+            </button>
+
+            <div className="mb-4">
+              <p className="text-s font-bold mt-2 lg:text-lg">Filtruj według tagów:</p>
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1 2xl:grid-cols-2 gap-1 gap-x-5">
+                {tagsOptions.map((tag) => (
+                  <label key={tag} className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={searchQuery.split(",").includes(tag)}
+                      onChange={() => handleTagClick(tag)}
+                      className="mr-2 accent-[#FFB703]"
+                    />
+                    {tag}
+                  </label>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <button
+            onClick={clearFilters}
+            className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded w-full"
+          >
+            Wyczyść filtry
+          </button>
+        </div>
+
+        <div className="w-full md:w-3/4">
           {isLoading ? (
             <div className="flex flex-wrap gap-4">{skeletons}</div>
           ) : error ? (
             <div className="text-red-500">{error}</div>
-          ) : recipes.length === 0 ? ( 
+          ) : recipes.length === 0 ? (
             <div className="">
               <p>Brak pasujących przepisów.</p>
             </div>
@@ -150,51 +195,6 @@ export const RecipesDisplay = () => {
               ))}
             </div>
           )}
-        </div>
-
-        <div className="w-1/4 pr-4">
-          <div className="flex flex-col mb-4">
-            <input
-              type="text"
-              placeholder="Wyszukaj przepisy po nazwie..."
-              value={searchBy === "name" ? searchQuery : ""}
-              onChange={(e) => {
-                setSearchBy("name");
-                setSearchQuery(e.target.value);
-              }}
-              className="px-4 py-2 bg-gray-800 text-white rounded w-full"
-            />
-            <button
-              onClick={handleSearch}
-              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mt-2"
-            >
-              Szukaj
-            </button>
-
-            <div className="mb-4">
-              <p className="text-lg font-bold mt-2">Filtruj według tagów:</p>
-              <div className="grid grid-cols-2 gap-1 gap-x-5">
-                {tagsOptions.map((tag) => (
-                  <label key={tag} className="flex items-center">
-                    <input
-                      type="checkbox"
-                      checked={searchQuery.split(",").includes(tag)}
-                      onChange={() => handleTagClick(tag)}
-                      className="mr-2 accent-[#FFB703]"
-                    />
-                    {tag}
-                  </label>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <button
-            onClick={clearFilters}
-            className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded w-full"
-          >
-            Wyczyść filtry
-          </button>
         </div>
       </div>
     </div>

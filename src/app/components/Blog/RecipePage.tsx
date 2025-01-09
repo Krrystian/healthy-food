@@ -47,7 +47,7 @@ const RecipePage = ({ params }: { params: { id: string } }) => {
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row">
               <div className="md:w-1/3 mb-4 md:mb-0">
-                <div className="flex flex-wrap gap-2 pb-1 justify-center">
+                <div className="flex flex-wrap gap-2 pb-1 justify-center text-sm lg:text-base">
                   {recipe.tags.map((tag:any) => (
                     <span
                       key={tag}
@@ -60,9 +60,9 @@ const RecipePage = ({ params }: { params: { id: string } }) => {
                 <img src={recipe.image} alt={recipe.name} className="w-full rounded-lg" />
               </div>
 
-              <div className="md:w-2/3 md:pl-4">
+              <div className="text-sm lg:text-base md:w-2/3 md:pl-4">
                 <p>{recipe.description}</p>
-                <h2 className="text-xl font-bold mt-8">Składniki:</h2>
+                <h2 className="text-lg lg:text-xl font-bold mt-8">Składniki:</h2>
                 <ul className="list-disc list-inside">
                   {recipe.ingredients.map((ingredient: any) => (
                     <li key={ingredient.id}>
@@ -71,7 +71,7 @@ const RecipePage = ({ params }: { params: { id: string } }) => {
                   ))}
                 </ul>
 
-                <h2 className="text-xl font-bold mt-8">Sposób przygotowania:</h2>
+                <h2 className="text-lg lg:text-xl font-bold mt-8">Sposób przygotowania:</h2>
                 <ol className="list-decimal list-inside">
                   {recipe.instructions.map((instruction: string, index: number) => (
                     <li key={index} className="p-1">{instruction}</li>
