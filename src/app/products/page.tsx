@@ -1,5 +1,5 @@
 import React from 'react'
-import BarcodeScanner from '../components/ProductsScanner/BarecodeScanner'
+import BarcodeScanner from '../components/ProductsScanner/BarcodeScanner'
 import BackgroundPattern from "../components/BackgroundPattern";
 
 const Page = () => {
