@@ -19,6 +19,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { set } from "date-fns";
+import { useRouter } from "next/navigation";
 
 export const Users = () => {
   const [users, setUsers] = React.useState<
@@ -498,7 +499,7 @@ export const Recipes = () => {
   const [error, setError] = React.useState<string | null>(null);
   const [recipes, setRecipes] = React.useState<
     {
-      id: number;
+      id: string;
       name: string;
       description: string;
       tags: string[];
@@ -537,7 +538,10 @@ export const Recipes = () => {
     setPage(1);
     fetchData(1);
   };
-  const handleSuspend = async (id: number) => {
+  const handleSuspend = async (id: string) => {
+    if (!confirm("Na pewno chcesz usunąć ten przepis?")) {
+      return;
+    }
     try {
       const response = await axios.delete(`/api/admin/removeRecipe/${id}`);
       setRecipes((prevRecipes) =>
@@ -545,6 +549,14 @@ export const Recipes = () => {
       );
     } catch (error) {
       console.error("Error suspending recipe:", error);
+    }
+  }
+  const router = useRouter();
+  const handleEdit = async (id: string) => {
+    try {
+      router.push(`/account/adm/updateRecipe/${id}`);
+    } catch (error) {
+      console.error("Error editing recipe:", error);
     }
   }
   const skeletons = Array(5)
@@ -661,6 +673,9 @@ export const Recipes = () => {
                           className={cn(
                             "bg-yellow-500/50 hover:bg-yellow-500/60 px-3 py-1 rounded-xl duration-300 transition-all"
                           )}
+                          onClick={() => {
+                            handleEdit(recipe.id);
+                          }}
                         >
                           Edytuj
                         </button>
