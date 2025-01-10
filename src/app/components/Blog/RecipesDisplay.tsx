@@ -20,7 +20,7 @@ export const RecipesDisplay = () => {
       tags: string[];
     }[]
   >([]);
-  const [searchQuery, setSearchQuery] = useState(diets || ""); // Ustawienie stanu na podstawie parametrów URL
+  const [searchQuery, setSearchQuery] = useState(diets || ""); 
   const [searchBy, setSearchBy] = useState<"name" | "tag">(
     diets ? "tag" : "name"
   );
@@ -63,12 +63,11 @@ export const RecipesDisplay = () => {
   };
 
   useEffect(() => {
-    // Inicjalizacja po odświeżeniu strony
     if (diets) {
       setSearchBy("tag");
       setSearchQuery(diets);
     }
-    fetchData(); // Wywołanie zapytania
+    fetchData(); 
   }, [diets]);
 
   const handleSearch = () => {
