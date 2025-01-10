@@ -87,10 +87,11 @@ export const RecipesDisplay = () => {
     fetchData();
   };
 
-  const clearFilters = () => {
+  const clearFilters = async () => {
+    console.log("clearFilters");
     setSearchBy("name");
     setSearchQuery("");
-    router.push("");
+    router.push("?");
     fetchData();
   };
 
