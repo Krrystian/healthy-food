@@ -1,10 +1,9 @@
-//MUSI BYĆ URUCHOMIONY SERWER NEXT.JS NA PORCIE 3000
 
 import request from 'supertest';
 
 describe('POST /api/calculator', () => {
   it('should create a calculator record', async () => {
-    const response = await request('http://localhost:3000') // Adres aplikacji Next.js
+    const response = await request('http://localhost:3000')
       .post('/api/calculator')
       .send({
         type: 'BMI',
@@ -22,7 +21,7 @@ describe('POST /api/calculator', () => {
   });
 
   it('should return an error if invalid type is provided', async () => {
-    const response = await request('http://localhost:3000') // Adres aplikacji Next.js
+    const response = await request('http://localhost:3000')
       .post('/api/calculator')
       .send({
         type: 'INVALID_TYPE',

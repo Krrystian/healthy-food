@@ -18,10 +18,8 @@ describe('SignOutButton', () => {
     render(<SignOutButton />);
     const button = screen.getByRole('button');
     
-    // Symulujemy kliknięcie w przycisk
     fireEvent.click(button);
     
-    // Sprawdzamy, czy funkcja signOut została wywołana
     expect(signOut).toHaveBeenCalled();
   });
 });
