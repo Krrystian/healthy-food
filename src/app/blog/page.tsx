@@ -3,7 +3,8 @@ import BackgroundPattern from "../components/BackgroundPattern";
 import { RecipesDisplay } from '../components/Blog/RecipesDisplay';
 
 
-const page = () => {
+const Page = () => {
+  
   return (
     <div>
       <BackgroundPattern />
@@ -19,4 +20,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

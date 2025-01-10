@@ -17,7 +17,7 @@ const FormResult = ({ diets }: { diets: string[] }) => {
   
     const dietQuery = diets.join(",");
     const displayDiets = diets.map(diet => dietMappingDisplayName[diet] || diet).join(", ");
-
+    
     return (
         <div className='my-5 rounded-xl p-5 bg-black/40 text-white flex flex-col justify-center items-center'>
             <div className="container pb-10 text-center">

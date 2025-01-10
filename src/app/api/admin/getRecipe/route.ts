@@ -11,7 +11,6 @@ export async function GET(req: Request) {
     const searchByTag = searchParams.get("tag");
     const searchById = searchParams.get("id");
     const whereClause: any = {};
-    console.log(searchByName, searchByTag);
     if (searchByName) {
         whereClause.name = {
           contains: searchByName,

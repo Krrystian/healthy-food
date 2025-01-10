@@ -3,16 +3,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 import Image from "next/legacy/image";
-import { useRouter, useSearchParams } from "next/navigation"; 
+import { useRouter, useSearchParams } from "next/navigation";
 
 export const RecipesDisplay = () => {
   const router = useRouter();
-  const searchParams = useSearchParams(); 
-  const diets = searchParams.get('diets');
-
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [error, setError] = React.useState<string | null>(null);
-  const [recipes, setRecipes] = React.useState<
+  const searchParams = useSearchParams();
+  const diets = decodeURIComponent(searchParams.get("diets") || "");
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [recipes, setRecipes] = useState<
     {
       id: number;
       name: string;
@@ -21,8 +20,10 @@ export const RecipesDisplay = () => {
       tags: string[];
     }[]
   >([]);
-  const [searchQuery, setSearchQuery] = React.useState("");
-  const [searchBy, setSearchBy] = React.useState<"name" | "tag">("name");
+  const [searchQuery, setSearchQuery] = useState(diets || ""); // Ustawienie stanu na podstawie parametrów URL
+  const [searchBy, setSearchBy] = useState<"name" | "tag">(
+    diets ? "tag" : "name"
+  );
 
   const tagsOptions = [
     "wegetariańskie",
@@ -62,34 +63,36 @@ export const RecipesDisplay = () => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, [searchQuery, searchBy]);
-
-  useEffect(() => {
+    // Inicjalizacja po odświeżeniu strony
     if (diets) {
-      const dietArray = Array.isArray(diets) ? diets : diets.split(","); 
       setSearchBy("tag");
-      setSearchQuery(dietArray.join(",")); 
+      setSearchQuery(diets);
     }
-  }, [ diets]);
+    fetchData(); // Wywołanie zapytania
+  }, [diets]);
 
   const handleSearch = () => {
+    router.push(`?name=${encodeURIComponent(searchQuery)}`);
     fetchData();
   };
 
   const handleTagClick = (tag: string) => {
     setSearchBy("tag");
-    setSearchQuery((prevQuery) => {
-      const selectedTags = prevQuery.split(",").filter(Boolean);
-      return selectedTags.includes(tag)
-        ? selectedTags.filter((t) => t !== tag).join(",")
-        : [...selectedTags, tag].join(",");
-    });
+    const selectedTags = searchQuery.split(",").filter(Boolean);
+    const updatedTags = selectedTags.includes(tag)
+      ? selectedTags.filter((t) => t !== tag)
+      : [...selectedTags, tag];
+    const query = updatedTags.join(",");
+    setSearchQuery(query);
+    router.push(`?diets=${encodeURIComponent(query)}`);
+    fetchData();
   };
 
   const clearFilters = () => {
     setSearchBy("name");
     setSearchQuery("");
+    router.push("");
+    fetchData();
   };
 
   const skeletons = Array(5)
@@ -155,7 +158,7 @@ export const RecipesDisplay = () => {
           ) : error ? (
             <div className="text-red-500">{error}</div>
           ) : recipes.length === 0 ? (
-            <div className="">
+            <div>
               <p>Brak pasujących przepisów.</p>
             </div>
           ) : (

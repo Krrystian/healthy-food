@@ -5,7 +5,6 @@ import { features } from "process";
 export async function POST(req: Request) {
   try{
     const body = await req.json()
-    console.log(body)
     const data = [body.age, ...body.dietGoal, ...body.foodIntolerances, ...body.optionalDiseases, ...body.foodAvoidance]
     const response = await axios.post("https://healthy-you-ai-ba1f1dfba37f.herokuapp.com/predict", {features: data} )
     const diets = ["bezglutenowa",	"bezlaktozowa",	"niskotluszczowa",	"niskoweglowodanowa",	"pescowegetarianska",	"standardowa",	"weganska",	"wegetarianska",	"wysokobialkowa"]
@@ -15,7 +14,6 @@ export async function POST(req: Request) {
         result.push(diets[index])
       }
     });
-    console.log(result)
     return NextResponse.json({ result: result }, { status: 200 });
   } catch(error:any){
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
