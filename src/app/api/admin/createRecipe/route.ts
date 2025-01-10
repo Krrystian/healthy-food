@@ -43,6 +43,6 @@ export async function POST(req: Request) {
         return NextResponse.json({ message: "Notifications sent" }, { status: 200 });
     } catch (error: any) {
         console.error("Error creating recipe:", error); 
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        return NextResponse.json({ error: error.message }, { status: 400 });
     }
 }
