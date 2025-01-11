@@ -1,6 +1,3 @@
-"use client";
-import { motion, useTransform, useScroll } from "framer-motion";
-import { useRef } from "react";
 import BackgroundPattern from "../../components/BackgroundPattern";
 import Diets from "@/app/components/Diet/TypesOfDiets";
 

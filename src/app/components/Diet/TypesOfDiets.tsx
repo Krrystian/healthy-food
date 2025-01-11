@@ -107,7 +107,7 @@ const diets = [
     {
       url: "/typeOfDiets/low-carbohydrate.jpg",
       title: "Niskowęglowodanowa",
-      description: "Ddieta, która ogranicza spożycie węglowodanów, koncentrując się na białkach i tłuszczach. Często stosowana w celu redukcji wagi lub stabilizacji poziomu cukru we krwi.",
+      description: "Dieta, która ogranicza spożycie węglowodanów, koncentrując się na białkach i tłuszczach. Często stosowana w celu redukcji wagi lub stabilizacji poziomu cukru we krwi.",
       id: 4,
       recipeTitle: "Piersi z kurczaka z cukinią, pieczarkami i nasionami sezamu",
       recipeIng: ["500 g piersi kurczaka",

@@ -1,6 +1,4 @@
 "use client";
-import { motion, useTransform, useScroll } from "framer-motion";
-import { useRef } from "react";
 import HorizontalScrollCarousel from "../components/Diet/Carousel"
 import BackgroundPattern from "../components/BackgroundPattern";
 import useSmoothScroll from "../hooks/useSmoothScroll";
