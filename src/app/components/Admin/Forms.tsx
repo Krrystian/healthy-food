@@ -18,7 +18,6 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { set } from "date-fns";
 import { useRouter } from "next/navigation";
 
 export const Users = () => {
@@ -519,6 +518,7 @@ export const Recipes = () => {
       const res = await axios.get(`/api/admin/getRecipe`, {
         params: {
           [searchBy]: searchQuery,
+          page: newPage,
         },
       });
       console.log(res.data);
@@ -559,6 +559,19 @@ export const Recipes = () => {
       console.error("Error editing recipe:", error);
     }
   }
+  const handleNextPage = () => {
+    if (page < totalPages) {
+      fetchData(page + 1);
+      setPage((prev) => prev + 1);
+    };
+  };
+  
+  const handlePrevPage = () => {
+    if (page > 1) {
+      fetchData(page - 1);
+      setPage((prev) => prev - 1);
+    }
+  };
   const skeletons = Array(5)
     .fill(null)
     .map((_, index) => (
@@ -698,7 +711,7 @@ export const Recipes = () => {
         </div>
         <div className="flex justify-center mt-4 gap-4 items-center">
         <button
-          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+          onClick={handlePrevPage}
           disabled={page === 1}
           className={cn(
             "bg-blue-500/50 hover:bg-blue-500/70 duration-300 px-4 py-2 rounded text-white",
@@ -711,7 +724,7 @@ export const Recipes = () => {
           Strona {page} z {totalPages}
         </span>
         <button
-          onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+          onClick={handleNextPage}
           disabled={page === totalPages}
           className="bg-blue-500/50 hover:bg-blue-500/70 duration-300 px-4 py-2 rounded text-white"
         >
