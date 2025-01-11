@@ -2,12 +2,6 @@
 import { motion, useTransform, useScroll, useSpring } from "framer-motion";
 import { useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
-import {
-  TextRevealCard,
-  TextRevealCardDescription,
-  TextRevealCardTitle,
-} from "../text-reveal-card";
-import Mouse from "../Mouse";
 
 
 export default function HorizontalScrollCarousel() {
@@ -120,7 +114,6 @@ const CardScreen = () => {
 const CardScreen = () => {
   return (
     <div>
-      <Mouse/>
       <div className="h-screen w-screen flex flex-col justify-center items-center">
       <motion.p 
         className="p-8 text-center text-4xl md:text-5xl font-semibold text-white cursor-default"

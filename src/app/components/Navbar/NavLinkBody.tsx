@@ -142,6 +142,7 @@ export const KontoContent = () => {
         </Link>
         <Link
           href="/account/profile"
+          onClick={(e: React.MouseEvent) => onClick("/account/profile", e)}
           className="relative group font-semibold py-1"
         >
           Profil

@@ -1,18 +1,22 @@
 import React from 'react'
-import BarcodeScanner from '../components/ProductsScanner/BarcodeScanner'
 import BackgroundPattern from "../components/BackgroundPattern";
+import { RecipesDisplay } from '../components/Blog/RecipesDisplay';
+
 
 const Page = () => {
+  
   return (
     <div>
       <BackgroundPattern />
       <div className='px-12 pt-4 mt-[40px] md:mt-[80px] text-white'>  
         <h2 className='text-5xl md:text-7xl text-[#26BDDC] text-center md:text-left'>
-          Znajdź produkt
+          Przepisy
         </h2>
-        <BarcodeScanner/>
+        <div className='my-5 rounded-xl p-10 bg-black/40'>
+          <RecipesDisplay />
+        </div>
       </div>
-    </div>    
+    </div>
   )
 }
 

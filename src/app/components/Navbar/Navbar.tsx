@@ -36,14 +36,6 @@ const Navbar = () => {
       ],
     },
     {
-      title: "Blog",
-      items: [
-        { name: "Latest Posts", href: "/blog/latest" },
-        { name: "Popular Posts", href: "/blog/popular" },
-        { name: "Categories", href: "/blog/categories" },
-      ],
-    },
-    {
       title: "Dieta",
       items: [
         { name: "Po co komu dieta?", href: "/diet" },
@@ -109,7 +101,7 @@ const Navbar = () => {
               height={60}
               alt="logo"
               priority
-              className="cursor-pointer"
+              className="cursor-pointer z-10"
               onClick={() => animatePageOut("/", router)}
             />
             <div className="absolute flex flex-row items-center justify-center gap-1 w-full">
@@ -120,10 +112,9 @@ const Navbar = () => {
                 Content={KalkulatoryContent}
               />
               <NavLink
-                label="Blog"
-                href="/"
+                label="Przepisy"
+                href="/blog"
                 prefetch={true}
-                Content={BlogContent}
               />
               <NavLink
                 label="Dieta"
@@ -137,12 +128,12 @@ const Navbar = () => {
               {loggedIn ? (
                 <NavLink
                   label="Konto"
-                  href="/"
+                  href="/account/profile"
                   prefetch={true}
                   Content={KontoContent}
                   account
                   underline={false}
-                  className="px-8 border-2 rounded-xl border-black"
+                  className="px-8 border-2 rounded-xl border-black z-10"
                 />
               ) : (
                 <SignInButton className="p-3 border-2 border-[#023047] rounded-md hover:bg-[#FB8500]/90 duration-300 transition-all text-xl font-medium">
@@ -216,6 +207,9 @@ const Navbar = () => {
                       setIsMenuOpen={setMenuOpen}
                     />
                   ))}
+                  <Link href="/" className="text-2xl">
+                    Przepisy
+                  </Link>
                   <Link href="/products" className="text-2xl">
                     Produkty
                   </Link>

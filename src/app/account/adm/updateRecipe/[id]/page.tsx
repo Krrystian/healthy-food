@@ -1,16 +1,17 @@
 "use client";
+
 import BackgroundPattern from '@/app/components/BackgroundPattern';
 import { motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useForm, FieldValues } from 'react-hook-form';
 import axios from 'axios';
 import { useS3Uploader } from '@/app/hooks/useS3Uploader';
 import { createRecipeSchema } from '@/app/lib/zod';
 import { z } from 'zod';
-//TODO: dodać error message zamiast alert w wypadku kiedy nie jest to zrobione poprawnie
+
 type Product = {
   name: string;
   quantity: string;
@@ -33,7 +34,11 @@ type FormData = {
 const Page: React.FC = () => {
   const { data: session } = useSession();
   const router = useRouter();
+  const pathname = usePathname();
   const { uploadToS3 } = useS3Uploader();
+  const recipeId = pathname.split('/').pop();
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const {
     register,
@@ -67,7 +72,29 @@ const Page: React.FC = () => {
     }
   }, [session, router]);
 
-  if (!session) {
+  useEffect(() => {
+    if (recipeId) {
+      axios.get(`/api/admin/getRecipe?id=${recipeId}`).then((response) => {
+        const { recipe } = response.data;
+        if (recipe) {
+            console.log("Recipe:", recipe);
+          setValue('title', recipe.name);
+          setValue('tags', recipe.tags);
+          setValue('products', recipe.ingredients);
+          setValue('image', recipe.image);
+          setValue('description', recipe.description);
+          setValue('preparation', recipe.instructions.join('\n'));
+        }
+        setValue('tagInput', '');
+        setValue('productName', '');
+        setValue('productQuantity', '');
+        setValue('productMetric', 'szklanka');
+        setIsLoading(false);
+      });
+    }
+  }, [recipeId, setValue]);
+
+  if (!session || isLoading) {
     return null;
   }
 
@@ -112,33 +139,36 @@ const Page: React.FC = () => {
 
   const onSubmit = async (data: FormData) => {
     console.log('Form Data:', data);
-    
+
     const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+    let imageUrl = data.image;
+
     if (fileInput && fileInput.files && fileInput.files[0]) {
       const file = fileInput.files[0];
-      const path = 'recipe'; 
-      const imageUrl = await uploadToS3(file, "", path, data.title);
-      setValue('image', imageUrl);
-      const { tagInput, productName, productQuantity, productMetric, ...filteredData } = data;
-      const userId = session?.user?.id;
+      const path = 'recipe';
+      imageUrl = await uploadToS3(file, "", path, data.title);
+    }
 
-      try {
-        createRecipeSchema.parse(filteredData);
-        const response = await axios.post('/api/admin/createRecipe', {
-          ...filteredData,
-          image: imageUrl,
-          userId,
-        });
-        console.log('Response:', response.data);
-        reset();
-        alert('Zapisano!');
+    const { tagInput, productName, productQuantity, productMetric, ...filteredData } = data;
+    const userId = session?.user?.id;
+
+    try {
+      createRecipeSchema.parse(filteredData);
+      const response = await axios.put(`/api/admin/updateRecipe/${recipeId}`, {
+        ...filteredData,
+        image: imageUrl,
+        userId,
+        id: recipeId,
+      });
+      console.log('Response:', response.data);
+      alert('Zaktualizowano!');
+      router.push(`/account/adm?menu=Recipes`);
     } catch (error) {
-        if (error instanceof z.ZodError) {
-          console.error("Validation failed:", error.errors);
-          alert("Validation failed. Please check the form fields.");
-        } else {
-          console.error("Unexpected error:", error);
-        }
+      if (error instanceof z.ZodError) {
+        console.error("Validation failed:", error.errors);
+        alert("Validation failed. Please check the form fields.");
+      } else {
+        console.error("Unexpected error:", error);
       }
     }
   };
@@ -150,7 +180,7 @@ const Page: React.FC = () => {
         className="w-1/2 flex flex-col gap-4 py-16"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div className="grid grid-cols-8 gap-4 text-xl p-4 rounded-xl px-8 justify-center items-baseline bg-black/40">
+<div className="grid grid-cols-8 gap-4 text-xl p-4 rounded-xl px-8 justify-center items-baseline bg-black/40">
           <label htmlFor="Title" className="col-span-1">Nazwa:</label>
           <input
             type="text"
@@ -287,7 +317,7 @@ const Page: React.FC = () => {
               <option value="g">Gram</option>
               <option value="dag">Dekagram</option>
               <option value="kg">Kilogram</option>
-            </select>
+            </select>  
             <button
               type="button"
               className="bg-blue-500/50 hover:bg-blue-500/70 duration-300 px-4 py-2 rounded text-white"
@@ -312,12 +342,11 @@ const Page: React.FC = () => {
             )}
           </div>
         </div>
-
         <button
           type="submit"
           className="bg-green-500/50 hover:bg-green-500/70 duration-300 px-6 py-3 rounded text-white text-xl mt-4"
         >
-          Zapisz
+          Zaktualizuj
         </button>
       </form>
     </div>

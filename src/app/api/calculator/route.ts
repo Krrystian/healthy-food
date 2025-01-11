@@ -38,8 +38,7 @@ export async function POST(request: Request) {
                 result: req.result,
             },
         });
-        return NextResponse.json("Calculator has been saved.", { status: 201 });
-
+        return NextResponse.json({ message: "Calculator has been saved." }, { status: 201 });
     } catch(error){
         console.log(error)
         return NextResponse.json(error, { status: 500 });
