@@ -2,9 +2,7 @@ import React from 'react'
 import BackgroundPattern from "../components/BackgroundPattern";
 import { RecipesDisplay } from '../components/Blog/RecipesDisplay';
 
-
 const Page = () => {
-  
   return (
     <div>
       <BackgroundPattern />

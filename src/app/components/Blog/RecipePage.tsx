@@ -1,8 +1,16 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const RecipePage = ({ params }: { params: { id: string } }) => {
+  const { data: session } = useSession();
+  const router = useRouter();
+  if (!session) {
+    router.push("/login");
+    return null;
+  }
   const { id } = params;
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

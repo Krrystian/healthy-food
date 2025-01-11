@@ -4,8 +4,10 @@ import axios from "axios";
 import Link from "next/link";
 import Image from "next/legacy/image";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export const RecipesDisplay = () => {
+  
   const router = useRouter();
   const searchParams = useSearchParams();
   const diets = decodeURIComponent(searchParams.get("diets") || "");
@@ -24,6 +26,11 @@ export const RecipesDisplay = () => {
   const [searchBy, setSearchBy] = useState<"name" | "tag">(
     diets ? "tag" : "name"
   );
+  const { data: session } = useSession();
+  if (!session) {
+    router.push("/login");
+    return null;
+  }
 
   const tagsOptions = [
     "wegetariańskie",
