@@ -10,7 +10,7 @@ const RecipePage = ({ params }: { params: { id: string } }) => {
 
   const fetchRecipe = async (id: string) => {
     try {
-      const res = await axios.get(`/api/admin/getAllRecipe`, {
+      const res = await axios.get(`/api/admin/getRecipe`, {
         params: { id },
       });
       setRecipe(res.data.recipe);

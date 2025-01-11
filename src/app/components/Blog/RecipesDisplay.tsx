@@ -48,12 +48,13 @@ export const RecipesDisplay = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const res = await axios.get(`/api/admin/getRecipe`, {
+      const res = await axios.get(`/api/admin/getAllRecipe`, {
         params: {
           [searchBy]: searchQuery,
         },
       });
       setRecipes(res.data.recipes);
+      console.log(res.data.recipes);
     } catch (error) {
       console.error("Nie udało się pobrać przepisów:", error);
       setError("Nie udało się pobrać przepisów");
@@ -67,12 +68,11 @@ export const RecipesDisplay = () => {
       setSearchBy("tag");
       setSearchQuery(diets);
     }
-    fetchData(); 
+    fetchData();
   }, [diets]);
 
   const handleSearch = () => {
     router.push(`?name=${encodeURIComponent(searchQuery)}`);
-    fetchData();
   };
 
   const handleTagClick = (tag: string) => {
@@ -84,7 +84,6 @@ export const RecipesDisplay = () => {
     const query = updatedTags.join(",");
     setSearchQuery(query);
     router.push(`?diets=${encodeURIComponent(query)}`);
-    fetchData();
   };
 
   const clearFilters = async () => {
@@ -92,8 +91,11 @@ export const RecipesDisplay = () => {
     setSearchBy("name");
     setSearchQuery("");
     router.push("?");
-    fetchData();
   };
+
+  useEffect(() => {
+    fetchData();
+  }, [searchQuery, searchBy]);
 
   const skeletons = Array(5)
     .fill(null)
