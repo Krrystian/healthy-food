@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { SignOutButton } from '../components/SignInOut/SignOutButton';
+import { SignOutButton } from '../../components/SignInOut/SignOutButton';
 import { signOut } from 'next-auth/react';
 import '@testing-library/jest-dom';
 

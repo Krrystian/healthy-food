@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import '@testing-library/jest-dom';
-import Loader from "../components/ProductsScanner/Loader";
+import Loader from "../../components/ProductsScanner/Loader";
 
 describe("Loader", () => {
   it("renders three bouncing circles with correct classes", () => {
