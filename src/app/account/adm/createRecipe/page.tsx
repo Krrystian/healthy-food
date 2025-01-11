@@ -287,6 +287,7 @@ const Page: React.FC = () => {
               <option value="g">Gram</option>
               <option value="dag">Dekagram</option>
               <option value="kg">Kilogram</option>
+              <option value="sztuka">Sztuka</option>
             </select>
             <button
               type="button"
