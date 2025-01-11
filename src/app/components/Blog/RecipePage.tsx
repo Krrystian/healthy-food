@@ -7,10 +7,12 @@ import { useRouter } from "next/navigation";
 const RecipePage = ({ params }: { params: { id: string } }) => {
   const { data: session } = useSession();
   const router = useRouter();
-  if (!session) {
-    router.push("/login");
-    return null;
-  }
+  useEffect(() => {
+    if (!session) {
+      router.push("/login");
+    }
+  }, [session, router]);
+  
   const { id } = params;
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

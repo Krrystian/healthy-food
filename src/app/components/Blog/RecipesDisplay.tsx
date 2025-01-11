@@ -9,6 +9,13 @@ import { useSession } from "next-auth/react";
 export const RecipesDisplay = () => {
   
   const router = useRouter();
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    if (!session) {
+      router.push("/login");
+    }
+  }, [session, router]);
   const searchParams = useSearchParams();
   const diets = decodeURIComponent(searchParams.get("diets") || "");
   const [isLoading, setIsLoading] = useState(true);
@@ -26,11 +33,6 @@ export const RecipesDisplay = () => {
   const [searchBy, setSearchBy] = useState<"name" | "tag">(
     diets ? "tag" : "name"
   );
-  const { data: session } = useSession();
-  if (!session) {
-    router.push("/login");
-    return null;
-  }
 
   const tagsOptions = [
     "wegetariańskie",
