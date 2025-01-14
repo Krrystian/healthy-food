@@ -296,7 +296,7 @@ export default function Home() {
             >
               <div className="w-full md:w-2/4 md:h-full h-[40%] relative flex-shrink-0 overflow-hidden">
                 <div className="relative w-full opacity-0 h-full blogImage select-none">
-                  <ImageHorizontal src="/sections/blog.webp" alt="kalkulatory" />
+                  <ImageHorizontal src="/sections/calculator.png" alt="kalkulatory" />
                 </div>
                 <div className="absolute top-0 h-full bg-[#019E52] blogBg z-10" />
               </div>
@@ -327,7 +327,7 @@ export default function Home() {
             <div className="w-screen h-screen flex flex-col md:flex-row flex-shrink-0 md:p-20 gap-4 md:gap-12 items-center">
               <div className="w-full md:w-2/4 md:h-full h-[40%] relative flex-shrink-0 overflow-hidden">
                 <div className="relative w-full opacity-0 h-full dietaImage">
-                  <ImageHorizontal src="/sections/blog.webp" alt="dieta" />
+                  <ImageHorizontal src="/sections/diet.webp" alt="dieta" />
                 </div>
                 <div className="absolute top-0 h-full bg-[#019E52] dietaBg z-10" />
               </div>
@@ -358,7 +358,7 @@ export default function Home() {
             <div className="w-screen h-screen flex flex-col md:flex-row flex-shrink-0 md:p-20 gap-4 md:gap-12 items-center">
               <div className="w-full md:w-2/4 md:h-full h-[40%] relative flex-shrink-0 overflow-hidden">
                 <div className="relative w-full opacity-0 h-full przepisyImage">
-                  <ImageHorizontal src="/sections/blog.webp" alt="przepisy" />
+                  <ImageHorizontal src="/sections/recipe.png" alt="przepisy" />
                 </div>
                 <div className="absolute top-0 h-full bg-[#019E52] przepisyBg z-10" />
               </div>
@@ -390,7 +390,7 @@ export default function Home() {
               <div className="w-full md:w-2/4 md:h-full h-[40%] relative flex-shrink-0 overflow-hidden">
                 <div className="relative w-full opacity-0 h-full kalkulatoryImage">
                   <ImageHorizontal
-                    src="/sections/blog.webp"
+                    src="/sections/product.png"
                     alt="produkty"
                   />
                 </div>
