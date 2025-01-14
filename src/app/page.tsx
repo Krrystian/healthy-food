@@ -350,7 +350,7 @@ export default function Home() {
                   <Button
                     text="Zacznij dietę"
                     className="bg-[#DC2528] text-white"
-                    href="/diet/bmi"
+                    href="/diet/form"
                   />
                 </div>
               </div>
